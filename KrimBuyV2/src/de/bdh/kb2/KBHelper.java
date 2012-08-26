@@ -45,7 +45,6 @@ public class KBHelper
 	public Map<Player, Block> lastBlock = new HashMap<Player, Block>();
 	public List<Integer> pubList;
 	public HashMap<Integer,KBArea> areas = new HashMap<Integer,KBArea>();
-	public int timestamp = 0;
 	public List<String> worlds;
 	
 	public void loadPubAreas()
@@ -78,7 +77,7 @@ public class KBHelper
 	
 	public int getTS()
 	{
-		return this.timestamp;
+		return (int) (System.currentTimeMillis()  / 1000L);
 	}
 	
 	public void loadPlayerAreas(Player p)

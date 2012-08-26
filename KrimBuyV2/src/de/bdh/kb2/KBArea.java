@@ -65,7 +65,6 @@ public class KBArea
 				this.lastonline = rs.getInt("lastonline");
 				this.noloose = rs.getInt("noloose");
 				this.kaufzeit = rs.getInt("kaufzeit");
-				this.m.helper.timestamp = rs.getInt("timestamp");
 				
 				if(this.ruleset.length() > 0)
 				{
