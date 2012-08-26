@@ -78,6 +78,9 @@ public class Main extends JavaPlugin
         this.helper.Tick();
         playerListener = new KBPlayerListener(this);
         
+        KBTimer k = new KBTimer(this);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, k, 1, 1);
+        
         Bukkit.getServer().getPluginManager().registerEvents(playerListener, this);
         Commander c = new Commander(this);
         getCommand("makesell").setExecutor(c); 
