@@ -70,7 +70,7 @@ public class Main extends JavaPlugin
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) 
         {
-        	System.out.println((new StringBuilder()).append("[KB] unable to hook iconomy").toString()); 
+        	System.out.println((new StringBuilder()).append("[KB] unable to hook money").toString()); 
         } else
         	econ = rsp.getProvider();
         
@@ -107,8 +107,10 @@ public class Main extends JavaPlugin
     		System.out.println((new StringBuilder()).append("[KB] BrauTec Adaption loaded").toString());
     	} else
     	{
-    		System.out.println((new StringBuilder()).append("[KB] BdH Creative Mode").toString());
+    		System.out.println((new StringBuilder()).append("[KB] Creative Mode").toString());
     	}
+    	
+    	System.out.println((new StringBuilder()).append("[KB] based on: www.worldofminecraft.de").toString());
     }
     
     public static PluginDescriptionFile pdf;

@@ -449,7 +449,7 @@ public class Commander implements CommandExecutor {
 	        			Double prc = new Double(exp);
 	        			if(this.plugin.econ.getBalance(sender.getName()) > prc)
 						{
-							this.plugin.econ.depositPlayer(sender.getName(), (prc*-1));
+							this.plugin.econ.withdrawPlayer(sender.getName(), prc);
 							this.helper.upgradeArea((Player)sender, b);
 							sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück wurde erweitert").toString());
 							return true;
