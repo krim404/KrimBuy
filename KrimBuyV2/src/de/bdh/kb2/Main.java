@@ -44,7 +44,7 @@ public class Main extends JavaPlugin
     	new configManager(this);
     	
     	//Lade mySQL Lib - wenn nicht existent
-    	if (!(new File("lib/", "mysql-connector-java-bin.jar")).exists()) Downloader.install(configManager.MySQL_Jar_Location, "mysql-connector-java-bin.jar");
+    	//if (!(new File("lib/", "mysql-connector-java-bin.jar")).exists()) Downloader.install(configManager.MySQL_Jar_Location, "mysql-connector-java-bin.jar");
     	
     	//Erstelle Tabellen
     	try
