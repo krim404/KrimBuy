@@ -1,7 +1,5 @@
 package de.bdh.kb2;
 
-import java.io.File;
-
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.Bukkit;
@@ -14,7 +12,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import de.bdh.kb2.Commander;
 import de.bdh.kb2.KBPlayerListener;
 import de.bdh.kb.util.Database;
-import de.bdh.kb.util.Downloader;
 import de.bdh.kb.util.configManager;
 
 public class Main extends JavaPlugin

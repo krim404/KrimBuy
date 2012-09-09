@@ -29,6 +29,13 @@ public class configManager {
 	
     public configManager(Main main) {
     	plugin = main;
+    	
+    	File theDir = new File(plugin.getDataFolder(),"");
+		if (!theDir.exists())
+		{
+			theDir.mkdir();
+		}
+		
     	setupconf();
     	load();
     }
