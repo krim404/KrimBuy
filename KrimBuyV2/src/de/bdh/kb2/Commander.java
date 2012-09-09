@@ -25,7 +25,7 @@ public class Commander implements CommandExecutor {
 	public Commander(Main plugin)
 	{
 		this.plugin = plugin;
-		this.helper = plugin.helper;
+		this.helper = Main.helper;
 	}
 	
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String args[])

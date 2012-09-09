@@ -20,7 +20,7 @@ public class Main extends JavaPlugin
 	public static Database Database = null;
 	public KBPlayerListener playerListener = null;
 	public Economy econ = null;
-	public KBHelper helper = null;
+	public static KBHelper helper = null;
 
  	public Main()
     {
@@ -71,8 +71,8 @@ public class Main extends JavaPlugin
         } else
         	econ = rsp.getProvider();
         
-        this.helper = new KBHelper(this);
-        this.helper.Tick();
+        helper = new KBHelper(this);
+        helper.Tick();
         playerListener = new KBPlayerListener(this);
         
         KBTimer k = new KBTimer(this);

@@ -18,7 +18,7 @@ public class KBTimer implements Runnable {
 			return;
 		}
 			time = System.currentTimeMillis();
-			this.main.helper.Tick();
+			Main.helper.Tick();
 		} catch (Exception e) {}
 		
 	}

@@ -39,7 +39,7 @@ public class KBPlayerListener implements Listener
 	public KBPlayerListener(Main m)
 	{
 		this.p = m;
-		this.helper = m.helper;
+		this.helper = Main.helper;
 		
 		for (Player player: Bukkit.getServer().getOnlinePlayers()) 
         {
