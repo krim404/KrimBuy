@@ -187,7 +187,7 @@ public class Commander implements CommandExecutor {
         		{
         			if(args.length != 1)
 	                {
-        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("USAGE: /nextGS TYP").toString());
+        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("USAGE: /nextGS TYP. Beispiel: /nextGS slums").toString());
         				return true;
 	                }
         			try
@@ -273,7 +273,55 @@ public class Commander implements CommandExecutor {
 	        		{
 	        			System.out.println((new StringBuilder()).append("[KB] unable to tp gs: ").append(e).toString());
 	        		}
-        		} else
+        		} else if(sender.hasPermission("kb.teleport"))
+    			{
+        			if(args.length == 0)
+	                {
+	    				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Bitte wähle einen Grundstückstyp aus. Beispiel: /tpgs slums").toString());		
+	                } else
+	                {
+	        			String to = args[0];
+	        			String onlyfree = "AND price=0";
+	        			if(sender.hasPermission("kb.teleport.all"))
+	        				onlyfree = "";
+	        			try
+	        			{
+		        			String strg = "";
+		        			boolean found = false;
+			        		strg = (new StringBuilder()).append("SELECT world,blockx,blocky,blockz,bx,`by`,bz,tx,ty,tz,buyer,sold,level,ruleset,pass,id FROM ").append(configManager.SQLTable).append("_krimbuy WHERE ruleset LIKE ? AND sold=0 ? ORDER BY ABS(blockx - ?) + ABS(blockz - ?) ASC LIMIT 0,1").toString();
+			        		Connection conn = Main.Database.getConnection();
+			            	PreparedStatement ps;
+			        		ps = conn.prepareStatement(strg);
+			        		ps.setString(1,to + "%");
+			        		ps.setString(2, onlyfree);
+			        		ps.setInt(3,((Player) sender).getLocation().getBlockX());
+			        		ps.setInt(4,((Player) sender).getLocation().getBlockZ());
+			        		ResultSet rs = ps.executeQuery();
+			    			if(rs.next())
+			    			{
+			    				found = true;
+			    				Location t = Bukkit.getWorld(rs.getString("world")).getBlockAt(rs.getInt("blockx"), rs.getInt("blocky") + 1, rs.getInt("blockz")).getLocation();
+			    				((Player) sender).teleport(t);
+			    				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du wurdest auf das nächste freie Grundstück teleportiert").toString());
+			    			}
+			    			
+			    			if(!found)
+			    			{
+			    				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Sorry - kein freies Grundstück gefunden").toString());
+			    			}
+			    			
+			    			if(ps != null)
+			    				ps.close();
+			    			
+			    			if(rs != null)
+			    				rs.close();
+			    			
+	        			} catch (SQLException e)
+		        		{
+		        			System.out.println((new StringBuilder()).append("[KB] unable to next gs: ").append(e).toString());
+		        		}		
+	                }
+    			} else
         		{
         			sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung für diesen Befehl").toString());	
         			return true;

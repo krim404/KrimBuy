@@ -24,6 +24,12 @@ permissions:
     kb.interact:
         description: Allowed to interact with everything
         default: op
+    kb.teleport:
+        description: Allowed to teleport to a free lot with price 0
+        default: op
+    kb.teleport.all:
+        description: Allowed to teleport to a free lot with any price
+        default: op
     kb.admin:
         description: Kann die BrauTec Limits umgehen
         default: op
