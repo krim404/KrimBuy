@@ -103,7 +103,7 @@ public class KBHelper
     			loosegs = false;
     		
     			a = this.getArea(rs.getInt("id"));
-    			if(a.miet != 0)
+    			if(a.miet != 0 && a.owner.equalsIgnoreCase(p.getName()))
     			{
     				int days = ( rs.getInt("timestamp") - a.lastpay) / (60*60*24);
 					if(days > 1)
@@ -115,12 +115,13 @@ public class KBHelper
 						
 						if(this.m.econ.getBalance(p.getName()) >= prc)
 						{
-							this.m.econ.depositPlayer(p.getName(), (prc*-1));
+							this.m.econ.depositPlayer(p.getName(), prc);
 							p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dir wurde die Miete von '").append(money).append("'BM für ").append(days).append(" Tag(e) für dein Grundstück eingezogen").toString());
 							PreparedStatement ps3;
 							ps3 = conn.prepareStatement((new StringBuilder()).append("UPDATE ").append(configManager.SQLTable).append("_krimbuy SET lastpay=UNIX_TIMESTAMP() WHERE id = ? LIMIT 1").toString());
 							ps3.setInt(1, rs.getInt("id"));
 							ps3.executeUpdate();
+							a.lastpay = rs.getInt("timestamp");
 							
 							if(ps3 != null)
 								ps3.close();

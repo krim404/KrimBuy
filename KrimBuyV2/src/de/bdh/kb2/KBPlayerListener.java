@@ -319,7 +319,7 @@ public class KBPlayerListener implements Listener
 				if(!(this.helper.canBuildHere(player, b.getRelative(BlockFace.UP))) && !this.helper.canBuildHere(player, b) && !event.getPlayer().hasPermission("kb.interact"))
 				{
 	        		event.setCancelled(true);
-	        		player.sendMessage("Du kannst nicht auf X:"+b.getX() +"+Y:"+ b.getY()+" Z:"+b.getZ()+" interagieren");
+	        		//player.sendMessage("Du kannst nicht auf X:"+b.getX() +"+Y:"+ b.getY()+" Z:"+b.getZ()+" interagieren");
 				} else if(!(this.helper.canBuildHere(player, b.getRelative(BlockFace.UP))) && !this.helper.canBuildHere(player, b) && event.getPlayer().hasPermission("kb.interact") && (gt == Material.DISPENSER.getId() || gt == Material.FURNACE.getId() || gt == Material.CHEST.getId()))
 				{
 					//Truhen / Dispenser / Ofen sind trotz allem verboten (gilt nur mit Vanilla Blocks)
