@@ -115,7 +115,7 @@ public class KBHelper
 						
 						if(this.m.econ.getBalance(p.getName()) >= prc)
 						{
-							this.m.econ.depositPlayer(p.getName(), prc);
+							this.m.econ.withdrawPlayer(p.getName(), prc);
 							p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dir wurde die Miete von '").append(money).append("'BM für ").append(days).append(" Tag(e) für dein Grundstück eingezogen").toString());
 							PreparedStatement ps3;
 							ps3 = conn.prepareStatement((new StringBuilder()).append("UPDATE ").append(configManager.SQLTable).append("_krimbuy SET lastpay=UNIX_TIMESTAMP() WHERE id = ? LIMIT 1").toString());
