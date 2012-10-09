@@ -487,9 +487,9 @@ public class KBPlayerListener implements Listener
         					if(a.price > 0)
         					{
         						if(configManager.lang.equalsIgnoreCase("de"))
-        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Der Preis beträgt ").append(a.price).append("BM").toString());
+        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Der Preis beträgt ").append(a.price).append(this.p.econ.currencyNamePlural()).toString());
         						else
-        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("It cost ").append(a.price).append("BM").toString());
+        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("It cost ").append(a.price).append(this.p.econ.currencyNamePlural()).toString());
 
         					}
         					else
@@ -529,17 +529,17 @@ public class KBPlayerListener implements Listener
 							if(cu != 0)
 							{
 								if(configManager.lang.equalsIgnoreCase("de"))
-									event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dieses Grundstück kann erweitert werden für ").append(cu).append("BM. Gib dazu /upgradeGS ein").toString());
+									event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dieses Grundstück kann erweitert werden für ").append(cu).append(this.p.econ.currencyNamePlural()).append(". Gib dazu /upgradeGS ein").toString());
 								else
-									event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot can be upgraded for ").append(cu).append("BM. Just enter /upgradeGS").toString());
+									event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot can be upgraded for ").append(cu).append(this.p.econ.currencyNamePlural()).append(". Just enter /upgradeGS").toString());
 
 							}        				
 						} else
         				{
 							if(configManager.lang.equalsIgnoreCase("de"))
-								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück im Wert von ").append(a.paid).append("BM des Typs '").append(typ).append("' - Level ").append(a.level).append(" gehoert ").append(a.owner).toString());
+								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück im Wert von ").append(a.paid).append(this.p.econ.currencyNamePlural()).append(" des Typs '").append(typ).append("' - Level ").append(a.level).append(" gehoert ").append(a.owner).toString());
 							else
-								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot with the value ").append(a.paid).append("BM and the type '").append(typ).append("' - Level ").append(a.level).append(" owns ").append(a.owner).toString());
+								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot with the value ").append(a.paid).append(this.p.econ.currencyNamePlural()).append(" and the type '").append(typ).append("' - Level ").append(a.level).append(" owns ").append(a.owner).toString());
 
 							long tmp = 1000l * a.lastonline;
 							String date = DateFormat.getDateInstance().format(tmp);
