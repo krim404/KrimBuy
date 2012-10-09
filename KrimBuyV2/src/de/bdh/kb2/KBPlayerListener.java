@@ -48,7 +48,7 @@ public class KBPlayerListener implements Listener
         }
 	}
 	
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler
     public void onQuit(PlayerQuitEvent event)
     {
 		this.helper.lastBlock.remove(event.getPlayer());
@@ -56,7 +56,7 @@ public class KBPlayerListener implements Listener
 		this.helper.userarea.remove(event.getPlayer());
     }
 	
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler
     public void onJoin(PlayerJoinEvent event)
     {
         Player player = event.getPlayer();
@@ -64,7 +64,7 @@ public class KBPlayerListener implements Listener
         this.helper.updateLastOnline(player);
     }
 	
-	//BlockBreak
+	//BlockBreak - Anti Guest 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockDamage(BlockDamageEvent event)
     {
@@ -76,6 +76,105 @@ public class KBPlayerListener implements Listener
         {
             event.setCancelled(true);
             player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Bauen.").toString());
+            return;
+        }
+    }
+    
+    //Inventory Click - Anti Guest
+    @EventHandler(priority = EventPriority.HIGHEST)
+	public void onDisc(InventoryClickEvent event)
+    {
+		if(event.getWhoClicked() instanceof Player)
+		{
+			Player player = (Player) event.getWhoClicked();
+			if(!player.hasPermission("kab.build"))
+	        {
+	        	event.setCancelled(true);
+	            player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung.").toString());
+	            return;
+	        }
+		}
+    }
+    
+    //Painting - Anti Guest
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onGuestPaintingPlace(PaintingPlaceEvent event)
+    {
+    	if(!(event.getPlayer() instanceof Player))
+			return;
+    	
+    	Player player = event.getPlayer();
+        if(!player.hasPermission("kab.build"))
+        {
+            event.setCancelled(true);
+            player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Bauen.").toString());
+            return;
+        }
+    }
+    
+    //Painting2 - Anti Guest 
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onGuestPaintingBreak(PaintingBreakEvent event)
+    {
+    	if(event instanceof PaintingBreakByEntityEvent)
+        {
+            org.bukkit.entity.Entity remover = ((PaintingBreakByEntityEvent)event).getRemover();
+		    if(remover instanceof Player) 
+		    {
+		    	Player player = (Player)remover;
+	    		if(!player.hasPermission("kab.build"))
+	    		{
+	    			event.setCancelled(true);
+	    			player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Bauen.").toString());
+	    			return;
+	    		}
+		    }
+        }
+    }
+    
+    //BlockPlace - Anti Guest
+    public void onBlockPlaceGuest(BlockPlaceEvent blockplaceevent)
+    {
+		if(!(blockplaceevent.getPlayer() instanceof Player))
+			return;
+		
+        Player player = blockplaceevent.getPlayer();
+        if(!player.hasPermission("kab.build"))
+        {
+        	blockplaceevent.setCancelled(true);
+            player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Bauen.").toString());
+            return;
+        }
+    }
+    
+    //BlockBreak - Anti Guest
+    @EventHandler(priority = EventPriority.HIGHEST)
+	public void onBlockBreakGuest(BlockBreakEvent blockbreakevent)
+	{
+		if(!(blockbreakevent.getPlayer() instanceof Player))
+			return;
+		
+        Player player = blockbreakevent.getPlayer();
+        if(!player.hasPermission("kab.build"))
+        {
+        	blockbreakevent.setCancelled(true);
+            player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Bauen.").toString());
+            return;
+        }
+	}
+    
+    //Interact - Anti Guest
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onPlayerInteractEventGuest(PlayerInteractEvent event)
+    {
+		if(!(event.getPlayer() instanceof Player))
+			return;
+		
+    	Player player = event.getPlayer();
+        if(!player.hasPermission("kab.interact"))
+        {
+            event.setCancelled(true);
+            player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Interagieren.").toString());
             return;
         }
     }
@@ -118,35 +217,15 @@ public class KBPlayerListener implements Listener
         }
     }
     
-	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onDisc(InventoryClickEvent event)
-    {
-		if(event.getWhoClicked() instanceof Player)
-		{
-			Player player = (Player) event.getWhoClicked();
-			if(!player.hasPermission("kab.build"))
-	        {
-	        	event.setCancelled(true);
-	            player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung.").toString());
-	            return;
-	        }
-		}
-    }
-	
-    @EventHandler(priority = EventPriority.HIGHEST)
+    //DEFAULT Paint Build
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPaintingPlace(PaintingPlaceEvent event)
     {
     	if(!(event.getPlayer() instanceof Player))
 			return;
     	
     	Player player = event.getPlayer();
-        if(!player.hasPermission("kab.build"))
-        {
-            event.setCancelled(true);
-            player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Bauen.").toString());
-            return;
-        }
-        
+
         if(!this.helper.canBuildHere(player, event.getBlock().getWorld().getBlockAt(event.getPainting().getLocation())))
         {
         	event.setCancelled(true);
@@ -154,7 +233,8 @@ public class KBPlayerListener implements Listener
         }
     }
     
-    @EventHandler(priority = EventPriority.HIGHEST)
+    //DEFAULT Paint Build
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPaintingBreak(PaintingBreakEvent event)
     {
     	if(event instanceof PaintingBreakByEntityEvent)
@@ -163,12 +243,6 @@ public class KBPlayerListener implements Listener
 		    if(remover instanceof Player) 
 		    {
 		    	Player player = (Player)remover;
-	    		if(!player.hasPermission("kab.build"))
-	    		{
-	    			event.setCancelled(true);
-	    			player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Bauen.").toString());
-	    			return;
-	    		}
 	    		
 	    		if(!this.helper.canBuildHere(player, event.getPainting().getWorld().getBlockAt(event.getPainting().getLocation())))
 	            {
@@ -179,32 +253,14 @@ public class KBPlayerListener implements Listener
         }
     }
     
-    @EventHandler
-    public void normalJoin(PlayerJoinEvent playerjoin)
-    {
-        playerjoin.setJoinMessage("");
-    }
-
-    @EventHandler
-    public void normalLeave(PlayerQuitEvent playerleft)
-    {
-        playerleft.setQuitMessage("");
-    }
-    
-    @EventHandler(priority = EventPriority.HIGHEST)
+    //DEFAULT Block Place
+    @EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockPlace(BlockPlaceEvent blockplaceevent)
     {
 		if(!(blockplaceevent.getPlayer() instanceof Player))
 			return;
 		
         Player player = blockplaceevent.getPlayer();
-        if(!player.hasPermission("kab.build"))
-        {
-        	blockplaceevent.setCancelled(true);
-            player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Bauen.").toString());
-            return;
-        }
-        
         if(!this.helper.canBuildHere(player, blockplaceevent.getBlock()))
         {
     		blockplaceevent.setCancelled(true);
@@ -220,19 +276,14 @@ public class KBPlayerListener implements Listener
 		}
     }
     
-    @EventHandler(priority = EventPriority.HIGHEST)
+    //DEFAULT Block Break
+    @EventHandler(priority = EventPriority.LOWEST)
 	public void onBlockBreak(BlockBreakEvent blockbreakevent)
 	{
 		if(!(blockbreakevent.getPlayer() instanceof Player))
 			return;
 		
         Player player = blockbreakevent.getPlayer();
-        if(!player.hasPermission("kab.build"))
-        {
-        	blockbreakevent.setCancelled(true);
-            player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Bauen.").toString());
-            return;
-        }
       
         
         if(!this.helper.canBuildHere(player, blockbreakevent.getBlock()))
@@ -270,20 +321,15 @@ public class KBPlayerListener implements Listener
 		}
 	}
     
-	@EventHandler(priority = EventPriority.HIGHEST)
+    //DEFAULT Interact
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerInteractEvent(PlayerInteractEvent event)
     {
 		if(!(event.getPlayer() instanceof Player))
 			return;
 		
     	Player player = event.getPlayer();
-        if(!player.hasPermission("kab.interact"))
-        {
-            event.setCancelled(true);
-            player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Interagieren.").toString());
-            return;
-        }
-		
+    	
         if((event.getClickedBlock() instanceof Block))
 		{
 			Block b = event.getClickedBlock();
