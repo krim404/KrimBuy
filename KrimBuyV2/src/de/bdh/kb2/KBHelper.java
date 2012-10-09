@@ -116,7 +116,11 @@ public class KBHelper
 						if(this.m.econ.getBalance(p.getName()) >= prc)
 						{
 							this.m.econ.withdrawPlayer(p.getName(), prc);
-							p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dir wurde die Miete von '").append(money).append("'BM für ").append(days).append(" Tag(e) für dein Grundstück eingezogen").toString());
+							if(configManager.lang.equalsIgnoreCase("de"))
+								p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dir wurde die Miete von '").append(money).append("'").append(this.m.econ.currencyNamePlural()).append(" für ").append(days).append(" Tag(e) für dein Grundstück eingezogen").toString());
+							else
+								p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("The daily rental fee of '").append(money).append("'").append(this.m.econ.currencyNamePlural()).append(" for ").append(days).append(" day(s) has been collected").toString());
+
 							PreparedStatement ps3;
 							ps3 = conn.prepareStatement((new StringBuilder()).append("UPDATE ").append(configManager.SQLTable).append("_krimbuy SET lastpay=UNIX_TIMESTAMP() WHERE id = ? LIMIT 1").toString());
 							ps3.setInt(1, rs.getInt("id"));
@@ -128,8 +132,17 @@ public class KBHelper
 						} else
 						{
 							loosegs = true;
-							p.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Du kannst die Miete von '").append(money).append("'BM für dein Grundstück nicht bezahlen.").toString());
-							p.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Dein Grundstück wurde dir entzogen").toString());
+							if(configManager.lang.equalsIgnoreCase("de"))
+							{
+								p.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Du kannst die Miete von '").append(money).append("'").append(this.m.econ.currencyNamePlural()).append(" für dein Grundstück nicht bezahlen.").toString());
+								p.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Dein Grundstück wurde dir entzogen").toString());
+							}
+							else
+							{
+								p.sendMessage((new StringBuilder()).append(ChatColor.RED).append("You can't afford the rental fee of '").append(money).append("'").append(this.m.econ.currencyNamePlural()).append(" for your lot").toString());
+								p.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Your lot has been free'd").toString());
+							
+							}
 							if(a.clear > 0)
 								a.clearGS();
 							this.freeGS(rs.getInt("id"));
@@ -259,6 +272,7 @@ public class KBHelper
     		return true;
     	
     	//BRAUTEC
+    	/*
     	if(configManager.BrauTec.equalsIgnoreCase("1"))
     	{
     		int x = b.getLocation().getBlockX();
@@ -269,6 +283,7 @@ public class KBHelper
     			return true;
     		}
     	}
+    	*/
 
     	return this.canBuildHereData(p, b);
 	}
@@ -676,7 +691,10 @@ public class KBHelper
 									if(p.hasPermission("kb.admin"))
 									{
 										int vol = (uber.getX() - unter.getX()) * (uber.getY() - unter.getY()) * (uber.getZ() - unter.getZ());
-										p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("GS Daten: Bodenfläche: ").append(tmp.size()).append(" - Volumen: ").append(vol).toString());
+										if(configManager.lang.equalsIgnoreCase("de"))
+											p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("GS Daten: Bodenfläche: ").append(tmp.size()).append(" - Volumen: ").append(vol).toString());
+										else
+											p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Lot data: floorsize: ").append(tmp.size()).append(" - capacity: ").append(vol).toString());
 									}
 								}
 								
@@ -685,7 +703,13 @@ public class KBHelper
 									if(p != null)
 									{
 										if(p.hasPermission("kb.admin"))
-											p.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Das GS ist zu gross, das Muster des Bodens wurde daher nicht gespeichert. Sofern das GS einen einheitlichen Boden besitzt kannst du dies ignorieren.").toString());
+										{
+											if(configManager.lang.equalsIgnoreCase("de"))
+												p.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Das GS ist zu gross, das Muster des Bodens wurde daher nicht gespeichert. Sofern das GS einen einheitlichen Boden besitzt kannst du dies ignorieren.").toString());
+											else
+												p.sendMessage((new StringBuilder()).append(ChatColor.RED).append("This lot is too big. The floor can't be saved. If this lot has a mono-typed-floor: you can ignore this").toString());
+
+										}
 									}
 								} else {
 									floor = this.getCodedBottom(tmp);
@@ -706,8 +730,13 @@ public class KBHelper
 							if(id != 0)
 								this.killGS(id);
 							if(p != null)
-								p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dieser Untergrund passt nicht zum Gelände. Entfernt").toString());
-							
+							{
+								if(configManager.lang.equalsIgnoreCase("de"))
+									p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dieser Untergrund passt nicht zum Ruleset. GS Entfernt").toString());
+								else
+									p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This floor doesn't fit to the ruleset. Lot removed").toString());
+
+							}
 						}
 					}
 					
