@@ -22,6 +22,7 @@ public class configManager {
     public static String SQLDatabase = "minecraft";
     public static String SQLTable = "minecraft";
     public static String BrauTec = "0";
+    public static Integer interactMessage = 0;
     public static String worlds = "0";
     
     private static File confFile;
@@ -55,7 +56,8 @@ public class configManager {
         SQLPort = conf.getString("System.Database.Settings.MySQL.Port", SQLPort);
         SQLUsername = conf.getString("System.Database.Settings.MySQL.Username", SQLUsername);
         SQLPassword = conf.getString("System.Database.Settings.MySQL.Password", SQLPassword);
-        BrauTec = conf.getString("System.BrauTec",BrauTec);
+        //BrauTec = conf.getString("System.BrauTec",BrauTec);
+        interactMessage = conf.getInt("System.interactMessage",interactMessage);
         worlds = conf.getString("System.worlds",worlds);
         
         try {
@@ -96,7 +98,8 @@ public class configManager {
             conf.set("System.Database.Settings.MySQL.Port", SQLPort);
             conf.set("System.Database.Settings.MySQL.Username", SQLUsername);
             conf.set("System.Database.Settings.MySQL.Password", SQLPassword);
-            conf.set("System.BrauTec", BrauTec);
+            conf.set("System.interactMessage", interactMessage);
+            //conf.set("System.BrauTec", BrauTec);
             conf.set("System.worlds", worlds);
             
             try {

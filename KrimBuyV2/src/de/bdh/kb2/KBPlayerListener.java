@@ -344,6 +344,9 @@ public class KBPlayerListener implements Listener
 					event.setCancelled(true);
 				}
 			}
+			
+			/*
+			//Ehemals für BrauTec
 			//Verhindere manipulation an Pipes - BrauTec Mod
 			else if(event.getAction() == Action.RIGHT_CLICK_BLOCK && (gt == 166 || gt == 187) && configManager.BrauTec.equalsIgnoreCase("1"))
 	        {
@@ -353,19 +356,24 @@ public class KBPlayerListener implements Listener
 					event.setCancelled(true);
 				}
 	        }
+	        */
+			
 	        //Schilder dürfen immer geklickt werden - sowie minecarts immer auf rails gesetzt werden dürfen
 	        else if(event.getAction() == Action.RIGHT_CLICK_BLOCK && ((gt == 63 || gt == 68 || gt == 323) || (player.getItemInHand().getTypeId() == 328 && (gt == 27 || gt == 28 || gt == 66))))
 	        {
+	        	event.setCancelled(false);
 	        	//alles OK
 	        } 
 	        	
-	        //Steinknöpfe gehen immer genauso wie 225 und Bedrock
+	        //Steinknöpfe gehen immer genauso wie 225 ( BrauTec ) und Bedrock
 	        else if((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_BLOCK) && (event.getClickedBlock().getTypeId() != 7 && event.getClickedBlock().getTypeId() != 225 && event.getClickedBlock().getTypeId() != Material.STONE_BUTTON.getId()))
 			{
 				if(!(this.helper.canBuildHere(player, b.getRelative(BlockFace.UP))) && !this.helper.canBuildHere(player, b) && !event.getPlayer().hasPermission("kb.interact"))
 				{
 	        		event.setCancelled(true);
-	        		//player.sendMessage("Du kannst nicht auf X:"+b.getX() +"+Y:"+ b.getY()+" Z:"+b.getZ()+" interagieren");
+	        		
+	        		if(configManager.interactMessage == 1)
+	        			player.sendMessage("Du kannst nicht auf X:"+b.getX() +"+Y:"+ b.getY()+" Z:"+b.getZ()+" interagieren");
 				} else if(!(this.helper.canBuildHere(player, b.getRelative(BlockFace.UP))) && !this.helper.canBuildHere(player, b) && event.getPlayer().hasPermission("kb.interact") && (gt == Material.DISPENSER.getId() || gt == Material.FURNACE.getId() || gt == Material.CHEST.getId()))
 				{
 					//Truhen / Dispenser / Ofen sind trotz allem verboten (gilt nur mit Vanilla Blocks)
