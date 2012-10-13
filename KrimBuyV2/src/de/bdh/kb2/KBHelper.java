@@ -404,7 +404,7 @@ public class KBHelper
 			if(a.getInteractBlock() != null)
 			{
 				Block b = a.getInteractBlock();
-				if(b.getTypeId() != 0)
+				if(b.getTypeId() != 0 && configManager.doSponge == 1)
 				{
 					b.getRelative(BlockFace.UP).setTypeId(Material.SPONGE.getId());
 				}
@@ -590,7 +590,7 @@ public class KBHelper
     		ResultSet rs = ps.executeQuery();
 			if(rs.next())
 			{
-				if(rs.getInt("sold") == 0)
+				if(rs.getInt("sold") == 0 && configManager.doSponge == 1)
 				{
 					b.getRelative(BlockFace.UP).setTypeId(19);
 				}

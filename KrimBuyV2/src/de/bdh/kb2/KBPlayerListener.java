@@ -65,7 +65,7 @@ public class KBPlayerListener implements Listener
     }
 	
 	//BlockDamage - Anti Guest 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockDamage(BlockDamageEvent event)
     {
     	if(!(event.getPlayer() instanceof Player))
@@ -85,7 +85,7 @@ public class KBPlayerListener implements Listener
     }
     
     //Inventory Click - Anti Guest
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
 	public void onDisc(InventoryClickEvent event)
     {
 		if(event.getWhoClicked() instanceof Player)
@@ -105,7 +105,7 @@ public class KBPlayerListener implements Listener
     }
     
     //Painting - Anti Guest
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onGuestPaintingPlace(PaintingPlaceEvent event)
     {
     	if(!(event.getPlayer() instanceof Player))
@@ -125,7 +125,7 @@ public class KBPlayerListener implements Listener
     }
     
     //Painting2 - Anti Guest 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onGuestPaintingBreak(PaintingBreakEvent event)
     {
     	if(event instanceof PaintingBreakByEntityEvent)
@@ -149,7 +149,7 @@ public class KBPlayerListener implements Listener
     }
     
     //BlockPlace - Anti Guest
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockPlaceGuest(BlockPlaceEvent blockplaceevent)
     {
 		if(!(blockplaceevent.getPlayer() instanceof Player))
@@ -169,7 +169,7 @@ public class KBPlayerListener implements Listener
     }
     
     //BlockBreak - Anti Guest
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreakGuest(BlockBreakEvent blockbreakevent)
 	{
 		if(!(blockbreakevent.getPlayer() instanceof Player))
@@ -189,7 +189,7 @@ public class KBPlayerListener implements Listener
 	}
     
     //Interact - Anti Guest
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerInteractEventGuest(PlayerInteractEvent event)
     {
 		if(!(event.getPlayer() instanceof Player))
@@ -251,7 +251,7 @@ public class KBPlayerListener implements Listener
     }
     
     //DEFAULT Paint Build
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPaintingPlace(PaintingPlaceEvent event)
     {
     	if(!(event.getPlayer() instanceof Player))
@@ -267,7 +267,7 @@ public class KBPlayerListener implements Listener
     }
     
     //DEFAULT Paint Build
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPaintingBreak(PaintingBreakEvent event)
     {
     	if(event instanceof PaintingBreakByEntityEvent)
@@ -287,7 +287,7 @@ public class KBPlayerListener implements Listener
     }
     
     //DEFAULT Block Place
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.LOW)
 	public void onBlockPlace(BlockPlaceEvent blockplaceevent)
     {
 		if(!(blockplaceevent.getPlayer() instanceof Player))
@@ -310,7 +310,7 @@ public class KBPlayerListener implements Listener
     }
     
     //DEFAULT Block Break
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.LOW)
 	public void onBlockBreak(BlockBreakEvent blockbreakevent)
 	{
 		if(!(blockbreakevent.getPlayer() instanceof Player))
@@ -359,7 +359,7 @@ public class KBPlayerListener implements Listener
 	}
     
     //DEFAULT Interact
-	@EventHandler(priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.LOW)
 	public void onPlayerInteractEvent(PlayerInteractEvent event)
     {
 		if(!(event.getPlayer() instanceof Player))

@@ -25,6 +25,7 @@ public class configManager {
     public static Integer interactMessage = 0;
     public static String worlds = "0";
     public static String lang = "de";
+    public static Integer doSponge = 1;
     
     private static File confFile;
     
@@ -59,7 +60,8 @@ public class configManager {
         SQLPassword = conf.getString("System.Database.Settings.MySQL.Password", SQLPassword);
         //BrauTec = conf.getString("System.BrauTec",BrauTec);
         interactMessage = conf.getInt("System.interactMessage",interactMessage);
-        lang = conf.getString("System.language",lang);
+        lang = conf.getString("System.lang",lang);
+        doSponge = conf.getInt("System.sponge",doSponge);
         worlds = conf.getString("System.worlds",worlds);
         
         try {
@@ -104,6 +106,7 @@ public class configManager {
             //conf.set("System.BrauTec", BrauTec);
             conf.set("System.worlds", worlds);
             conf.set("System.lang", lang);
+            conf.set("System.sponge", doSponge);
             
             try {
                 confFile.createNewFile();
