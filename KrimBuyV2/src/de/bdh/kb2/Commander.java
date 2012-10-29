@@ -490,11 +490,12 @@ public class Commander implements CommandExecutor {
 	        					if(a.clear > 0)
 	        					{
 	        						a.clearGS();
-	        						this.helper.freeGS(id);
 	        						this.helper.updateArea((Player)sender,b);
-	        						a.loadByID(id);
 	        					}
-		    					
+	        					
+	        					this.helper.freeGS(id);
+	        					a.loadByID(id);
+	        					
 	        					if(configManager.lang.equalsIgnoreCase("de"))
 	        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast das Grundstück erfolgreich verkauft und ").append(amount).append(this.plugin.econ.currencyNamePlural()).append(" erhalten").toString());
 	        					else

@@ -88,7 +88,7 @@ public class KBHelper
         	PreparedStatement ps;
         	
         	List<Integer> pl = new ArrayList<Integer>();
-    		String strg = (new StringBuilder()).append("SELECT id,UNIX_TIMESTAMP() as `timestamp` FROM ").append(configManager.SQLTable).append("_krimbuy WHERE buyer=? or (pass=? AND pass != \"\" AND sold=1)").toString();
+    		String strg = (new StringBuilder()).append("SELECT id,UNIX_TIMESTAMP() as `timestamp`, buyer FROM ").append(configManager.SQLTable).append("_krimbuy WHERE buyer=? or (pass=? AND pass != \"\" AND sold=1)").toString();
     		ps = conn.prepareStatement(strg);
     		ps.setString(1,p.getName());
     		if(this.pass.get(p.getName()) != null)
@@ -143,6 +143,9 @@ public class KBHelper
 								p.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Your lot has been free'd").toString());
 							
 							}
+							
+							System.out.println("[KB] Player "+rs.getString("buyer") +" lost his lot - not enough money");
+							
 							if(a.clear > 0)
 								a.clearGS();
 							this.freeGS(rs.getInt("id"));
