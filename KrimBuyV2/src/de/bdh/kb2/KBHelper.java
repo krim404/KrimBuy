@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -194,6 +195,39 @@ public class KBHelper
     		return tmp;
     	} else return this.areas.get(id);
     }
+	
+	public KBArea getAreaByLocation(Location l)
+	{
+		KBArea ret = null;
+		try
+		{
+			Connection conn = Main.Database.getConnection();
+        	PreparedStatement ps;
+    		String strg = (new StringBuilder()).append("SELECT id FROM ").append(configManager.SQLTable).append("_krimbuy WHERE bx <= ? AND by <= ? AND bz <= ? AND tx >= ? AND ty >= ? AND tz >= ? LIMIT 0,1").toString();
+    		ps = conn.prepareStatement(strg);
+    		ps.setInt(1, l.getBlockX());
+    		ps.setInt(2, l.getBlockY());
+    		ps.setInt(3, l.getBlockZ());
+    		ps.setInt(4, l.getBlockX());
+    		ps.setInt(5, l.getBlockY());
+    		ps.setInt(6, l.getBlockZ());
+    		ResultSet rs = ps.executeQuery();
+			if(rs.next())
+			{
+				ret = this.getArea(rs.getInt("id"));
+			} 
+			
+			if(ps != null)
+				ps.close();
+			if(rs != null)
+				rs.close();
+			
+		} catch(SQLException e)
+		{
+			System.out.println((new StringBuilder()).append("[KB] unable to get KBArea from LOC: ").append(e).toString());
+		} 
+		return ret;
+	}
 	
 	public void updateLastOnline(Player p)
 	{

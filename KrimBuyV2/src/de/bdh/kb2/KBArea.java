@@ -33,6 +33,7 @@ public class KBArea
 	
 	public boolean loadByID(int id)
 	{
+		boolean ret = true;
 		try
 		{
 			Connection conn = Main.Database.getConnection();
@@ -117,13 +118,16 @@ public class KBArea
 						rs2.close();
 				}
 				
-			} 
+			} else
+			{
+				ret = false;
+			}
 			
 			if(ps != null)
 				ps.close();
 			if(rs != null)
 				rs.close();
-			return true;
+			return ret;
 		} catch(SQLException e)
 		{
 			System.out.println((new StringBuilder()).append("[KB] unable to get KBArea from ID: ").append(e).toString());

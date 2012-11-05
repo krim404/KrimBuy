@@ -26,6 +26,7 @@ public class configManager {
     public static String worlds = "0";
     public static String lang = "de";
     public static Integer doSponge = 1;
+    public static Integer doPiston = 1;
     
     private static File confFile;
     
@@ -62,6 +63,7 @@ public class configManager {
         interactMessage = conf.getInt("System.interactMessage",interactMessage);
         lang = conf.getString("System.lang",lang);
         doSponge = conf.getInt("System.sponge",doSponge);
+        doPiston = conf.getInt("System.hookPistonEvent",doPiston);
         worlds = conf.getString("System.worlds",worlds);
         
         try {
@@ -107,6 +109,7 @@ public class configManager {
             conf.set("System.worlds", worlds);
             conf.set("System.lang", lang);
             conf.set("System.sponge", doSponge);
+            conf.set("System.hookPistonEvent", doPiston);
             
             try {
                 confFile.createNewFile();

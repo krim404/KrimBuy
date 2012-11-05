@@ -2,6 +2,7 @@ package de.bdh.kb2;
 
 import java.text.DateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
@@ -16,6 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.painting.PaintingBreakByEntityEvent;
@@ -249,6 +251,32 @@ public class KBPlayerListener implements Listener
 			}
         }
     }
+    
+    @EventHandler(priority = EventPriority.LOW)
+	public void onPiston(BlockPistonExtendEvent event)
+	{
+    	if(configManager.doPiston == 1)
+    	{
+    		KBArea a = this.helper.getAreaByLocation(event.getBlock().getLocation());
+    		
+    		if(a != null)
+    		{
+				List<Block> l = event.getBlocks();
+				if(!a.canPlaceBlock(event.getBlock().getRelative(event.getDirection())))
+				{
+					event.setCancelled(true);
+				}
+				
+				for (Block b: l) 
+				{
+					if(!a.canPlaceBlock(b.getRelative(event.getDirection())))
+					{
+						event.setCancelled(true);
+					}
+				}
+    		}
+    	}
+	}
     
     //DEFAULT Paint Build
     @EventHandler(priority = EventPriority.LOW)
