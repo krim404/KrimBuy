@@ -378,7 +378,7 @@ public class KBPlayerListener implements Listener
         		{
         			this.helper.killGS(id);
         			if(configManager.lang.equalsIgnoreCase("de"))
-        				player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück wurde zerstört").toString());
+        				player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundst√ºck wurde zerst√∂rt").toString());
         			else
     	        		player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("The lot has been destroyed").toString());
 
@@ -407,7 +407,7 @@ public class KBPlayerListener implements Listener
 				if(!this.helper.canBuildHereData(player, b))
 				{
 					if(configManager.lang.equalsIgnoreCase("de"))
-						player.sendMessage("Dein Rang verbietet das Öffnen von Truhen / Dispensern / Öfen");
+						player.sendMessage("Dein Rang verbietet das √ñffnen von Truhen / Dispensern / √ñfen");
 					else
 		        		player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You're not allowed to open chests, dispensers and furnaces").toString());
 
@@ -416,7 +416,7 @@ public class KBPlayerListener implements Listener
 			}
 			
 			/*
-			//Ehemals für BrauTec
+			//Ehemals fÔøΩr BrauTec
 			//Verhindere manipulation an Pipes - BrauTec Mod
 			else if(event.getAction() == Action.RIGHT_CLICK_BLOCK && (gt == 166 || gt == 187) && configManager.BrauTec.equalsIgnoreCase("1"))
 	        {
@@ -428,14 +428,14 @@ public class KBPlayerListener implements Listener
 	        }
 	        */
 			
-	        //Schilder dürfen immer geklickt werden - sowie minecarts immer auf rails gesetzt werden dürfen
+	        //Schilder dÔøΩrfen immer geklickt werden - sowie minecarts immer auf rails gesetzt werden dÔøΩrfen
 	        else if(event.getAction() == Action.RIGHT_CLICK_BLOCK && ((gt == 63 || gt == 68 || gt == 323) || (player.getItemInHand().getTypeId() == 328 && (gt == 27 || gt == 28 || gt == 66))))
 	        {
 	        	event.setCancelled(false);
 	        	//alles OK
 	        } 
 	        	
-	        //Steinknöpfe gehen immer genauso wie 225 ( BrauTec ) und Bedrock
+	        //SteinknÔøΩpfe gehen immer genauso wie 225 ( BrauTec ) und Bedrock
 	        else if((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_BLOCK) && (event.getClickedBlock().getTypeId() != 7 && event.getClickedBlock().getTypeId() != 225 && event.getClickedBlock().getTypeId() != Material.STONE_BUTTON.getId()))
 			{
 				if(!(this.helper.canBuildHere(player, b.getRelative(BlockFace.UP))) && !this.helper.canBuildHere(player, b) && !event.getPlayer().hasPermission("kb.interact"))
@@ -455,7 +455,7 @@ public class KBPlayerListener implements Listener
 					//Truhen / Dispenser / Ofen sind trotz allem verboten (gilt nur mit Vanilla Blocks)
 					event.setCancelled(true);
 					if(configManager.lang.equalsIgnoreCase("de"))
-						player.sendMessage("Du darfst keine fremden Truhen öffnen");
+						player.sendMessage("Du darfst keine fremden Truhen ÔøΩffnen");
 					else
 		        		player.sendMessage("You're not allowed to open chests from other players");
 
@@ -483,7 +483,7 @@ public class KBPlayerListener implements Listener
         				if(a.ruleset.length() > 0)
         				{
         					if(configManager.lang.equalsIgnoreCase("de"))
-        						s.append(ChatColor.YELLOW).append("Bauhöhe: ").append(a.height).append(" Blöcke, Keller: ").append(a.deep).append(" Blöcke");
+        						s.append(ChatColor.YELLOW).append("Bauh√∂he: ").append(a.height).append(" Bl√∂cke, Keller: ").append(a.deep).append(" Bl√∂cke");
         					else
         						s.append(ChatColor.YELLOW).append("Build height: ").append(a.height).append(" Blocks, basement: ").append(a.deep).append(" Blocks");
 	
@@ -517,7 +517,7 @@ public class KBPlayerListener implements Listener
         					if(a.price > 0)
         					{
         						if(configManager.lang.equalsIgnoreCase("de"))
-        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Der Preis beträgt ").append(a.price).append(this.p.econ.currencyNamePlural()).toString());
+        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Der Preis betr√§gt ").append(a.price).append(this.p.econ.currencyNamePlural()).toString());
         						else
         							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("It cost ").append(a.price).append(this.p.econ.currencyNamePlural()).toString());
 
@@ -525,7 +525,7 @@ public class KBPlayerListener implements Listener
         					else
         					{
         						if(configManager.lang.equalsIgnoreCase("de"))
-        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück ist kostenlos").toString());
+        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundst√ºck ist kostenlos").toString());
         						else
         							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("It's free").toString());
 
@@ -550,7 +550,7 @@ public class KBPlayerListener implements Listener
 
 							}
 							if(configManager.lang.equalsIgnoreCase("de"))
-								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dieses Grundstück gehört dir. Es ist vom Typ '").append(typ).toString());
+								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dieses Grundst√ºck geh√∂rt dir. Es ist vom Typ '").append(typ).toString());
 							else
 								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot is yours. It's type is '").append(typ).toString());
 	
@@ -559,7 +559,7 @@ public class KBPlayerListener implements Listener
 							if(cu != 0)
 							{
 								if(configManager.lang.equalsIgnoreCase("de"))
-									event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dieses Grundstück kann erweitert werden für ").append(cu).append(this.p.econ.currencyNamePlural()).append(". Gib dazu /upgradeGS ein").toString());
+									event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dieses Grundst√ºck kann erweitert werden f√ºr ").append(cu).append(this.p.econ.currencyNamePlural()).append(". Gib dazu /upgradeGS ein").toString());
 								else
 									event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot can be upgraded for ").append(cu).append(this.p.econ.currencyNamePlural()).append(". Just enter /upgradeGS").toString());
 
@@ -567,7 +567,7 @@ public class KBPlayerListener implements Listener
 						} else
         				{
 							if(configManager.lang.equalsIgnoreCase("de"))
-								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück im Wert von ").append(a.paid).append(this.p.econ.currencyNamePlural()).append(" des Typs '").append(typ).append("' - Level ").append(a.level).append(" gehoert ").append(a.owner).toString());
+								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundst√ºck im Wert von ").append(a.paid).append(this.p.econ.currencyNamePlural()).append(" des Typs '").append(typ).append("' - Level ").append(a.level).append(" geh√∂rt ").append(a.owner).toString());
 							else
 								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot with the value ").append(a.paid).append(this.p.econ.currencyNamePlural()).append(" and the type '").append(typ).append("' - Level ").append(a.level).append(" owns ").append(a.owner).toString());
 

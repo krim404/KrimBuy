@@ -118,7 +118,7 @@ public class KBHelper
 						{
 							this.m.econ.withdrawPlayer(p.getName(), prc);
 							if(configManager.lang.equalsIgnoreCase("de"))
-								p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dir wurde die Miete von '").append(money).append("'").append(this.m.econ.currencyNamePlural()).append(" f웦 ").append(days).append(" Tag(e) f웦 dein Grundst웒k eingezogen").toString());
+								p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dir wurde die Miete von '").append(money).append("'").append(this.m.econ.currencyNamePlural()).append(" f체r ").append(days).append(" Tag(e) f체r dein Grundst체ck eingezogen").toString());
 							else
 								p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("The daily rental fee of '").append(money).append("'").append(this.m.econ.currencyNamePlural()).append(" for ").append(days).append(" day(s) has been collected").toString());
 
@@ -135,8 +135,8 @@ public class KBHelper
 							loosegs = true;
 							if(configManager.lang.equalsIgnoreCase("de"))
 							{
-								p.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Du kannst die Miete von '").append(money).append("'").append(this.m.econ.currencyNamePlural()).append(" f웦 dein Grundst웒k nicht bezahlen.").toString());
-								p.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Dein Grundst웒k wurde dir entzogen").toString());
+								p.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Du kannst die Miete von '").append(money).append("'").append(this.m.econ.currencyNamePlural()).append(" f체r dein Grundst체ck nicht bezahlen.").toString());
+								p.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Dein Grundst체ck wurde dir entzogen").toString());
 							}
 							else
 							{
@@ -337,7 +337,7 @@ public class KBHelper
 				{
 					if(a.pass.length() > 0 && this.pass.get(p.getName()) != null && a.pass.equals(this.pass.get(p.getName())))
 					{
-						//Passwort stimmt 웑erein
+						//Passwort stimmt 체berein
 						if(!tmp.contains(id))
 						{
 							tmp.add(id);
@@ -714,7 +714,7 @@ public class KBHelper
 				    		ps2.setString(10, b.getWorld().getName());
 				    		ps2.executeUpdate();
 				    		
-				    		//Suche Boden (H쉉hstes Level)
+				    		//Suche Boden (H체chstes Level)
 							PreparedStatement ps3;
 							ps3 = conn.prepareStatement((new StringBuilder()).append("SELECT bottom FROM ").append(configManager.SQLTable).append("_krimbuy_rules WHERE ruleset = ? ORDER BY level DESC LIMIT 0,1").toString());
 							ps3.setString(1, rs.getString("ruleset"));
@@ -729,7 +729,7 @@ public class KBHelper
 									{
 										int vol = (uber.getX() - unter.getX()) * (uber.getY() - unter.getY()) * (uber.getZ() - unter.getZ());
 										if(configManager.lang.equalsIgnoreCase("de"))
-											p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("GS Daten: Bodenfl둩he: ").append(tmp.size()).append(" - Volumen: ").append(vol).toString());
+											p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("GS Daten: Bodenfl채che: ").append(tmp.size()).append(" - Volumen: ").append(vol).toString());
 										else
 											p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Lot data: floorsize: ").append(tmp.size()).append(" - capacity: ").append(vol).toString());
 									}

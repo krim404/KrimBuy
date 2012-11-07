@@ -832,7 +832,7 @@ public class Commander implements CommandExecutor {
                 {
         			this.helper.ruleset.remove(sender.getName());
         			if(configManager.lang.equalsIgnoreCase("de"))
-        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast dein ruleset geloescht").toString());
+        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast dein Ruleset geloescht").toString());
         			else
         				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've deleted your ruleset").toString());
 
