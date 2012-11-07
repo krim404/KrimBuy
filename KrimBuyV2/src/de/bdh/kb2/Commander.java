@@ -58,7 +58,7 @@ public class Commander implements CommandExecutor {
 	        					if(a.clear > 0)
 	        						a.clearGS();
 	        					if(configManager.lang.equalsIgnoreCase("de"))
-	        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück wurde freigestellt").toString());
+	        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstueck wurde freigestellt").toString());
 	        					else
 	        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("The lot is now free").toString());
 
@@ -66,7 +66,7 @@ public class Commander implements CommandExecutor {
 			                {
 			                	this.helper.obtainGS(id, args[0]);
 			                	if(configManager.lang.equalsIgnoreCase("de"))
-			                		sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück gehört nun: ").append(args[0]).toString());
+			                		sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstueck gehoert nun: ").append(args[0]).toString());
 			                	else
 	        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot is now owned by: ").append(args[0]).toString());
 			                }
@@ -76,7 +76,7 @@ public class Commander implements CommandExecutor {
         		} else
         		{
         			if(configManager.lang.equalsIgnoreCase("de"))
-        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung ein Grundstück zu bearbeiten").toString());
+        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung ein Grundstueck zu bearbeiten").toString());
         			else
         				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You dont have permissions to do that").toString());
 
@@ -89,12 +89,12 @@ public class Commander implements CommandExecutor {
 	        		if(args.length == 0)
 	                {
 	        			if(configManager.lang.equalsIgnoreCase("de"))
-	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Bitte gib das Passwort für ein GS ein: /useGS PASSWORT").toString());
+	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Bitte gib das Passwort fuer ein GS ein: /useGS PASSWORT").toString());
 	        			return true;
 	                } else
 	                {
 	                	if(configManager.lang.equalsIgnoreCase("de"))
-	                		sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast ein Passwort gesetzt. Du kannst nun auf Grundstücken bauen, welche dieses PW nutzen.").toString());
+	                		sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast ein Passwort gesetzt. Du kannst nun auf Grundstuecken bauen, welche dieses PW nutzen.").toString());
 	                	else
 	                		sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've entered a password. Now you can build on lots, which use this pw").toString());
 
@@ -104,7 +104,7 @@ public class Commander implements CommandExecutor {
         		} else
         		{
         			if(configManager.lang.equalsIgnoreCase("de"))
-        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung ein Grundstück zu bearbeiten").toString());
+        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung ein Grundstueck zu bearbeiten").toString());
         			else
         				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You dont have permissions to do that").toString());
         		}
@@ -120,7 +120,7 @@ public class Commander implements CommandExecutor {
 	            	if(args.length == 0)
 	                {
 	            		if(configManager.lang.equalsIgnoreCase("de"))
-	            			sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Grundstücke auf deiner Position:").toString());
+	            			sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Grundstuecke auf deiner Position:").toString());
 	            		else
 	            			sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Lots on your position:").toString());
 
@@ -129,7 +129,7 @@ public class Commander implements CommandExecutor {
 	                } else if(sender.hasPermission("kb.admin"))
 	                {
 	                	if(configManager.lang.equalsIgnoreCase("de"))
-	                		sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Grundstücke des Spielers ").append(args[0]).append(":").toString());
+	                		sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Grundstuecke des Spielers ").append(args[0]).append(":").toString());
 	                	else
 	                		sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Lots owned by player ").append(args[0]).append(":").toString());
 
@@ -138,7 +138,7 @@ public class Commander implements CommandExecutor {
 	                } else
 	                {
 	                	if(configManager.lang.equalsIgnoreCase("de"))
-	                		sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung für diesen Befehl").toString());
+	                		sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung fuer diesen Befehl").toString());
 	                	else
 	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You dont have permissions to do that").toString());
 	                	return true;
@@ -160,7 +160,7 @@ public class Commander implements CommandExecutor {
 	    			if(!found)
 	    			{
 	    				if(configManager.lang.equalsIgnoreCase("de"))
-	    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Keine Grundstücke gefunden").toString());
+	    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Keine Grundstuecke gefunden").toString());
 	    				else
 	    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Nothing found").toString());
 
@@ -203,7 +203,7 @@ public class Commander implements CommandExecutor {
 		    				Location t = Bukkit.getWorld(rs.getString("world")).getBlockAt(rs.getInt("blockx"), rs.getInt("blocky"), rs.getInt("blockz")).getLocation();
 		    				((Player) sender).setCompassTarget(t);
 		    				if(configManager.lang.equalsIgnoreCase("de"))
-		    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dein Kompass zeigt nun auf das nächste dir gehörende Grundstück").toString());
+		    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dein Kompass zeigt nun auf das naechste dir gehoerende Grundstueck").toString());
 		    				else
 		    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Your compass now points to your closest lot").toString());
 	
@@ -231,7 +231,7 @@ public class Commander implements CommandExecutor {
         		} else
         		{
         			if(configManager.lang.equalsIgnoreCase("de"))
-        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung für diesen Befehl").toString());	
+        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung fuer diesen Befehl").toString());	
         			else
         				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You dont have permissions to do that").toString());
         			return true;
@@ -264,7 +264,7 @@ public class Commander implements CommandExecutor {
 		    				Location t = Bukkit.getWorld(rs.getString("world")).getBlockAt(rs.getInt("blockx"), rs.getInt("blocky"), rs.getInt("blockz")).getLocation();
 		    				((Player) sender).setCompassTarget(t);
 		    				if(configManager.lang.equalsIgnoreCase("de"))
-		    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dein Kompass zeigt nun auf das nächste freie Grundstück").toString());
+		    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dein Kompass zeigt nun auf das naechste freie Grundstueck").toString());
 		    				else
 		    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Your compass points to the next free lot").toString());
 
@@ -292,7 +292,7 @@ public class Commander implements CommandExecutor {
         		} else
         		{
         			if(configManager.lang.equalsIgnoreCase("de"))
-        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung für diesen Befehl").toString());	
+        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung fuer diesen Befehl").toString());	
         			else
         				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You dont have permissions to do that").toString());
         			return true;
@@ -331,7 +331,7 @@ public class Commander implements CommandExecutor {
 		    			if(!found)
 		    			{
 		    				if(configManager.lang.equalsIgnoreCase("de"))
-		    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Grundstück wurde nicht gefunden").toString());
+		    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Grundstueck wurde nicht gefunden").toString());
 		    				else
 		    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("No lot found").toString());
 
@@ -352,7 +352,7 @@ public class Commander implements CommandExecutor {
         			if(args.length == 0)
 	                {
         				if(configManager.lang.equalsIgnoreCase("de"))
-        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Bitte wähle einen Grundstückstyp aus. Beispiel: /tpgs slums").toString());		
+        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Bitte waehle einen Grundstueckstyp aus. Beispiel: /tpgs slums").toString());		
         				else
         					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Please select a lot type. Example: /tpgs slums").toString());		
 
@@ -381,7 +381,7 @@ public class Commander implements CommandExecutor {
 			    				Location t = Bukkit.getWorld(rs.getString("world")).getBlockAt(rs.getInt("blockx"), rs.getInt("blocky") + 1, rs.getInt("blockz")).getLocation();
 			    				((Player) sender).teleport(t);
 			    				if(configManager.lang.equalsIgnoreCase("de"))
-			    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du wurdest auf das nächste freie Grundstück teleportiert").toString());
+			    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du wurdest auf das naechste freie Grundstueck teleportiert").toString());
 			    				else
 			    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've been teleported to the next free lot").toString());
 
@@ -390,7 +390,7 @@ public class Commander implements CommandExecutor {
 			    			if(!found)
 			    			{
 			    				if(configManager.lang.equalsIgnoreCase("de"))
-			    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Sorry - kein freies Grundstück gefunden").toString());
+			    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Sorry - kein freies Grundstueck gefunden").toString());
 			    				else
 			    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Sorry - no free lot found").toString());
 
@@ -410,7 +410,7 @@ public class Commander implements CommandExecutor {
     			} else
         		{
     				if(configManager.lang.equalsIgnoreCase("de"))
-    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung für diesen Befehl").toString());	
+    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung fuer diesen Befehl").toString());	
     				else
         				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You dont have permissions to do that").toString());
     				return true;
@@ -426,7 +426,7 @@ public class Commander implements CommandExecutor {
 	        			{
 	        				this.helper.killGS(id);
 	        				if(configManager.lang.equalsIgnoreCase("de"))
-	        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück wurde entfernt").toString());
+	        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstueck wurde entfernt").toString());
 	        				else
 	        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("The lot has been removed").toString());
 
@@ -435,7 +435,7 @@ public class Commander implements CommandExecutor {
 	        			else
 	        			{
 	        				if(configManager.lang.equalsIgnoreCase("de"))
-	        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Grundstück nicht gefunden").toString());
+	        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Grundstueck nicht gefunden").toString());
 	        				else
 	        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Lot not found").toString());
 
@@ -443,7 +443,7 @@ public class Commander implements CommandExecutor {
 	        		} else
 	        		{
 	        			if(configManager.lang.equalsIgnoreCase("de"))
-	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung Grundstücke zu entfernen").toString());
+	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung Grundstuecke zu entfernen").toString());
 	        			else
 	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You dont have permissions to do that").toString());
 	        			return true;
@@ -465,7 +465,7 @@ public class Commander implements CommandExecutor {
 	        		if(b == null)
 	        		{
 	        			if(configManager.lang.equalsIgnoreCase("de"))
-	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast kein Grundstück ausgewaehlt").toString());
+	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast kein Grundstueck ausgewaehlt").toString());
 	        			else
 	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've not selected a lot").toString());
 	        			return true;
@@ -479,7 +479,7 @@ public class Commander implements CommandExecutor {
 	        				if(args.length == 0)
 	        				{
 	        					if(configManager.lang.equalsIgnoreCase("de"))
-	        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du kannst dieses Grundstück für ").append(amount).append(this.plugin.econ.currencyNamePlural()).append(" verkaufen. Gib hierzu '/sellGS okay' ein").toString());
+	        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du kannst dieses Grundstueck fuer ").append(amount).append(this.plugin.econ.currencyNamePlural()).append(" verkaufen. Gib hierzu '/sellGS okay' ein").toString());
 	        					else
 	        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You can sell this lot for ").append(amount).append(this.plugin.econ.currencyNamePlural()).append(". Just enter '/sellGS okay'").toString());
 
@@ -497,7 +497,7 @@ public class Commander implements CommandExecutor {
 	        					a.loadByID(id);
 	        					
 	        					if(configManager.lang.equalsIgnoreCase("de"))
-	        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast das Grundstück erfolgreich verkauft und ").append(amount).append(this.plugin.econ.currencyNamePlural()).append(" erhalten").toString());
+	        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast das Grundstueck erfolgreich verkauft und ").append(amount).append(this.plugin.econ.currencyNamePlural()).append(" erhalten").toString());
 	        					else
 	        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've sold the lot and gained ").append(amount).append(this.plugin.econ.currencyNamePlural()).toString());
 
@@ -505,7 +505,7 @@ public class Commander implements CommandExecutor {
 	        			} else
 	        			{
 	        				if(configManager.lang.equalsIgnoreCase("de"))
-	        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du kannst dieses Grundstück nicht verkaufen").toString());
+	        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du kannst dieses Grundstueck nicht verkaufen").toString());
 	        				else
 	        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You can't sell this lot").toString());
 
@@ -514,7 +514,7 @@ public class Commander implements CommandExecutor {
         		} else
         		{
         			if(configManager.lang.equalsIgnoreCase("de"))
-        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung ein Grundstück zu verkaufen").toString());
+        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung ein Grundstueck zu verkaufen").toString());
         			else
         				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You dont have permissions to do that").toString());
         		}
@@ -536,7 +536,7 @@ public class Commander implements CommandExecutor {
 	        		if(args.length == 0)
 	                {
 	        			if(configManager.lang.equalsIgnoreCase("de"))
-	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Bitte gib ein neues Passwort für ein GS ein: /passGS PASSWORT").toString());
+	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Bitte gib ein neues Passwort fuer ein GS ein: /passGS PASSWORT").toString());
 	        			else
 	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Please enter a password for the lot: /passGS PASSWORT").toString());
 
@@ -561,7 +561,7 @@ public class Commander implements CommandExecutor {
 						        		ps2.executeUpdate();
 						        		if(configManager.lang.equalsIgnoreCase("de"))
 						        		{
-					    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast ein Passwort gesetzt. Andere Spieler können nun mit Hilfe des Passwortes auf dem GS bauen").toString());
+					    					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast ein Passwort gesetzt. Andere Spieler koennen nun mit Hilfe des Passwortes auf dem GS bauen").toString());
 						                	sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Hierzu muss dieser /useGS ").append(args[0]).append(" eingeben.").toString());
 						        		} else
 						        		{
@@ -582,7 +582,7 @@ public class Commander implements CommandExecutor {
 	                			} else
 	                			{
 	                				if(configManager.lang.equalsIgnoreCase("de"))
-	                					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du kannst nicht das Passwort eines fremden Grundstückes ändern").toString());
+	                					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du kannst nicht das Passwort eines fremden Grundstueckes aendern").toString());
 	                				else
 	                					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You cant change the password of a lot you don't own").toString());
 
@@ -590,7 +590,7 @@ public class Commander implements CommandExecutor {
 	                		} else
 	                		{
 	                			if(configManager.lang.equalsIgnoreCase("de"))
-	                				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das ausgewählte Grundstück ist ungültig").toString());
+	                				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das ausgewaehlte Grundstueck ist ungueltig").toString());
 	                			else
 	                				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This selected lot is invalid").toString());
 
@@ -598,7 +598,7 @@ public class Commander implements CommandExecutor {
 	                	} else 
 	                	{
 	                		if(configManager.lang.equalsIgnoreCase("de"))
-	                			sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das ausgewählte Grundstück ist ungültig").toString());
+	                			sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das ausgewaehlte Grundstueck ist ungueltig").toString());
 	                		else
                 				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This selected lot is invalid").toString());
 	                	}
@@ -606,7 +606,7 @@ public class Commander implements CommandExecutor {
         		} else
         		{
         			if(configManager.lang.equalsIgnoreCase("de"))
-        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung ein Grundstück zu bearbeiten").toString());
+        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Berechtigung ein Grundstueck zu bearbeiten").toString());
         			else
         				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You dont have permissions to do that").toString());
         		}
@@ -641,7 +641,7 @@ public class Commander implements CommandExecutor {
 	        					ps.close();
 	        	    		
 	        	    		if(configManager.lang.equalsIgnoreCase("de"))
-	        	    			sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Alle Grundstücke von '").append(args[0]).append("' werden nun nicht verfallen - solange er offline bleibt").toString());
+	        	    			sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Alle Grundstuecke von '").append(args[0]).append("' werden nun nicht verfallen - solange er offline bleibt").toString());
 	        	    		else
 	        	    			sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("All lots owned by '").append(args[0]).append("' won't be free'd - until he comes back online").toString());
 
@@ -680,7 +680,7 @@ public class Commander implements CommandExecutor {
 							this.plugin.econ.withdrawPlayer(sender.getName(), prc);
 							this.helper.upgradeArea((Player)sender, b);
 							if(configManager.lang.equalsIgnoreCase("de"))
-								sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück wurde erweitert").toString());
+								sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstueck wurde erweitert").toString());
 							else
 								sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Your lot has been expanded").toString());
 
@@ -697,7 +697,7 @@ public class Commander implements CommandExecutor {
 	        		} else
 	        		{
 	        			if(configManager.lang.equalsIgnoreCase("de"))
-	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du kannst dieses Grundstück nicht erweitern").toString());
+	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du kannst dieses Grundstueck nicht erweitern").toString());
 	        			else
 	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You can't expand this lot anymore").toString());
 
@@ -754,7 +754,7 @@ public class Commander implements CommandExecutor {
 											} else
 											{
 												if(configManager.lang.equalsIgnoreCase("de"))
-													sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast bereits zuviele Grundstücke von diesem Typ").toString());
+													sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast bereits zuviele Grundstuecke von diesem Typ").toString());
 												else
 													sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've already got too many lots of this type").toString());
 
@@ -762,7 +762,7 @@ public class Commander implements CommandExecutor {
 										} else
 										{
 											if(configManager.lang.equalsIgnoreCase("de"))
-												sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du darfst dieses Grundstück nicht kaufen").toString());
+												sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du darfst dieses Grundstueck nicht kaufen").toString());
 											else
 												sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You're not allowed to buy this lot").toString());
 
@@ -786,7 +786,7 @@ public class Commander implements CommandExecutor {
 	        				} else
 	        				{
 	        					if(configManager.lang.equalsIgnoreCase("de"))
-	        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück ist ungültig").toString());
+	        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstueck ist ungueltig").toString());
 	        					else
 	        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot is invalid").toString());
 
@@ -794,7 +794,7 @@ public class Commander implements CommandExecutor {
 	        			} else
 	        			{
 	        				if(configManager.lang.equalsIgnoreCase("de"))
-	        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück ist ungültig").toString());
+	        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstueck ist ungueltig").toString());
 	        				else
         						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot is invalid").toString());
 	        			}
@@ -820,7 +820,7 @@ public class Commander implements CommandExecutor {
         		{
         			this.helper.updateArea((Player)sender, b);
         			if(configManager.lang.equalsIgnoreCase("de"))
-        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück wurde aktualisiert").toString());
+        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstueck wurde aktualisiert").toString());
         			else
         				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot has been updated").toString());
 
@@ -832,7 +832,7 @@ public class Commander implements CommandExecutor {
                 {
         			this.helper.ruleset.remove(sender.getName());
         			if(configManager.lang.equalsIgnoreCase("de"))
-        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast dein ruleset gelöscht").toString());
+        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast dein ruleset geloescht").toString());
         			else
         				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've deleted your ruleset").toString());
 
@@ -904,7 +904,7 @@ public class Commander implements CommandExecutor {
 	        			if(ps != null)
 	        				ps.close();
 	        			
-	        			//Wenn Regelset Ausgewählt:
+	        			//Wenn Regelset Ausgewaehlt:
 	        			if(this.helper.ruleset.get(sender.getName()) != null)
 	        			{
 	        				ps = conn.prepareStatement((new StringBuilder()).append("UPDATE ").append(configManager.SQLTable).append("_krimbuy SET ruleset=?, level=1 WHERE blockx=? AND blocky=? AND blockz = ? AND world = ? LIMIT 1").toString());
@@ -918,7 +918,7 @@ public class Commander implements CommandExecutor {
 		        			if(ps != null)
 		        				ps.close();
 		        			if(configManager.lang.equalsIgnoreCase("de"))
-		        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück hat nun den Typ ").append(this.helper.ruleset.get(sender.getName())).append("").toString());
+		        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstueck hat nun den Typ ").append(this.helper.ruleset.get(sender.getName())).append("").toString());
 		        			else
 		        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot has the type ").append(this.helper.ruleset.get(sender.getName())).append("").toString());
 
