@@ -7,6 +7,7 @@ import org.bukkit.Server;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.bdh.kb2.Commander;
@@ -62,6 +63,8 @@ public class Main extends JavaPlugin
         version = pdf.getVersion();
         author = "Krim";
         
+        
+
         System.out.println((new StringBuilder(String.valueOf(cmdName))).append("by ").append(author).append(" version ").append(version).append(" enabled.").toString());
        
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
@@ -77,6 +80,7 @@ public class Main extends JavaPlugin
         
         KBTimer k = new KBTimer(this);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, k, 1, 1);
+        Bukkit.getServicesManager().register(KBHelper.class, helper, this, ServicePriority.Normal);
         
         Bukkit.getServer().getPluginManager().registerEvents(playerListener, this);
         Commander c = new Commander(this);

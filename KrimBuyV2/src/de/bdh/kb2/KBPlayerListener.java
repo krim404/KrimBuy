@@ -32,6 +32,7 @@ import org.bukkit.inventory.ItemStack;
 import de.bdh.kb.util.configManager;
 import de.bdh.kb2.Main;
 
+@SuppressWarnings("deprecation")
 public class KBPlayerListener implements Listener
 {
 	Main p;
