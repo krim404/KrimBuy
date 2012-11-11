@@ -2,7 +2,10 @@ package de.bdh.kb.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import de.bdh.kb2.Main;
@@ -27,7 +30,8 @@ public class configManager {
     public static String lang = "de";
     public static Integer doSponge = 1;
     public static Integer doPiston = 1;
-    
+    public static Integer fromx = 0,fromy = 0,fromz = 0,tox = 0,toy = 0,toz = 0;
+    public static HashMap<World,kbWorld> worldLimit = new HashMap<World,kbWorld>();
     private static File confFile;
     
 	
@@ -65,6 +69,41 @@ public class configManager {
         doSponge = conf.getInt("System.sponge",doSponge);
         doPiston = conf.getInt("System.hookPistonEvent",doPiston);
         worlds = conf.getString("System.worlds",worlds);
+        
+        fromx = conf.getInt("System.worlds.default.protect.from.x",0);
+        fromy = conf.getInt("System.worlds.default.protect.from.y",0);
+        fromz = conf.getInt("System.worlds.default.protect.from.z",0);
+        tox = conf.getInt("System.worlds.default.protect.to.x",0);
+        toy = conf.getInt("System.worlds.default.protect.to.y",0);
+        toz = conf.getInt("System.worlds.default.protect.to.z",0);
+        
+        Integer tx,ty,tz,fx,fy,fz;
+        
+		if(worlds != null && worlds.length() > 0)
+		{
+			String[] tmpBoh = worlds.split(",");
+			for (String bl: tmpBoh) 
+			{
+			   if(Bukkit.getWorld(bl) != null)
+			   {
+				   	tx = conf.getInt("System.worlds."+bl+".protect.to.x",0);
+			        ty = conf.getInt("System.worlds."+bl+".protect.to.y",0);
+			        tz = conf.getInt("System.worlds."+bl+".protect.to.z",0);
+			        fx = conf.getInt("System.worlds."+bl+".protect.from.x",0);
+			        fy = conf.getInt("System.worlds."+bl+".protect.from.y",0);
+			        fz = conf.getInt("System.worlds."+bl+".protect.from.z",0);
+			        if(!(tx == fx && ty == fy && tz == fz))
+			        {
+			        	worldLimit.put(Bukkit.getWorld(bl) , new kbWorld(bl,fx,fy,fz,tx,ty,tz));
+			        } else if(!(fromx == tox && fromy == toy && fromz == toz))
+		            {
+			        	worldLimit.put(Bukkit.getWorld(bl) , new kbWorld(bl,fromx,fromy,fromz,tox,toy,toz));
+		            } 
+			   }
+			}
+		}
+		
+        
         
         try {
         	if (!confFile.exists())
@@ -110,6 +149,16 @@ public class configManager {
             conf.set("System.lang", lang);
             conf.set("System.sponge", doSponge);
             conf.set("System.hookPistonEvent", doPiston);
+            
+
+            conf.set("System.worlds.default.protect.from.x",fromx);
+            conf.set("System.worlds.default.protect.from.y",fromy);
+            conf.set("System.worlds.default.protect.from.z",fromz);
+       
+            conf.set("System.worlds.default.protect.to.x",tox);
+            conf.set("System.worlds.default.protect.to.y",toy);
+            conf.set("System.worlds.default.protect.to.z",toz);
+          
             
             try {
                 confFile.createNewFile();

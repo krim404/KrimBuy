@@ -257,8 +257,16 @@ public class KBHelper
 	
 	public boolean canBuildHereData(Player p, Block b)
 	{
+		if(!this.worlds.contains(p.getWorld().getName()))
+    		return true;
+		
+		if(configManager.worldLimit.get(p.getWorld()) != null)
+		{
+			if(!configManager.worldLimit.get(p.getWorld()).isIn(b.getLocation()))
+				return true;
+		}
+		
 		KBArea item = null;
-    	
     	List<Integer> li = this.getPlayerAreas(p);
     	if(li != null)
     	{
@@ -308,19 +316,11 @@ public class KBHelper
     	if(!this.worlds.contains(p.getWorld().getName()))
     		return true;
     	
-    	//BRAUTEC
-    	/*
-    	if(configManager.BrauTec.equalsIgnoreCase("1"))
-    	{
-    		int x = b.getLocation().getBlockX();
-	        int z = b.getLocation().getBlockZ();
-    	
-    		if(((x > 500 || x < -500) || (z > 500 || z < -500)))
-    		{
-    			return true;
-    		}
-    	}
-    	*/
+    	if(configManager.worldLimit.get(p.getWorld()) != null)
+		{
+			if(!configManager.worldLimit.get(p.getWorld()).isIn(b.getLocation()))
+				return true;
+		}
 
     	return this.canBuildHereData(p, b);
 	}

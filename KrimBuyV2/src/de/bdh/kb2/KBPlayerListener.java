@@ -19,10 +19,10 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
+import org.bukkit.event.hanging.HangingBreakEvent;
+import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.painting.PaintingBreakByEntityEvent;
-import org.bukkit.event.painting.PaintingBreakEvent;
-import org.bukkit.event.painting.PaintingPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -31,8 +31,6 @@ import org.bukkit.inventory.ItemStack;
 
 import de.bdh.kb.util.configManager;
 import de.bdh.kb2.Main;
-
-@SuppressWarnings("deprecation")
 public class KBPlayerListener implements Listener
 {
 	Main p;
@@ -109,7 +107,7 @@ public class KBPlayerListener implements Listener
     
     //Painting - Anti Guest
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onGuestPaintingPlace(PaintingPlaceEvent event)
+    public void onGuestPaintingPlace(HangingPlaceEvent event)
     {
     	if(!(event.getPlayer() instanceof Player))
 			return;
@@ -129,11 +127,11 @@ public class KBPlayerListener implements Listener
     
     //Painting2 - Anti Guest 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onGuestPaintingBreak(PaintingBreakEvent event)
+    public void onGuestPaintingBreak(HangingBreakEvent event)
     {
-    	if(event instanceof PaintingBreakByEntityEvent)
+    	if(event instanceof HangingBreakByEntityEvent)
         {
-            org.bukkit.entity.Entity remover = ((PaintingBreakByEntityEvent)event).getRemover();
+            org.bukkit.entity.Entity remover = ((HangingBreakByEntityEvent)event).getRemover();
 		    if(remover instanceof Player) 
 		    {
 		    	Player player = (Player)remover;
@@ -281,14 +279,14 @@ public class KBPlayerListener implements Listener
     
     //DEFAULT Paint Build
     @EventHandler(priority = EventPriority.LOW)
-    public void onPaintingPlace(PaintingPlaceEvent event)
+    public void onPaintingPlace(HangingPlaceEvent event)
     {
     	if(!(event.getPlayer() instanceof Player))
 			return;
     	
     	Player player = event.getPlayer();
 
-        if(!this.helper.canBuildHere(player, event.getBlock().getWorld().getBlockAt(event.getPainting().getLocation())))
+        if(!this.helper.canBuildHere(player, event.getBlock().getWorld().getBlockAt(event.getEntity().getLocation())))
         {
         	event.setCancelled(true);
         	return;
@@ -297,16 +295,16 @@ public class KBPlayerListener implements Listener
     
     //DEFAULT Paint Build
     @EventHandler(priority = EventPriority.LOW)
-    public void onPaintingBreak(PaintingBreakEvent event)
+    public void onPaintingBreak(HangingBreakEvent event)
     {
-    	if(event instanceof PaintingBreakByEntityEvent)
+    	if(event instanceof HangingBreakByEntityEvent)
         {
-            org.bukkit.entity.Entity remover = ((PaintingBreakByEntityEvent)event).getRemover();
+            org.bukkit.entity.Entity remover = ((HangingBreakByEntityEvent)event).getRemover();
 		    if(remover instanceof Player) 
 		    {
 		    	Player player = (Player)remover;
 	    		
-	    		if(!this.helper.canBuildHere(player, event.getPainting().getWorld().getBlockAt(event.getPainting().getLocation())))
+	    		if(!this.helper.canBuildHere(player, event.getEntity().getWorld().getBlockAt(event.getEntity().getLocation())))
 	            {
 	            	event.setCancelled(true);
 	            	return;
