@@ -203,7 +203,7 @@ public class KBHelper
 		{
 			Connection conn = Main.Database.getConnection();
         	PreparedStatement ps;
-    		String strg = (new StringBuilder()).append("SELECT id FROM ").append(configManager.SQLTable).append("_krimbuy WHERE bx <= ? AND by <= ? AND bz <= ? AND tx >= ? AND ty >= ? AND tz >= ? LIMIT 0,1").toString();
+    		String strg = (new StringBuilder()).append("SELECT id FROM ").append(configManager.SQLTable).append("_krimbuy WHERE bx <= ? AND `by` <= ? AND bz <= ? AND tx >= ? AND ty >= ? AND tz >= ? LIMIT 0,1").toString();
     		ps = conn.prepareStatement(strg);
     		ps.setInt(1, l.getBlockX());
     		ps.setInt(2, l.getBlockY());
