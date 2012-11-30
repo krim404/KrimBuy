@@ -16,7 +16,6 @@ public class configManager {
     protected static YamlConfiguration conf;
     
     // features 
-    public static String MySQL_Jar_Location = "http://mirror.anigaiku.com/Dependencies/mysql-connector-java-bin.jar";
     public static String DatabaseType = "mySQL";
     public static String SQLHostname = "localhost";
     public static String SQLPort = "3306";
