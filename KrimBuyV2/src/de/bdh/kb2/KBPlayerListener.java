@@ -336,7 +336,7 @@ public class KBPlayerListener implements Listener
     		if(a != null)
     		{
 				List<Block> l = event.getBlocks();
-				if(!a.canPlaceBlock(event.getBlock().getRelative(event.getDirection())))
+				if(!a.isIn(event.getBlock().getRelative(event.getDirection()).getLocation()))
 				{
 					this.helper.blockedEvent.put(event.hashCode(), true);
 					event.setCancelled(true);
@@ -345,7 +345,7 @@ public class KBPlayerListener implements Listener
 				
 				for (Block b: l) 
 				{
-					if(!a.canPlaceBlock(b.getRelative(event.getDirection())))
+					if(!a.isIn(b.getRelative(event.getDirection()).getLocation()))
 					{
 						this.helper.blockedEvent.put(event.hashCode(), true);
 						event.setCancelled(true);
