@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -76,6 +77,8 @@ public class KBPlayerListener implements Listener
         if(!player.hasPermission("kab.build"))
         {
             event.setCancelled(true);
+            this.helper.blockedEvent.put(event.hashCode(), true);
+            
             if(configManager.lang.equalsIgnoreCase("de"))
             	player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Bauen.").toString());
             else
@@ -83,6 +86,68 @@ public class KBPlayerListener implements Listener
 
             return;
         }
+    }
+    
+    //GARBAGE COLLECTORS
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onBlockDamageGarbageCollector(BlockDamageEvent event)
+    {
+    	this.garbageCollector(event);
+    }
+    
+    @EventHandler(priority = EventPriority.MONITOR)
+	public void onDiscGarbageCollector(InventoryClickEvent event)
+    {
+    	this.garbageCollector(event);
+    }
+    
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onPaintingBreakGarbageCollector(HangingBreakEvent event)
+    {
+    	this.garbageCollector(event);
+    }
+    
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onPaintingPlaceGarbageCollector(HangingPlaceEvent event)
+    {
+    	this.garbageCollector(event);
+    }
+    
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onBlockPlaceGarbageCollector(BlockPlaceEvent event)
+    {
+    	this.garbageCollector(event);
+    }
+    
+    @EventHandler(priority = EventPriority.MONITOR)
+	public void onBlockBreakGarbageCollector(BlockBreakEvent event)
+	{
+    	this.garbageCollector(event);
+	}
+    
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onPlayerInteractEventGarbageCollector(PlayerInteractEvent event)
+    {
+		this.garbageCollector(event);
+    }
+	
+    @EventHandler(priority = EventPriority.MONITOR)
+	public void onClickPlayerGarbageCollector(PlayerInteractEntityEvent event)
+    {
+    	this.garbageCollector(event);
+    }
+    
+    @EventHandler(priority = EventPriority.MONITOR)
+	public void onPistonGarbageCollector(BlockPistonExtendEvent event)
+	{
+    	if(configManager.doPiston == 1)
+    		this.garbageCollector(event);
+	}
+    
+    public void garbageCollector(Event event)
+    {
+    	if(this.helper.blockedEvent.get(event.hashCode()) != null)
+    		this.helper.blockedEvent.remove(event.hashCode());
     }
     
     //Inventory Click - Anti Guest
@@ -95,6 +160,7 @@ public class KBPlayerListener implements Listener
 			if(!player.hasPermission("kab.build"))
 	        {
 	        	event.setCancelled(true);
+	        	this.helper.blockedEvent.put(event.hashCode(), true);
 	        	if(configManager.lang.equalsIgnoreCase("de"))
 	        		player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung.").toString());
 	        	else
@@ -111,11 +177,11 @@ public class KBPlayerListener implements Listener
     {
     	if(!(event.getPlayer() instanceof Player))
 			return;
-    	
     	Player player = event.getPlayer();
         if(!player.hasPermission("kab.build"))
         {
             event.setCancelled(true);
+            this.helper.blockedEvent.put(event.hashCode(), true);
             if(configManager.lang.equalsIgnoreCase("de"))
             	player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Bauen.").toString());
             else
@@ -138,6 +204,7 @@ public class KBPlayerListener implements Listener
 	    		if(!player.hasPermission("kab.build"))
 	    		{
 	    			event.setCancelled(true);
+	    			this.helper.blockedEvent.put(event.hashCode(), true);
 	    			if(configManager.lang.equalsIgnoreCase("de"))
 	    				player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Bauen.").toString());
 	    			else
@@ -160,6 +227,7 @@ public class KBPlayerListener implements Listener
         if(!player.hasPermission("kab.build"))
         {
         	blockplaceevent.setCancelled(true);
+        	this.helper.blockedEvent.put(blockplaceevent.hashCode(), true);
         	if(configManager.lang.equalsIgnoreCase("de"))
         		player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Bauen.").toString());
         	else
@@ -168,7 +236,7 @@ public class KBPlayerListener implements Listener
         	return;
         }
     }
-    
+
     //BlockBreak - Anti Guest
     @EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreakGuest(BlockBreakEvent blockbreakevent)
@@ -179,6 +247,7 @@ public class KBPlayerListener implements Listener
         Player player = blockbreakevent.getPlayer();
         if(!player.hasPermission("kab.build"))
         {
+        	this.helper.blockedEvent.put(blockbreakevent.hashCode(), true);
         	blockbreakevent.setCancelled(true);
         	if(configManager.lang.equalsIgnoreCase("de"))
         		player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Bauen.").toString());
@@ -200,6 +269,7 @@ public class KBPlayerListener implements Listener
         if(!player.hasPermission("kab.interact"))
         {
             event.setCancelled(true);
+            this.helper.blockedEvent.put(event.hashCode(), true);
             if(configManager.lang.equalsIgnoreCase("de"))
             	player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Interagieren.").toString());
             else
@@ -223,7 +293,10 @@ public class KBPlayerListener implements Listener
         {
         	Long lc = lastclick.get(giver);
         	if(lc != null && Math.abs(System.currentTimeMillis() - lc) < 500)
+        	{
+        		this.helper.blockedEvent.put(event.hashCode(), true);
 				event.setCancelled(true);
+        	}
 			else
 			{
 				int itemid = giver.getItemInHand().getTypeId();
@@ -245,6 +318,7 @@ public class KBPlayerListener implements Listener
 		            });
 	            }
 	        	event.setCancelled(true);
+	        	this.helper.blockedEvent.put(event.hashCode(), true);
 	        	lastclick.put(giver, System.currentTimeMillis());
 	        	return;
 			}
@@ -263,14 +337,18 @@ public class KBPlayerListener implements Listener
 				List<Block> l = event.getBlocks();
 				if(!a.canPlaceBlock(event.getBlock().getRelative(event.getDirection())))
 				{
+					this.helper.blockedEvent.put(event.hashCode(), true);
 					event.setCancelled(true);
+					return;
 				}
 				
 				for (Block b: l) 
 				{
 					if(!a.canPlaceBlock(b.getRelative(event.getDirection())))
 					{
+						this.helper.blockedEvent.put(event.hashCode(), true);
 						event.setCancelled(true);
+						return;
 					}
 				}
     		}
@@ -288,6 +366,7 @@ public class KBPlayerListener implements Listener
 
         if(!this.helper.canBuildHere(player, event.getBlock().getWorld().getBlockAt(event.getEntity().getLocation())))
         {
+        	this.helper.blockedEvent.put(event.hashCode(), true);
         	event.setCancelled(true);
         	return;
         }
@@ -306,6 +385,7 @@ public class KBPlayerListener implements Listener
 	    		
 	    		if(!this.helper.canBuildHere(player, event.getEntity().getWorld().getBlockAt(event.getEntity().getLocation())))
 	            {
+	    			this.helper.blockedEvent.put(event.hashCode(), true);
 	            	event.setCancelled(true);
 	            	return;
 	            }
@@ -323,6 +403,7 @@ public class KBPlayerListener implements Listener
         Player player = blockplaceevent.getPlayer();
         if(!this.helper.canBuildHere(player, blockplaceevent.getBlock()))
         {
+        	this.helper.blockedEvent.put(blockplaceevent.hashCode(), true);
     		blockplaceevent.setCancelled(true);
         	return;
         }
@@ -348,12 +429,14 @@ public class KBPlayerListener implements Listener
         
         if(!this.helper.canBuildHere(player, blockbreakevent.getBlock()))
         {
+        	this.helper.blockedEvent.put(blockbreakevent.hashCode(), true);
     		blockbreakevent.setCancelled(true);
         	return;
         }
         
         if(blockbreakevent.getBlock().getTypeId() == Material.SPONGE.getId() && blockbreakevent.getBlock().getRelative(BlockFace.DOWN).getTypeId() == 7)
         {
+        	this.helper.blockedEvent.put(blockbreakevent.hashCode(), true);
     		blockbreakevent.setCancelled(true);
         	return;
         }
@@ -368,7 +451,10 @@ public class KBPlayerListener implements Listener
 			lastclick.put(blockbreakevent.getPlayer(), System.currentTimeMillis());
 			
         	if(lc != null && Math.abs(System.currentTimeMillis() - lc) > 500)
+        	{
+        		this.helper.blockedEvent.put(blockbreakevent.hashCode(), true);
         		blockbreakevent.setCancelled(true);
+        	}
         	else
         	{	
         		int id = this.helper.getIDbyBlock(b);
@@ -409,7 +495,9 @@ public class KBPlayerListener implements Listener
 					else
 		        		player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You're not allowed to open chests, dispensers and furnaces").toString());
 
+					this.helper.blockedEvent.put(event.hashCode(), true);
 					event.setCancelled(true);
+					return;
 				}
 			}
 			
@@ -429,6 +517,7 @@ public class KBPlayerListener implements Listener
 	        //Schilder d�rfen immer geklickt werden - sowie minecarts immer auf rails gesetzt werden d�rfen
 	        else if(event.getAction() == Action.RIGHT_CLICK_BLOCK && ((gt == 63 || gt == 68 || gt == 323) || (player.getItemInHand().getTypeId() == 328 && (gt == 27 || gt == 28 || gt == 66))))
 	        {
+	        	this.helper.blockedEvent.put(event.hashCode(), false);
 	        	event.setCancelled(false);
 	        	//alles OK
 	        } 
@@ -439,7 +528,7 @@ public class KBPlayerListener implements Listener
 				if(!(this.helper.canBuildHere(player, b.getRelative(BlockFace.UP))) && !this.helper.canBuildHere(player, b) && !event.getPlayer().hasPermission("kb.interact"))
 				{
 	        		event.setCancelled(true);
-	        		
+	        		this.helper.blockedEvent.put(event.hashCode(), true);
 	        		if(configManager.interactMessage == 1)
 	        		{
 	        			if(configManager.lang.equalsIgnoreCase("de"))
@@ -452,6 +541,7 @@ public class KBPlayerListener implements Listener
 				{
 					//Truhen / Dispenser / Ofen sind trotz allem verboten (gilt nur mit Vanilla Blocks)
 					event.setCancelled(true);
+					this.helper.blockedEvent.put(event.hashCode(), true);
 					if(configManager.lang.equalsIgnoreCase("de"))
 						player.sendMessage("Du darfst keine fremden Truhen �ffnen");
 					else
@@ -466,6 +556,7 @@ public class KBPlayerListener implements Listener
 				if(event.getPlayer().hasPermission("kb.create"))
 					this.helper.lastBlock.put(event.getPlayer(), b);
 				
+				this.helper.blockedEvent.put(event.hashCode(), true);
 				event.setCancelled(true);
 				
 				int id = this.helper.getIDbyBlock(b);

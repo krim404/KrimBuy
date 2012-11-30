@@ -40,6 +40,7 @@ public class KBHelper
 		this.loadPubAreas();
 	}
 	
+	public HashMap<Integer,Boolean> blockedEvent = new HashMap<Integer,Boolean>();
 	public HashMap<String,String> pass = new HashMap<String,String>();
 	public HashMap<String,String> ruleset = new HashMap<String,String>();
 	public HashMap<Player,List<Integer>> userarea = new HashMap<Player,List<Integer>>();
