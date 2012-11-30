@@ -29,6 +29,7 @@ public class configManager {
     public static String lang = "de";
     public static Integer doSponge = 1;
     public static Integer doPiston = 1;
+    public static Integer doProtectPicsTNT = 1;
     public static Integer fromx = 0,fromy = 0,fromz = 0,tox = 0,toy = 0,toz = 0;
     public static HashMap<World,kbWorld> worldLimit = new HashMap<World,kbWorld>();
     private static File confFile;
@@ -67,6 +68,7 @@ public class configManager {
         lang = conf.getString("System.lang",lang);
         doSponge = conf.getInt("System.sponge",doSponge);
         doPiston = conf.getInt("System.hookPistonEvent",doPiston);
+        doProtectPicsTNT = conf.getInt("System.protectPicturesFromTNT",doProtectPicsTNT);
         worlds = conf.getString("System.worlds",worlds);
         
         fromx = conf.getInt("System.worldLimit.default.protect.from.x",0);
@@ -148,7 +150,7 @@ public class configManager {
             conf.set("System.lang", lang);
             conf.set("System.sponge", doSponge);
             conf.set("System.hookPistonEvent", doPiston);
-            
+            conf.set("System.protectPicturesFromTNT", doProtectPicsTNT);
 
             conf.set("System.worldLimit.default.protect.from.x",fromx);
             conf.set("System.worldLimit.default.protect.from.y",fromy);

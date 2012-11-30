@@ -22,6 +22,7 @@ import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingBreakEvent;
+import org.bukkit.event.hanging.HangingBreakEvent.RemoveCause;
 import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -389,6 +390,11 @@ public class KBPlayerListener implements Listener
 	            	event.setCancelled(true);
 	            	return;
 	            }
+		    } else if(configManager.doProtectPicsTNT == 1 && event.getCause() == RemoveCause.EXPLOSION)
+		    {
+		    	this.helper.blockedEvent.put(event.hashCode(), true);
+            	event.setCancelled(true);
+            	return;
 		    }
         }
     }
