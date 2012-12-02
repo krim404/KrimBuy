@@ -92,3 +92,6 @@ commands:
     kbupdate:
          description: aktualisiere das Grundstueck
          usage: /kbupdate
+    kbreload:
+         description: lade kb neu
+         usage: /kbreload

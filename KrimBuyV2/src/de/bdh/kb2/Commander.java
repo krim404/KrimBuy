@@ -30,7 +30,12 @@ public class Commander implements CommandExecutor {
 	
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String args[])
     {
-        if(sender instanceof Player)
+		if(command.getName().equals("kbreload") && ((sender instanceof Player) && sender.hasPermission("kb.admin")) || !(sender instanceof Player))
+    	{
+			this.plugin.reload();
+			sender.sendMessage("KrimBuy reloaded");
+    	}
+		else if(sender instanceof Player)
         {
         	if(command.getName().equals("giveGS"))
         	{

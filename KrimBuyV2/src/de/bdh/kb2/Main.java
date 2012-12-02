@@ -5,6 +5,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
@@ -34,6 +35,19 @@ public class Main extends JavaPlugin
         System.out.println((new StringBuilder(String.valueOf(cmdName))).append("by ").append(author).append(" version ").append(version).append(" disabled.").toString());
     }
 
+    public void reload()
+    {
+    	helper = new KBHelper(this);
+    	
+		for (Player player: Bukkit.getServer().getOnlinePlayers()) 
+        {
+	        helper.loadPlayerAreas(player);
+	        helper.updateLastOnline(player);
+        }
+		
+        helper.Tick();
+    }
+    
     public void onEnable()
     {	
     	Server = getServer();
@@ -101,7 +115,7 @@ public class Main extends JavaPlugin
         getCommand("kbupdate").setExecutor(c); 
         getCommand("tpGS").setExecutor(c); 
         getCommand("nextGS").setExecutor(c); 
-        
+        getCommand("kbreload").setExecutor(c);
 
     	if(configManager.BrauTec.equals("1"))
     	{
