@@ -526,7 +526,12 @@ public class KBPlayerListener implements Listener
 	        	this.helper.blockedEvent.put(event.hashCode(), false);
 	        	event.setCancelled(false);
 	        	//alles OK
-	        } 
+	        //Boote sind erlaubt
+	        } else if(event.getAction() == Action.RIGHT_CLICK_BLOCK && player.getItemInHand().getTypeId() == Material.BOAT.getId() && b.getType() == Material.WATER)
+	        {
+	        	this.helper.blockedEvent.put(event.hashCode(), false);
+	        	event.setCancelled(false);
+	        }
 	        	
 	        //Steinkn�pfe gehen immer genauso wie 225 ( BrauTec ) und Bedrock
 	        else if((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_BLOCK) && (event.getClickedBlock().getTypeId() != 7 && event.getClickedBlock().getTypeId() != 225 && event.getClickedBlock().getTypeId() != Material.STONE_BUTTON.getId()))
