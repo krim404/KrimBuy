@@ -93,7 +93,7 @@ public class Main extends JavaPlugin
         playerListener = new KBPlayerListener(this);
         
         KBTimer k = new KBTimer(this);
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, k, 1, 1);
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, k, 1, 20*60*60);
         Bukkit.getServicesManager().register(KBHelper.class, helper, this, ServicePriority.Normal);
         
         Bukkit.getServer().getPluginManager().registerEvents(playerListener, this);
