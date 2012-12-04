@@ -33,6 +33,7 @@ import org.bukkit.inventory.ItemStack;
 
 import de.bdh.kb.util.configManager;
 import de.bdh.kb2.Main;
+import java.util.HashSet;
 public class KBPlayerListener implements Listener
 {
 	Main p;
@@ -527,10 +528,27 @@ public class KBPlayerListener implements Listener
 	        	event.setCancelled(false);
 	        	//alles OK
 	        //Boote sind erlaubt
-	        } else if(event.getAction() == Action.RIGHT_CLICK_BLOCK && player.getItemInHand().getTypeId() == Material.BOAT.getId() && b.getType() == Material.WATER)
+	        } else if((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) && player.getItemInHand().getTypeId() == Material.BOAT.getId())
 	        {
-	        	this.helper.blockedEvent.put(event.hashCode(), false);
-	        	event.setCancelled(false);
+                        //Blocks to be rendered as "transparent"
+                        HashSet<Byte> ignore = new HashSet<Byte>();
+                        //Ignore air, torches and signs
+                        //NOTE:Add more if you like to
+                        ignore.add((byte)0);
+                        ignore.add((byte)Material.TORCH.getId());
+                        ignore.add((byte)Material.WALL_SIGN.getId());
+                        ignore.add((byte)Material.SIGN_POST.getId());
+                        
+                        Block targetBlock = player.getTargetBlock(ignore, 5);
+                        
+                        if(targetBlock.getType() == Material.WATER || targetBlock.getType() == Material.STATIONARY_WATER){
+                            
+                            this.helper.blockedEvent.put(event.hashCode(), false);
+                            event.setCancelled(false);
+                            
+                        }
+                        
+	        	
 	        }
 	        	
 	        //Steinkn�pfe gehen immer genauso wie 225 ( BrauTec ) und Bedrock
