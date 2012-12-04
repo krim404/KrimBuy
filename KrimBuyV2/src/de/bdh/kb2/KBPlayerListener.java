@@ -541,11 +541,13 @@ public class KBPlayerListener implements Listener
                         
                         Block targetBlock = player.getTargetBlock(ignore, 5);
                         
-                        if(targetBlock.getType() == Material.WATER || targetBlock.getType() == Material.STATIONARY_WATER){
-                            
-                            this.helper.blockedEvent.put(event.hashCode(), false);
-                            event.setCancelled(false);
-                            
+                        if(targetBlock!=null){
+                            if(targetBlock.getType() == Material.WATER || targetBlock.getType() == Material.STATIONARY_WATER){
+
+                                this.helper.blockedEvent.put(event.hashCode(), false);
+                                event.setCancelled(false);
+
+                            }
                         }
                         
 	        	
