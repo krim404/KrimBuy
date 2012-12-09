@@ -507,9 +507,7 @@ public class KBPlayerListener implements Listener
 					return;
 				}
 			}
-			
-			/*
-			//Ehemals f�r BrauTec
+
 			//Verhindere manipulation an Pipes - BrauTec Mod
 			else if(event.getAction() == Action.RIGHT_CLICK_BLOCK && (gt == 166 || gt == 187) && configManager.BrauTec.equalsIgnoreCase("1"))
 	        {
@@ -519,7 +517,7 @@ public class KBPlayerListener implements Listener
 					event.setCancelled(true);
 				}
 	        }
-	        */
+	        
 			
 	        //Schilder d�rfen immer geklickt werden - sowie minecarts immer auf rails gesetzt werden d�rfen
 	        else if(event.getAction() == Action.RIGHT_CLICK_BLOCK && ((gt == 63 || gt == 68 || gt == 323) || (player.getItemInHand().getTypeId() == 328 && (gt == 27 || gt == 28 || gt == 66))))

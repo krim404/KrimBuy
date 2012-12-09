@@ -63,7 +63,7 @@ public class configManager {
         SQLPort = conf.getString("System.Database.Settings.MySQL.Port", SQLPort);
         SQLUsername = conf.getString("System.Database.Settings.MySQL.Username", SQLUsername);
         SQLPassword = conf.getString("System.Database.Settings.MySQL.Password", SQLPassword);
-        //BrauTec = conf.getString("System.BrauTec",BrauTec);
+        BrauTec = conf.getString("System.BrauTec",BrauTec);
         interactMessage = conf.getInt("System.interactMessage",interactMessage);
         lang = conf.getString("System.lang",lang);
         doSponge = conf.getInt("System.sponge",doSponge);
