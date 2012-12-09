@@ -21,6 +21,7 @@ public class Main extends JavaPlugin
 	private static Server Server = null;
 	public static Database Database = null;
 	public KBPlayerListener playerListener = null;
+	public KBHangingListener hangList = null;
 	public Economy econ = null;
 	public static KBHelper helper = null;
 
@@ -123,6 +124,8 @@ public class Main extends JavaPlugin
     		System.out.println((new StringBuilder()).append("[KB] BrauTec Adaption loaded").toString());
     	} else
     	{
+    		this.hangList = new KBHangingListener(this);
+    		Bukkit.getServer().getPluginManager().registerEvents(this.hangList, this);
     		System.out.println((new StringBuilder()).append("[KB] Creative Mode").toString());
     	}
     	

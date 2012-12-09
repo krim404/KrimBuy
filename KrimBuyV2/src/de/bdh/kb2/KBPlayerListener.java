@@ -20,10 +20,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.hanging.HangingBreakByEntityEvent;
-import org.bukkit.event.hanging.HangingBreakEvent;
-import org.bukkit.event.hanging.HangingBreakEvent.RemoveCause;
-import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -104,18 +100,6 @@ public class KBPlayerListener implements Listener
     }
     
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onPaintingBreakGarbageCollector(HangingBreakEvent event)
-    {
-    	this.garbageCollector(event);
-    }
-    
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onPaintingPlaceGarbageCollector(HangingPlaceEvent event)
-    {
-    	this.garbageCollector(event);
-    }
-    
-    @EventHandler(priority = EventPriority.MONITOR)
     public void onBlockPlaceGarbageCollector(BlockPlaceEvent event)
     {
     	this.garbageCollector(event);
@@ -171,51 +155,6 @@ public class KBPlayerListener implements Listener
 	        	return;
 	        }
 		}
-    }
-    
-    //Painting - Anti Guest
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onGuestPaintingPlace(HangingPlaceEvent event)
-    {
-    	if(!(event.getPlayer() instanceof Player))
-			return;
-    	Player player = event.getPlayer();
-        if(!player.hasPermission("kab.build"))
-        {
-            event.setCancelled(true);
-            this.helper.blockedEvent.put(event.hashCode(), true);
-            if(configManager.lang.equalsIgnoreCase("de"))
-            	player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Bauen.").toString());
-            else
-        		player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You dont have permissions to build").toString());
-
-            return;
-        }
-    }
-    
-    //Painting2 - Anti Guest 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onGuestPaintingBreak(HangingBreakEvent event)
-    {
-    	if(event instanceof HangingBreakByEntityEvent)
-        {
-            org.bukkit.entity.Entity remover = ((HangingBreakByEntityEvent)event).getRemover();
-		    if(remover instanceof Player) 
-		    {
-		    	Player player = (Player)remover;
-	    		if(!player.hasPermission("kab.build"))
-	    		{
-	    			event.setCancelled(true);
-	    			this.helper.blockedEvent.put(event.hashCode(), true);
-	    			if(configManager.lang.equalsIgnoreCase("de"))
-	    				player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast noch keine Berechtigung zum Bauen.").toString());
-	    			else
-		        		player.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You dont have permissions to build").toString());
-
-	    			return;
-	    		}
-		    }
-        }
     }
     
     //BlockPlace - Anti Guest
@@ -356,49 +295,6 @@ public class KBPlayerListener implements Listener
     		}
     	}
 	}
-    
-    //DEFAULT Paint Build
-    @EventHandler(priority = EventPriority.LOW)
-    public void onPaintingPlace(HangingPlaceEvent event)
-    {
-    	if(!(event.getPlayer() instanceof Player))
-			return;
-    	
-    	Player player = event.getPlayer();
-
-        if(!this.helper.canBuildHere(player, event.getBlock().getWorld().getBlockAt(event.getEntity().getLocation())))
-        {
-        	this.helper.blockedEvent.put(event.hashCode(), true);
-        	event.setCancelled(true);
-        	return;
-        }
-    }
-    
-    //DEFAULT Paint Build
-    @EventHandler(priority = EventPriority.LOW)
-    public void onPaintingBreak(HangingBreakEvent event)
-    {
-    	if(event instanceof HangingBreakByEntityEvent)
-        {
-            org.bukkit.entity.Entity remover = ((HangingBreakByEntityEvent)event).getRemover();
-		    if(remover instanceof Player) 
-		    {
-		    	Player player = (Player)remover;
-	    		
-	    		if(!this.helper.canBuildHere(player, event.getEntity().getWorld().getBlockAt(event.getEntity().getLocation())))
-	            {
-	    			this.helper.blockedEvent.put(event.hashCode(), true);
-	            	event.setCancelled(true);
-	            	return;
-	            }
-		    } else if(configManager.doProtectPicsTNT == 1 && event.getCause() == RemoveCause.EXPLOSION)
-		    {
-		    	this.helper.blockedEvent.put(event.hashCode(), true);
-            	event.setCancelled(true);
-            	return;
-		    }
-        }
-    }
     
     //DEFAULT Block Place
     @EventHandler(priority = EventPriority.LOW)
