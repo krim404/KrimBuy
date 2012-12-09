@@ -514,6 +514,10 @@ public class Commander implements CommandExecutor {
 		        			{
 		        				System.out.println((new StringBuilder()).append("[KB] unable to next dellallgs: ").append(e).toString());
 		        			}
+		        		} else
+		        		{
+        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("No permissions :(").toString());
+
 		        		}
         			} else
         			{
