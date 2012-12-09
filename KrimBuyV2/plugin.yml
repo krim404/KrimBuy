@@ -92,6 +92,9 @@ commands:
     kbupdate:
          description: aktualisiere das Grundstueck
          usage: /kbupdate
+    dellallGS:
+         description: entfernt alle Grundstuecke eines Typs
+         usage: /dellallGS Typ
     kbreload:
          description: lade kb neu
          usage: /kbreload

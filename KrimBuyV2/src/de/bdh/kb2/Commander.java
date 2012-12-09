@@ -462,6 +462,73 @@ public class Commander implements CommandExecutor {
 
 	        	}
         	}
+        	else if(command.getName().equals("delallGS"))
+        	{
+        		if(args.length > 1)
+        		{	
+        			if(args[1].equals("okay"))
+        			{
+		        		if(sender.hasPermission("kb.admin"))
+		        		{
+		        			try
+		        			{
+		        				String strg = (new StringBuilder()).append("SELECT id FROM ").append(configManager.SQLTable).append("_krimbuy WHERE ruleset LIKE ?").toString();
+				        		Connection conn = Main.Database.getConnection();
+				            	PreparedStatement ps;
+				        		ps = conn.prepareStatement(strg);
+				        		ps.setString(1, "%" + args[0] + "%");
+				        		int found = 0;
+				        		ResultSet rs = ps.executeQuery();
+				        		int id = 0;
+				    			if(rs.next())
+				    			{
+				    				id = rs.getInt("id");
+				    				
+				    				if(this.helper.getArea(id) != null)
+				        			{ 
+				    					++found;
+				        				this.helper.killGS(id);
+				        			}
+				    			}
+				    			
+				    			if(found == 0)
+				    			{
+				    				if(configManager.lang.equalsIgnoreCase("de"))
+			        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Kein Grundstueck gefunden").toString());
+			        				else
+			        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("No Lots found").toString());
+				    			} else
+				    			{
+				    				if(configManager.lang.equalsIgnoreCase("de"))
+			        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Es wurden '").append(found).append("' Grundstuecke entfernt").toString());
+			        				else
+			        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("'").append(found).append("' lots has been removed").toString());
+				    			}
+				    			
+		        				if(ps != null)
+				    				ps.close();
+				    			
+				    			if(rs != null)
+				    				rs.close();
+		        			} catch (SQLException e)
+		        			{
+		        				System.out.println((new StringBuilder()).append("[KB] unable to next dellallgs: ").append(e).toString());
+		        			}
+		        		}
+        			} else
+        			{
+        				if(configManager.lang.equalsIgnoreCase("de"))
+        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Bitte bestätige diesen Befehl via /dellallgs TYP okay").toString());
+        				else
+        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Please validate this command by typing /dellallgs TYPE okay").toString());
+
+        			}
+        		} else
+        		{
+        			sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("USAGE: /dellallGS TYPE").toString());
+        		}
+        		
+        	}
         	else if(command.getName().equals("sellGS"))
         	{
         		if(sender.hasPermission("kb.buy"))

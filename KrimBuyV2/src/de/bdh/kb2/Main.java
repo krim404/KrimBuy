@@ -116,6 +116,7 @@ public class Main extends JavaPlugin
         getCommand("tpGS").setExecutor(c); 
         getCommand("nextGS").setExecutor(c); 
         getCommand("kbreload").setExecutor(c);
+        getCommand("dellallGS").setExecutor(c);
 
     	if(configManager.BrauTec.equals("1"))
     	{
