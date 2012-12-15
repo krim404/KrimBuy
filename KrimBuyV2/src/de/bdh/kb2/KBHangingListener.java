@@ -11,7 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingBreakEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
-import org.bukkit.event.hanging.HangingBreakEvent.RemoveCause;
+
 
 import de.bdh.kb.util.configManager;
 
@@ -116,26 +116,29 @@ public class KBHangingListener implements Listener
     @EventHandler(priority = EventPriority.LOW)
     public void onPaintingBreak(HangingBreakEvent event)
     {
+    	boolean ply = false;
     	if(event instanceof HangingBreakByEntityEvent)
         {
             org.bukkit.entity.Entity remover = ((HangingBreakByEntityEvent)event).getRemover();
 		    if(remover instanceof Player) 
 		    {
 		    	Player player = (Player)remover;
-	    		
+		    	ply = true;
 	    		if(!this.helper.canBuildHere(player, event.getEntity().getWorld().getBlockAt(event.getEntity().getLocation())))
 	            {
 	    			this.helper.blockedEvent.put(event.hashCode(), true);
 	            	event.setCancelled(true);
 	            	return;
 	            }
-		    } else if(configManager.doProtectPicsTNT == 1 && event.getCause() == RemoveCause.EXPLOSION)
-		    {
-		    	this.helper.blockedEvent.put(event.hashCode(), true);
-            	event.setCancelled(true);
-            	return;
-		    }
+		    }  
         }
+    	
+    	if(configManager.doProtectPicsTNT == 1 && ply == false)
+	    {
+	    	this.helper.blockedEvent.put(event.hashCode(), true);
+        	event.setCancelled(true);
+        	return;
+	    }
     }
     
 }
