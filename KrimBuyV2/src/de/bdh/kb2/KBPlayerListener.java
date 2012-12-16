@@ -415,8 +415,8 @@ public class KBPlayerListener implements Listener
 	        }
 	        
 			
-	        //Schilder d�rfen immer geklickt werden - sowie minecarts immer auf rails gesetzt werden d�rfen
-	        else if(event.getAction() == Action.RIGHT_CLICK_BLOCK && ((gt == 63 || gt == 68 || gt == 323) || (player.getItemInHand().getTypeId() == 328 && (gt == 27 || gt == 28 || gt == 66))))
+	        //Schilder d�rfen immer geklickt werden - sowie minecarts immer auf rails oder wool gesetzt werden d�rfen
+	        else if(event.getAction() == Action.RIGHT_CLICK_BLOCK && ((gt == 63 || gt == 68 || gt == 323) || (player.getItemInHand().getTypeId() == 328 && (gt == Material.WOOL.getId() || gt == 27 || gt == 28 || gt == 66))))
 	        {
 	        	this.helper.blockedEvent.put(event.hashCode(), false);
 	        	event.setCancelled(false);
