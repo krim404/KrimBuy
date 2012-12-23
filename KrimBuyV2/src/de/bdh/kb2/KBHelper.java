@@ -319,7 +319,7 @@ public class KBHelper
     	
     	if(configManager.worldLimit.get(p.getWorld()) != null)
 		{
-			if(!configManager.worldLimit.get(p.getWorld()).isIn(b.getLocation()))
+			if(!configManager.worldLimit.get(p.getWorld()).isIn(b.getLocation(),p))
 				return true;
 		}
 

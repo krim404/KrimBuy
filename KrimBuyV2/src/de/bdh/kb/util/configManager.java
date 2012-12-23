@@ -30,6 +30,7 @@ public class configManager {
     public static Integer doSponge = 1;
     public static Integer doPiston = 1;
     public static Integer doProtectPicsTNT = 1;
+    public static String permOutBorder = "";
     public static Integer fromx = 0,fromy = 0,fromz = 0,tox = 0,toy = 0,toz = 0;
     public static HashMap<World,kbWorld> worldLimit = new HashMap<World,kbWorld>();
     private static File confFile;
@@ -71,14 +72,16 @@ public class configManager {
         doProtectPicsTNT = conf.getInt("System.protectPicturesFromTNT",doProtectPicsTNT);
         worlds = conf.getString("System.worlds",worlds);
         
-        fromx = conf.getInt("System.worldLimit.default.protect.from.x",0);
-        fromy = conf.getInt("System.worldLimit.default.protect.from.y",0);
-        fromz = conf.getInt("System.worldLimit.default.protect.from.z",0);
-        tox = conf.getInt("System.worldLimit.default.protect.to.x",0);
-        toy = conf.getInt("System.worldLimit.default.protect.to.y",0);
-        toz = conf.getInt("System.worldLimit.default.protect.to.z",0);
+        fromx = conf.getInt("System.worldLimit.default.protect.from.x",fromx);
+        fromy = conf.getInt("System.worldLimit.default.protect.from.y",fromy);
+        fromz = conf.getInt("System.worldLimit.default.protect.from.z",fromz);
+        tox = conf.getInt("System.worldLimit.default.protect.to.x",tox);
+        toy = conf.getInt("System.worldLimit.default.protect.to.y",toy);
+        toz = conf.getInt("System.worldLimit.default.protect.to.z",toz);
+        permOutBorder = conf.getString("System.worldLimit.default.protect.permOut",permOutBorder);
         
         Integer tx,ty,tz,fx,fy,fz;
+        String pr;
         
 		if(worlds != null && worlds.length() > 0)
 		{
@@ -93,12 +96,14 @@ public class configManager {
 			        fx = conf.getInt("System.worldLimit."+bl+".protect.from.x",0);
 			        fy = conf.getInt("System.worldLimit."+bl+".protect.from.y",0);
 			        fz = conf.getInt("System.worldLimit."+bl+".protect.from.z",0);
+			        pr = conf.getString("System.worldLimit."+bl+".protect.permOut","");
+			        
 			        if(!(tx == fx && ty == fy && tz == fz))
 			        {
-			        	worldLimit.put(Bukkit.getWorld(bl) , new kbWorld(bl,fx,fy,fz,tx,ty,tz));
+			        	worldLimit.put(Bukkit.getWorld(bl) , new kbWorld(bl,fx,fy,fz,tx,ty,tz,pr));
 			        } else if(!(fromx == tox && fromy == toy && fromz == toz))
 		            {
-			        	worldLimit.put(Bukkit.getWorld(bl) , new kbWorld(bl,fromx,fromy,fromz,tox,toy,toz));
+			        	worldLimit.put(Bukkit.getWorld(bl) , new kbWorld(bl,fromx,fromy,fromz,tox,toy,toz,permOutBorder));
 		            } 
 			   }
 			}
@@ -159,6 +164,7 @@ public class configManager {
             conf.set("System.worldLimit.default.protect.to.x",tox);
             conf.set("System.worldLimit.default.protect.to.y",toy);
             conf.set("System.worldLimit.default.protect.to.z",toz);
+            conf.set("System.worldLimit.default.protect.permOut","");
           
             
             try {

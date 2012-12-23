@@ -2,10 +2,11 @@ package de.bdh.kb.util;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 public class kbWorld 
 {
-	public kbWorld(String w, Integer fx2, Integer fy2, Integer fz2, Integer tx2, Integer ty2, Integer tz2) 
+	public kbWorld(String w, Integer fx2, Integer fy2, Integer fz2, Integer tx2, Integer ty2, Integer tz2, String perm) 
 	{
 		this.fx = fx2;
 		this.fy = fy2;
@@ -14,10 +15,12 @@ public class kbWorld
 		this.ty = ty2;
 		this.tz = tz2;
 		this.world = w;
+		this.perm = perm;
 		
 	}
 	public Integer fx,fy,fz,tx,ty,tz;
 	public String world;
+	public String perm;
 	
 	public boolean isIn(Location l)
 	{
@@ -30,5 +33,16 @@ public class kbWorld
 			return true;
 		else
 			return false;
+	}
+	
+	public boolean isIn(Location l, Player p)
+	{
+		if(this.perm.length() > 0)
+		{
+			if(!p.hasPermission(this.perm) && !this.isIn(l))
+				return true;
+		}
+		
+		return this.isIn(l);
 	}
 }
