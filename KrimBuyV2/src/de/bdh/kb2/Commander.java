@@ -549,41 +549,51 @@ public class Commander implements CommandExecutor {
 	        		{
 	        			int id = this.helper.getIDbyBlock(b);
 	        			KBArea a = this.helper.getArea(id);
-	        			if(a.cansell > 0 && a.sold == 1 && a.owner.equalsIgnoreCase(sender.getName()))
+	        			if(a != null)
 	        			{
-	        				int amount = (new Double(a.paid * (new Double(a.cansell) / 100.0))).intValue();
-	        				if(args.length == 0)
-	        				{
-	        					if(configManager.lang.equalsIgnoreCase("de"))
-	        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du kannst dieses Grundstueck fuer ").append(amount).append(this.plugin.econ.currencyNamePlural()).append(" verkaufen. Gib hierzu '/sellGS okay' ein").toString());
-	        					else
-	        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You can sell this lot for ").append(amount).append(this.plugin.econ.currencyNamePlural()).append(". Just enter '/sellGS okay'").toString());
-
-	        				}
-	        				else
-	        				{
-	        					this.plugin.econ.depositPlayer(sender.getName(), amount);
-	        					if(a.clear > 0)
-	        					{
-	        						a.clearGS();
-	        						this.helper.updateArea((Player)sender,b);
-	        					}
-	        					
-	        					this.helper.freeGS(id);
-	        					a.loadByID(id);
-	        					
-	        					if(configManager.lang.equalsIgnoreCase("de"))
-	        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast das Grundstueck erfolgreich verkauft und ").append(amount).append(this.plugin.econ.currencyNamePlural()).append(" erhalten").toString());
-	        					else
-	        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've sold the lot and gained ").append(amount).append(this.plugin.econ.currencyNamePlural()).toString());
-
-	        				}
+		        			if(a.cansell > 0 && a.sold == 1 && a.owner.equalsIgnoreCase(sender.getName()))
+		        			{
+		        				int amount = (new Double(a.paid * (new Double(a.cansell) / 100.0))).intValue();
+		        				if(args.length == 0)
+		        				{
+		        					if(configManager.lang.equalsIgnoreCase("de"))
+		        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du kannst dieses Grundstueck fuer ").append(amount).append(this.plugin.econ.currencyNamePlural()).append(" verkaufen. Gib hierzu '/sellGS okay' ein").toString());
+		        					else
+		        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You can sell this lot for ").append(amount).append(this.plugin.econ.currencyNamePlural()).append(". Just enter '/sellGS okay'").toString());
+	
+		        				}
+		        				else
+		        				{
+		        					this.plugin.econ.depositPlayer(sender.getName(), amount);
+		        					if(a.clear > 0)
+		        					{
+		        						a.clearGS();
+		        						this.helper.updateArea((Player)sender,b);
+		        					}
+		        					
+		        					this.helper.freeGS(id);
+		        					a.loadByID(id);
+		        					
+		        					if(configManager.lang.equalsIgnoreCase("de"))
+		        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast das Grundstueck erfolgreich verkauft und ").append(amount).append(this.plugin.econ.currencyNamePlural()).append(" erhalten").toString());
+		        					else
+		        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've sold the lot and gained ").append(amount).append(this.plugin.econ.currencyNamePlural()).toString());
+	
+		        				}
+		        			} else
+		        			{
+		        				if(configManager.lang.equalsIgnoreCase("de"))
+		        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du kannst dieses Grundstueck nicht verkaufen").toString());
+		        				else
+		        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You can't sell this lot").toString());
+	
+		        			}
 	        			} else
 	        			{
 	        				if(configManager.lang.equalsIgnoreCase("de"))
-	        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du kannst dieses Grundstueck nicht verkaufen").toString());
-	        				else
-	        					sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You can't sell this lot").toString());
+	            				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast kein gueltiges Grundstueck ausgewaehlt").toString());
+	            			else
+	            				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've not selected a valid lot").toString());
 
 	        			}
 	        		}

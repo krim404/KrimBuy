@@ -257,16 +257,7 @@ public class KBHelper
 	}
 	
 	public boolean canBuildHereData(Player p, Block b)
-	{
-		if(!this.worlds.contains(p.getWorld().getName()))
-    		return true;
-		
-		if(configManager.worldLimit.get(p.getWorld()) != null)
-		{
-			if(!configManager.worldLimit.get(p.getWorld()).isIn(b.getLocation()))
-				return true;
-		}
-		
+	{	
 		KBArea item = null;
     	List<Integer> li = this.getPlayerAreas(p);
     	if(li != null)
