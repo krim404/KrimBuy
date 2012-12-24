@@ -801,63 +801,72 @@ public class Commander implements CommandExecutor {
 	        				KBArea a = this.helper.getArea(id);
 	        				if(a != null)
 	        				{
-	        					if(a.sold != 1)
-	        					{
-	        						Double prc = new Double(a.price);
-									
-									if(this.plugin.econ.getBalance(sender.getName()) >= prc)
-									{
-										if((a.perm.length() > 0 && sender.hasPermission(a.perm)) || a.perm.length() == 0)
+	        					if(a.nobuy == 0)
+		        				{
+		        					if(a.sold != 1)
+		        					{
+		        						Double prc = new Double(a.price);
+										
+										if(this.plugin.econ.getBalance(sender.getName()) >= prc)
 										{
-											if(a.onlyamount == 0 || this.helper.getGSAmount((Player)sender,a.ruleset,a.gruppe) < a.onlyamount)
+											if((a.perm.length() > 0 && sender.hasPermission(a.perm)) || a.perm.length() == 0)
 											{
-												if(this.plugin.econ.withdrawPlayer(sender.getName(), prc).transactionSuccess())
+												if(a.onlyamount == 0 || this.helper.getGSAmount((Player)sender,a.ruleset,a.gruppe) < a.onlyamount)
 												{
-													this.helper.obtainGS(id, sender.getName());
-													if(configManager.lang.equalsIgnoreCase("de"))
-														sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast das Grundstueck gekauft").toString());
-													else
-														sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've bought this lot").toString());
-
+													if(this.plugin.econ.withdrawPlayer(sender.getName(), prc).transactionSuccess())
+													{
+														this.helper.obtainGS(id, sender.getName());
+														if(configManager.lang.equalsIgnoreCase("de"))
+															sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast das Grundstueck gekauft").toString());
+														else
+															sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've bought this lot").toString());
+	
+													} else
+													{
+														if(configManager.lang.equalsIgnoreCase("de"))
+															sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Etwas ist schiefgelaufen. Bitte erstelle eine /PE").toString());
+														else
+															sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Something went wrong. Contact an administrator").toString());
+		
+													}
 												} else
 												{
 													if(configManager.lang.equalsIgnoreCase("de"))
-														sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Etwas ist schiefgelaufen. Bitte erstelle eine /PE").toString());
+														sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast bereits zuviele Grundstuecke von diesem Typ").toString());
 													else
-														sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Something went wrong. Contact an administrator").toString());
+														sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've already got too many lots of this type").toString());
 	
 												}
 											} else
 											{
 												if(configManager.lang.equalsIgnoreCase("de"))
-													sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast bereits zuviele Grundstuecke von diesem Typ").toString());
+													sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du darfst dieses Grundstueck nicht kaufen").toString());
 												else
-													sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've already got too many lots of this type").toString());
-
-											}
+													sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You're not allowed to buy this lot").toString());
+	
+											}	
 										} else
 										{
 											if(configManager.lang.equalsIgnoreCase("de"))
-												sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du darfst dieses Grundstueck nicht kaufen").toString());
+												sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast nicht genug Geld").toString());
 											else
-												sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You're not allowed to buy this lot").toString());
-
-										}	
+												sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You don't have enough money").toString());
+	
+										}
 									} else
 									{
 										if(configManager.lang.equalsIgnoreCase("de"))
-											sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast nicht genug Geld").toString());
+											sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dieses Grundstueck ist bereits verkauft").toString());
 										else
-											sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You don't have enough money").toString());
-
+											sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot is already sold").toString());
 									}
-								} else
+		        				}
+	        					else
 								{
 									if(configManager.lang.equalsIgnoreCase("de"))
-										sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dieses Grundstueck ist bereits verkauft").toString());
+										sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dieses Grundstueck ist nicht verkaeuflich").toString());
 									else
 										sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot is not for sale").toString());
-
 								}
 	        				} else
 	        				{

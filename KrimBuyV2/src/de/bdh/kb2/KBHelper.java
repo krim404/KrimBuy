@@ -299,8 +299,11 @@ public class KBHelper
     			{
     				if(item.isIn(b.getLocation()))
 	    			{
-	    				if(item.canPlaceBlock(b))
-	    					return true;
+    					if((item.perm.length() > 0 && p.hasPermission(item.perm)) || item.perm.length() == 0)
+    					{
+    						if(item.canPlaceBlock(b))
+    	    					return true;
+    					}
 	    			}
     			}
 			}
