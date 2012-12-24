@@ -524,34 +524,42 @@ public class KBPlayerListener implements Listener
         				//GS noch nicht verkauft
         				if(a.sold == 0)
         				{
-        					if(configManager.lang.equalsIgnoreCase("de"))
-        						event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dieser Bauplatz vom Typ ").append(typ).append(" steht zum Verkauf").toString());
-        					else
-        						event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot of the type  ").append(typ).append(" is for sale").toString());
-        					if(a.price > 0)
+        					if(a.nobuy == 0)
+        					{
+	        					if(configManager.lang.equalsIgnoreCase("de"))
+	        						event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dieser Bauplatz vom Typ ").append(typ).append(" steht zum Verkauf").toString());
+	        					else
+	        						event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot of the type  ").append(typ).append(" is for sale").toString());
+	        					if(a.price > 0)
+	        					{
+	        						if(configManager.lang.equalsIgnoreCase("de"))
+	        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Der Preis beträgt ").append(a.price).append(this.p.econ.currencyNamePlural()).toString());
+	        						else
+	        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("It cost ").append(a.price).append(this.p.econ.currencyNamePlural()).toString());
+	
+	        					}
+	        					else
+	        					{
+	        						if(configManager.lang.equalsIgnoreCase("de"))
+	        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück ist kostenlos").toString());
+	        						else
+	        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("It's free").toString());
+	
+	        					}
+								if(s.length() > 1)
+									event.getPlayer().sendMessage(s.toString());
+								
+								if(configManager.lang.equalsIgnoreCase("de"))
+									event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Wenn du dies kaufen willst, gib /buyGS ein").toString());
+								else
+									event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("If you want to buy this - enter /buyGS").toString());
+        					} else
         					{
         						if(configManager.lang.equalsIgnoreCase("de"))
-        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Der Preis beträgt ").append(a.price).append(this.p.econ.currencyNamePlural()).toString());
-        						else
-        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("It cost ").append(a.price).append(this.p.econ.currencyNamePlural()).toString());
-
+									event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dieses Grundstueck ist unverkaeuflich").toString());
+								else
+									event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot is not for sale").toString());
         					}
-        					else
-        					{
-        						if(configManager.lang.equalsIgnoreCase("de"))
-        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück ist kostenlos").toString());
-        						else
-        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("It's free").toString());
-
-        					}
-							if(s.length() > 1)
-								event.getPlayer().sendMessage(s.toString());
-							
-							if(configManager.lang.equalsIgnoreCase("de"))
-								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Wenn du dies kaufen willst, gib /buyGS ein").toString());
-							else
-								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("If you want to buy this - enter /buyGS").toString());
-
         				} else if(a.owner.equalsIgnoreCase(event.getPlayer().getName()))
         				{
 							StringBuilder sndm = (new StringBuilder()).append(ChatColor.YELLOW).append("Level: '").append(a.level);
