@@ -405,7 +405,7 @@ public class KBPlayerListener implements Listener
 			}
 
 			//Verhindere manipulation an Pipes - BrauTec Mod
-			else if(event.getAction() == Action.RIGHT_CLICK_BLOCK && (gt == 166 || gt == 187) && configManager.BrauTec.equalsIgnoreCase("1"))
+			else if(event.getAction() == Action.RIGHT_CLICK_BLOCK && (gt == 166 || gt == 187 || gt == 215) && configManager.BrauTec.equalsIgnoreCase("1"))
 	        {
 	        	if(!this.helper.canBuildHere(player, b))
 				{
