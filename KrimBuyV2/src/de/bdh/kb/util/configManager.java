@@ -30,6 +30,7 @@ public class configManager {
     public static Integer doSponge = 1;
     public static Integer doPiston = 1;
     public static Integer doProtectPicsTNT = 1;
+    public static Integer interactBlock = 7;
     public static String permOutBorder = "";
     public static Integer fromx = 0,fromy = 0,fromz = 0,tox = 0,toy = 0,toz = 0;
     public static HashMap<World,kbWorld> worldLimit = new HashMap<World,kbWorld>();
@@ -71,6 +72,7 @@ public class configManager {
         doPiston = conf.getInt("System.hookPistonEvent",doPiston);
         doProtectPicsTNT = conf.getInt("System.protectPicturesFromTNT",doProtectPicsTNT);
         worlds = conf.getString("System.worlds",worlds);
+        interactBlock = conf.getInt("System.interactBlock",interactBlock);
         
         fromx = conf.getInt("System.worldLimit.default.protect.from.x",fromx);
         fromy = conf.getInt("System.worldLimit.default.protect.from.y",fromy);
@@ -151,6 +153,7 @@ public class configManager {
             conf.set("System.Database.Settings.MySQL.Password", SQLPassword);
             conf.set("System.interactMessage", interactMessage);
             //conf.set("System.BrauTec", BrauTec);
+            conf.set("System.interactBlock",interactBlock);
             conf.set("System.worlds", worlds);
             conf.set("System.lang", lang);
             conf.set("System.sponge", doSponge);

@@ -314,7 +314,7 @@ public class KBPlayerListener implements Listener
 		int i = blockplaceevent.getBlock().getTypeId();
 		Player p = blockplaceevent.getPlayer();
 		
-		if(p.hasPermission("kb.create") && (i == 7))
+		if(p.hasPermission("kb.create") && (i == configManager.interactBlock))
 		{
 			this.helper.lastBlock.put(p, blockplaceevent.getBlock());
 		}
@@ -337,7 +337,7 @@ public class KBPlayerListener implements Listener
         	return;
         }
         
-        if(blockbreakevent.getBlock().getTypeId() == Material.SPONGE.getId() && blockbreakevent.getBlock().getRelative(BlockFace.DOWN).getTypeId() == 7)
+        if(blockbreakevent.getBlock().getTypeId() == Material.SPONGE.getId() && blockbreakevent.getBlock().getRelative(BlockFace.DOWN).getTypeId() == configManager.interactBlock)
         {
         	this.helper.blockedEvent.put(blockbreakevent.hashCode(), true);
     		blockbreakevent.setCancelled(true);
@@ -348,7 +348,7 @@ public class KBPlayerListener implements Listener
 		Block b = blockbreakevent.getBlock();
 		int i = b.getTypeId();
 		Player p = blockbreakevent.getPlayer();
-		if(p.hasPermission("kb.create") && (i == 7))
+		if(p.hasPermission("kb.create") && (i == configManager.interactBlock))
 		{
 			Long lc = lastclick.get(blockbreakevent.getPlayer());
 			lastclick.put(blockbreakevent.getPlayer(), System.currentTimeMillis());
@@ -382,12 +382,14 @@ public class KBPlayerListener implements Listener
 			return;
 		
     	Player player = event.getPlayer();
-    	
+    
         if((event.getClickedBlock() instanceof Block))
 		{
 			Block b = event.getClickedBlock();
 			int gt = b.getTypeId();
 
+			if(b.getType() == Material.AIR)
+				return;
 			
 			if((gt == Material.DISPENSER.getId() || gt == Material.FURNACE.getId() || gt == Material.CHEST.getId()) && player.hasPermission("kb.nochest") && !player.hasPermission("kb.chest"))
 			{
@@ -405,7 +407,7 @@ public class KBPlayerListener implements Listener
 			}
 
 			//Verhindere manipulation an Pipes - BrauTec Mod
-			else if(event.getAction() == Action.RIGHT_CLICK_BLOCK && (gt == 166 || gt == 187 || gt == 215) && configManager.BrauTec.equalsIgnoreCase("1"))
+			else if(event.getAction() == Action.RIGHT_CLICK_BLOCK && (gt == 166 || gt == 187 || gt == 215) && !configManager.BrauTec.equalsIgnoreCase("0"))
 	        {
 	        	if(!this.helper.canBuildHere(player, b))
 				{
@@ -443,12 +445,10 @@ public class KBPlayerListener implements Listener
 
                             }
                         }
-                        
-	        	
-	        }
+   	        }
 	        	
 	        //Steinkn�pfe gehen immer genauso wie 225 ( BrauTec ) und Bedrock
-	        else if((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_BLOCK) && (event.getClickedBlock().getTypeId() != 7 && event.getClickedBlock().getTypeId() != 225 && event.getClickedBlock().getTypeId() != Material.STONE_BUTTON.getId()))
+	        else if((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_BLOCK) && (event.getClickedBlock().getTypeId() != configManager.interactBlock && event.getClickedBlock().getTypeId() != 225 && event.getClickedBlock().getTypeId() != Material.STONE_BUTTON.getId()))
 			{
 				if(!(this.helper.canBuildHere(player, b.getRelative(BlockFace.UP))) && !this.helper.canBuildHere(player, b) && !event.getPlayer().hasPermission("kb.interact"))
 				{
@@ -471,12 +471,13 @@ public class KBPlayerListener implements Listener
 						player.sendMessage("Du darfst keine fremden Truhen �ffnen");
 					else
 		        		player.sendMessage("You're not allowed to open chests from other players");
+					
 
 				}
 			}
 	        
 	        //Interaktionsblock
-	        else if(b.getTypeId() == 7 && !event.getPlayer().isSneaking())
+	        else if(b.getTypeId() == configManager.interactBlock && !event.getPlayer().isSneaking())
 			{
 				if(event.getPlayer().hasPermission("kb.create"))
 					this.helper.lastBlock.put(event.getPlayer(), b);
@@ -605,7 +606,7 @@ public class KBPlayerListener implements Listener
         				}
         			}
         		}
-			}
+			} 
 		}
     }
 	   

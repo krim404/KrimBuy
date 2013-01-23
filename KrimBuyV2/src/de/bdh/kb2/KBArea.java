@@ -219,7 +219,7 @@ public class KBArea
 					while(z <= tz)
 					{
 						b = Bukkit.getWorld(this.world).getBlockAt(x, y, z);
-						if(this.canPlaceBlock(b) && (b.getTypeId() != 7 && b.getTypeId() != 19))
+						if(this.canPlaceBlock(b) && (b.getTypeId() != configManager.interactBlock && b.getTypeId() != 19))
 						{
 							//System.out.println((new StringBuilder()).append(ChatColor.RED).append("X,Y,Z").append(x).append(",").append(y).append(",").append(z).toString());
 							b.setTypeId(0);
@@ -249,7 +249,7 @@ public class KBArea
 				while(z <= tz)
 				{
 					b = Bukkit.getWorld(this.world).getBlockAt(x, y, z);
-					if(this.canPlaceBlock(b) && b.getTypeId() != 7)
+					if(this.canPlaceBlock(b) && b.getTypeId() != configManager.interactBlock)
 					{
 						b.setTypeId(bottom);
 					} 
