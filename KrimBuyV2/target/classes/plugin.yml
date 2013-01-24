@@ -21,7 +21,7 @@ permissions:
     kb.nochest:
         description: Not Allowed to open chests
         default: op
-    kb.w:
+    kb.interact:
         description: Allowed to interact with everything
         default: op
     kb.teleport:

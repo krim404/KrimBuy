@@ -13,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -26,14 +27,17 @@ public class KBHelper
 	public KBHelper(Main m)
 	{
 		this.m = m;
-		this.worlds = new ArrayList<String>();
+		this.worlds = new ArrayList<World>();
 		String w = configManager.worlds;
 		if(w != null && w.length() > 0)
 		{
 			String[] tmpBoh = w.split(",");
 			for (String bl: tmpBoh) {
-			   System.out.println("[KB] Enabled for World: "+bl);
-			   this.worlds.add(bl);
+				if(Bukkit.getWorld(bl) != null)
+				{
+					System.out.println("[KB] Enabled for World: "+bl);
+					this.worlds.add(Bukkit.getWorld(bl));
+				}
 			}
 		}
 		
@@ -47,7 +51,7 @@ public class KBHelper
 	public Map<Player, Block> lastBlock = new HashMap<Player, Block>();
 	public List<Integer> pubList;
 	public HashMap<Integer,KBArea> areas = new HashMap<Integer,KBArea>();
-	public List<String> worlds;
+	public List<World> worlds;
 	
 	public void loadPubAreas()
 	{
@@ -308,15 +312,28 @@ public class KBHelper
 		if(p.hasPermission("kb.build")) return true;
     	if(b.getTypeId() == 328) return true;
     	
-    	if(!this.worlds.contains(p.getWorld().getName()))
+    	if(!this.worlds.contains(p.getWorld()))
     		return true;
+    	
+    	
     	
     	if(configManager.worldLimit.get(p.getWorld()) != null)
 		{
 			if(!configManager.worldLimit.get(p.getWorld()).isIn(b.getLocation(),p))
 				return true;
 		}
-
+    	
+    	//Mystcraft Workaround
+    	if(configManager.BrauTec.equals("2"))
+    	{
+    		Block tmp = p.getWorld().getBlockAt(1, 1, 1);
+    		if(tmp != null)
+    		{
+    			if(tmp.getTypeId() != Material.GOLD_BLOCK.getId())
+    				return true;
+    		} else return true;
+    	}
+    	
     	return this.canBuildHereData(p, b);
 	}
 	
