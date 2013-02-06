@@ -90,7 +90,6 @@ public class Main extends JavaPlugin
         	econ = rsp.getProvider();
         
         helper = new KBHelper(this);
-        helper.Tick();
         playerListener = new KBPlayerListener(this);
         
         KBTimer k = new KBTimer(this);

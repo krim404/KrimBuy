@@ -7,6 +7,7 @@ public class KBTimer implements Runnable {
 	public KBTimer(Main main)
     {
         this.main = main;
+        time = System.currentTimeMillis();
     }
 	
 	public void run()

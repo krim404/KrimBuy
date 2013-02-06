@@ -329,9 +329,11 @@ public class KBHelper
     		Block tmp = p.getWorld().getBlockAt(1, 1, 1);
     		if(tmp != null)
     		{
-    			if(tmp.getTypeId() != Material.GOLD_BLOCK.getId())
+    			if(tmp.getTypeId() == Material.GOLD_BLOCK.getId())
+    			{
     				return true;
-    		} else return true;
+    			}
+    		} 
     	}
     	
     	return this.canBuildHereData(p, b);
