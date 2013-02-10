@@ -82,7 +82,7 @@ public class configManager {
         toy = conf.getInt("System.worldLimit.default.protect.to.y",toy);
         toz = conf.getInt("System.worldLimit.default.protect.to.z",toz);
         permOutBorder = conf.getString("System.worldLimit.default.protect.permOut",permOutBorder);
-        basepvp = conf.getBoolean("System.worldLimit.default.protect.pvp",basepvp);
+        basepvp = conf.getBoolean("System.worldLimit.default.protect.blockpvp",basepvp);
         
         Integer tx,ty,tz,fx,fy,fz;
         String pr;
@@ -102,7 +102,7 @@ public class configManager {
 			        fy = conf.getInt("System.worldLimit."+bl+".protect.from.y",0);
 			        fz = conf.getInt("System.worldLimit."+bl+".protect.from.z",0);
 			        pr = conf.getString("System.worldLimit."+bl+".protect.permOut","");
-			        pevp = conf.getBoolean("System.worldLimit."+bl+".protect.pvp",false);
+			        pevp = conf.getBoolean("System.worldLimit."+bl+".protect.blockpvp",false);
 			        
 			        if(!(tx == fx && ty == fy && tz == fz))
 			        {
@@ -172,7 +172,7 @@ public class configManager {
             conf.set("System.worldLimit.default.protect.to.y",toy);
             conf.set("System.worldLimit.default.protect.to.z",toz);
             conf.set("System.worldLimit.default.protect.permOut","");
-            conf.set("System.worldLimit.default.protect.pvp",basepvp);
+            conf.set("System.worldLimit.default.protect.blockpvp",basepvp);
           
             
             try {

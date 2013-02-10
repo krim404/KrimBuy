@@ -16,10 +16,10 @@ public class kbWorld
 		this.tz = tz2;
 		this.world = w;
 		this.perm = perm;
-		this.pvp = pvp;
+		this.blockpvp = pvp;
 	}
 	public Integer fx,fy,fz,tx,ty,tz;
-	public boolean pvp = false;
+	public boolean blockpvp = false;
 	public String world;
 	public String perm;
 	

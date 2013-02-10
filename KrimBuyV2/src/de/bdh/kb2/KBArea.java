@@ -25,6 +25,7 @@ public class KBArea
 	public HashMap<Block,Integer> floor = null;
 	String world = "", pass = "", owner = "", ruleset = "", perm = "", gruppe = "";
 	boolean pvp = false;
+	boolean invers = false;
 	Main m;
 	
 	public KBArea(Main m)
@@ -103,8 +104,12 @@ public class KBArea
 						if(blocks != null && blocks.length() > 0)
 						{
 							String[] tmpBoh = blocks.split(",");
-							for (String bl: tmpBoh) {
-							   this.boh.add(Integer.parseInt(bl));
+							for (String bl: tmpBoh) 
+							{
+								if(bl.equalsIgnoreCase("!"))
+									this.invers = true;
+								else
+									this.boh.add(Integer.parseInt(bl));
 							}
 						}
 						
@@ -155,11 +160,26 @@ public class KBArea
 			return false;
 	}
 	
+	public boolean canPlaceBlock(int id)
+	{
+		if(id == 0)
+			return true;
+		
+		boolean ret;
+		if(this.boh.contains(id))
+			ret = false;
+		else ret = true;
+		
+		
+		if(this.invers)
+			return !ret;
+		else
+			return ret;
+	}
+	
 	public boolean canPlaceBlock(Block b)
 	{
-		if(this.boh.contains(b.getTypeId()))
-			return false;
-		else return true;
+		return this.canPlaceBlock(b.getTypeId());
 	}
 	
 	public void loadFloor()

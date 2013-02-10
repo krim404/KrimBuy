@@ -31,7 +31,10 @@ permissions:
         description: Allowed to teleport to a free lot with any price
         default: op
     kb.admin:
-        description: Kann die BrauTec Limits umgehen
+        description: Kann die Limits umgehen
+        default: op
+    kb.alwayspvp:
+        description: user has always pvp on
         default: op
     kab.build:
         description: Allowed to build (master)

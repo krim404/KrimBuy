@@ -260,13 +260,69 @@ public class KBHelper
 		}
 	}
 	
+	public boolean canPVPHere(Player p)
+	{
+		if(!this.worlds.contains(p.getWorld()))
+    		return true;
+    	
+
+    	if(configManager.worldLimit.get(p.getWorld()) != null)
+		{
+			if(!configManager.worldLimit.get(p.getWorld()).isIn(p.getLocation(),p))
+				return true;
+			
+			if(configManager.worldLimit.get(p.getWorld()).blockpvp == false)
+				return true;
+		}
+    	
+		KBArea item = null;
+		List<Integer> li = this.getPlayerAreas(p);
+    	if(li != null)
+    	{
+    		for (Integer i: li) 
+    		{	
+    			item = this.getArea(i);
+    			if(item != null && item.pvp == true)
+    			{
+    				String pw = this.pass.get(p.getName());
+    				if((pw != null && item.pass.length() > 0 && item.pass.equals(pw)) || item.owner.equals(p.getName()))
+    				{
+		    			if(item.isIn(p.getLocation()))
+		    			{
+		    				return true;
+		    			}
+    				}
+    			}
+    		}
+    	}
+    	
+    	for(Integer i: this.pubList)
+    	{
+    		item = this.getArea(i);
+    		if(item != null)
+			{
+    			if(item.pvp == true)
+    			{
+    				if(item.isIn(p.getLocation()))
+	    			{
+    					if((item.perm.length() > 0 && p.hasPermission(item.perm)) || item.perm.length() == 0)
+    					{
+    	    				return true;
+    					}
+	    			}
+    			}
+			}
+    	}
+    	
+    	return false;
+	}
+	
 	public boolean canBuildHereData(Player p, Block b)
 	{	
 		KBArea item = null;
     	List<Integer> li = this.getPlayerAreas(p);
     	if(li != null)
     	{
-    		
     		for (Integer i: li) 
     		{	
     			item = this.getArea(i);
@@ -277,7 +333,7 @@ public class KBHelper
     				{
 		    			if(item.isIn(b.getLocation()))
 		    			{
-		    				if(item.canPlaceBlock(b))
+		    				if(b == null || item.canPlaceBlock(b))
 		    					return true;
 		    			}
     				}
@@ -296,7 +352,7 @@ public class KBHelper
 	    			{
     					if((item.perm.length() > 0 && p.hasPermission(item.perm)) || item.perm.length() == 0)
     					{
-    						if(item.canPlaceBlock(b))
+    						if(b == null || item.canPlaceBlock(b))
     	    					return true;
     					}
 	    			}
@@ -315,26 +371,12 @@ public class KBHelper
     	if(!this.worlds.contains(p.getWorld()))
     		return true;
     	
-    	
-    	
+
     	if(configManager.worldLimit.get(p.getWorld()) != null)
 		{
 			if(!configManager.worldLimit.get(p.getWorld()).isIn(b.getLocation(),p))
 				return true;
 		}
-    	
-    	//Mystcraft Workaround
-    	if(configManager.BrauTec.equals("2"))
-    	{
-    		Block tmp = p.getWorld().getBlockAt(1, 1, 1);
-    		if(tmp != null)
-    		{
-    			if(tmp.getTypeId() == Material.GOLD_BLOCK.getId())
-    			{
-    				return true;
-    			}
-    		} 
-    	}
     	
     	return this.canBuildHereData(p, b);
 	}

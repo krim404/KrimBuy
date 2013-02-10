@@ -10,7 +10,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Snowball;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -20,6 +23,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -373,6 +377,65 @@ public class KBPlayerListener implements Listener
         	}
 		}
 	}
+    
+    //PVP
+    @EventHandler
+	public void onAssault(EntityDamageByEntityEvent event)
+    {
+    	//Betrifft nur Spieler
+    	if(!(event.getEntity() instanceof Player))
+    		return;
+    	
+    	Player damaged = (Player)event.getEntity();
+    	
+    	if(damaged.hasPermission("kb.alwayspvp") && !damaged.isOp())
+    		return;
+    	
+    	Player damager = null;
+    	boolean dispensed = false;
+    	
+    	//Hole Shooterdaten
+        if(event.getDamager() instanceof Arrow)
+        {
+        	Arrow ar = (Arrow)event.getDamager();
+        	if(ar.getShooter() instanceof Player)
+        		damager = (Player) ar.getShooter();
+        	else if(ar.getShooter() == null)
+        		dispensed = true;
+        } else if(event.getDamager() instanceof Snowball)
+        {
+        	Snowball ar = (Snowball)event.getDamager();
+        	if(ar.getShooter() instanceof Player)
+        		damager = (Player) ar.getShooter();
+        	else if(ar.getShooter() == null)
+        		dispensed = true;
+        } else if(event.getDamager() instanceof Fireball)
+        {
+        	Fireball ar = (Fireball)event.getDamager();
+        	if(ar.getShooter() instanceof Player)
+        		damager = (Player) ar.getShooter();
+        	else if(ar.getShooter() == null)
+        		dispensed = true;
+        } else if(event.getDamager() instanceof Player)
+        	damager = (Player)event.getDamager();
+        
+        if(dispensed == true)
+        {
+        	if(Main.helper.canPVPHere(damaged) == false)
+        		event.setCancelled(true);
+        	
+        } else if(damager != null)
+        {
+        	if(Main.helper.canPVPHere(damaged) == false || Main.helper.canPVPHere(damager) == false)
+        	{
+        		event.setCancelled(true);
+        		if(configManager.lang.equalsIgnoreCase("de"))
+    				damager.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du kannst diesen Spieler nicht angreifen").toString());
+    			else
+    				damager.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You cannot attack this player here").toString());
+        	}
+        }
+    }
     
     //DEFAULT Interact
 	@EventHandler(priority = EventPriority.LOW)
