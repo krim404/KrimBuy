@@ -33,6 +33,7 @@ public class configManager {
     public static Integer interactBlock = 7;
     public static String permOutBorder = "";
     public static Integer fromx = 0,fromy = 0,fromz = 0,tox = 0,toy = 0,toz = 0;
+    public static boolean basepvp = false;
     public static HashMap<World,kbWorld> worldLimit = new HashMap<World,kbWorld>();
     private static File confFile;
     
@@ -81,9 +82,11 @@ public class configManager {
         toy = conf.getInt("System.worldLimit.default.protect.to.y",toy);
         toz = conf.getInt("System.worldLimit.default.protect.to.z",toz);
         permOutBorder = conf.getString("System.worldLimit.default.protect.permOut",permOutBorder);
+        basepvp = conf.getBoolean("System.worldLimit.default.protect.pvp",basepvp);
         
         Integer tx,ty,tz,fx,fy,fz;
         String pr;
+        boolean pevp;
         
 		if(worlds != null && worlds.length() > 0)
 		{
@@ -99,13 +102,14 @@ public class configManager {
 			        fy = conf.getInt("System.worldLimit."+bl+".protect.from.y",0);
 			        fz = conf.getInt("System.worldLimit."+bl+".protect.from.z",0);
 			        pr = conf.getString("System.worldLimit."+bl+".protect.permOut","");
+			        pevp = conf.getBoolean("System.worldLimit."+bl+".protect.pvp",false);
 			        
 			        if(!(tx == fx && ty == fy && tz == fz))
 			        {
-			        	worldLimit.put(Bukkit.getWorld(bl) , new kbWorld(bl,fx,fy,fz,tx,ty,tz,pr));
+			        	worldLimit.put(Bukkit.getWorld(bl) , new kbWorld(bl,fx,fy,fz,tx,ty,tz,pr,pevp));
 			        } else if(!(fromx == tox && fromy == toy && fromz == toz))
 		            {
-			        	worldLimit.put(Bukkit.getWorld(bl) , new kbWorld(bl,fromx,fromy,fromz,tox,toy,toz,permOutBorder));
+			        	worldLimit.put(Bukkit.getWorld(bl) , new kbWorld(bl,fromx,fromy,fromz,tox,toy,toz,permOutBorder,basepvp));
 		            } 
 			   }
 			}
@@ -168,6 +172,7 @@ public class configManager {
             conf.set("System.worldLimit.default.protect.to.y",toy);
             conf.set("System.worldLimit.default.protect.to.z",toz);
             conf.set("System.worldLimit.default.protect.permOut","");
+            conf.set("System.worldLimit.default.protect.pvp",basepvp);
           
             
             try {

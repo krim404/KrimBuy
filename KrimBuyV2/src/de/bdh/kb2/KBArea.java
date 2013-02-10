@@ -24,6 +24,7 @@ public class KBArea
 	public List<Integer> boh = null;
 	public HashMap<Block,Integer> floor = null;
 	String world = "", pass = "", owner = "", ruleset = "", perm = "", gruppe = "";
+	boolean pvp = false;
 	Main m;
 	
 	public KBArea(Main m)
@@ -71,7 +72,7 @@ public class KBArea
 				if(this.ruleset.length() > 0)
 				{
 					PreparedStatement ps2;
-					ps2 = conn.prepareStatement((new StringBuilder()).append("SELECT height,deep,miet,autofree,blocks,bottom,controlblockheight,clear,cansell,permissionnode,nobuild,onlyamount,price,gruppe,nobuy FROM ").append(configManager.SQLTable).append("_krimbuy_rules WHERE ruleset = ? AND level = ? LIMIT 0,1").toString());
+					ps2 = conn.prepareStatement((new StringBuilder()).append("SELECT pvp,height,deep,miet,autofree,blocks,bottom,controlblockheight,clear,cansell,permissionnode,nobuild,onlyamount,price,gruppe,nobuy FROM ").append(configManager.SQLTable).append("_krimbuy_rules WHERE ruleset = ? AND level = ? LIMIT 0,1").toString());
 					ps2.setString(1, rs.getString("ruleset"));
 					int level = rs.getInt("level");
 					if(level == 0) level = 1;
@@ -92,6 +93,10 @@ public class KBArea
 						this.upgradeprice = rs2.getInt("price");
 						this.gruppe = rs2.getString("gruppe");
 						this.nobuy = rs2.getInt("nobuy");
+						
+						int prvp = rs2.getInt("pvp");
+						if(prvp == 1)
+							this.pvp = true;
 						
 						String blocks = rs2.getString("blocks");
 						this.boh = new ArrayList<Integer>();

@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 
 public class kbWorld 
 {
-	public kbWorld(String w, Integer fx2, Integer fy2, Integer fz2, Integer tx2, Integer ty2, Integer tz2, String perm) 
+	public kbWorld(String w, Integer fx2, Integer fy2, Integer fz2, Integer tx2, Integer ty2, Integer tz2, String perm, boolean pvp) 
 	{
 		this.fx = fx2;
 		this.fy = fy2;
@@ -16,9 +16,10 @@ public class kbWorld
 		this.tz = tz2;
 		this.world = w;
 		this.perm = perm;
-		
+		this.pvp = pvp;
 	}
 	public Integer fx,fy,fz,tx,ty,tz;
+	public boolean pvp = false;
 	public String world;
 	public String perm;
 	
