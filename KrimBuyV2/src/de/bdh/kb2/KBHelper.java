@@ -269,9 +269,12 @@ public class KBHelper
     	if(configManager.worldLimit.get(p.getWorld()) != null)
 		{
 			if(!configManager.worldLimit.get(p.getWorld()).isIn(p.getLocation(),p))
-				return true;
+			{
+				if(configManager.basepvp == false)
+					return true;
+			}
 			
-			if(configManager.worldLimit.get(p.getWorld()).blockpvp == false)
+			else if(configManager.worldLimit.get(p.getWorld()).blockpvp == false)
 				return true;
 		}
     	
