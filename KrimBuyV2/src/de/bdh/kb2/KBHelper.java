@@ -292,7 +292,12 @@ public class KBHelper
     				{
 		    			if(item.isIn(p.getLocation()))
 		    			{
-		    				return true;
+		    				if(item.indoor == 1)
+		    				{
+		    					if(p.getWorld().getHighestBlockAt(p.getLocation()).getY() > p.getLocation().getBlockY())
+		    						return true;
+		    				} else
+		    					return true;
 		    			}
     				}
     			}
@@ -310,7 +315,12 @@ public class KBHelper
 	    			{
     					if((item.perm.length() > 0 && p.hasPermission(item.perm)) || item.perm.length() == 0)
     					{
-    	    				return true;
+    						if(item.indoor == 1)
+		    				{
+		    					if(p.getWorld().getHighestBlockAt(p.getLocation()).getY() > p.getLocation().getBlockY())
+		    						return true;
+		    				} else
+		    					return true;
     					}
 	    			}
     			}
@@ -337,7 +347,14 @@ public class KBHelper
 		    			if(item.isIn(b.getLocation()))
 		    			{
 		    				if(b == null || item.canPlaceBlock(b))
-		    					return true;
+		    				{
+		    					if(item.indoor == 1)
+			    				{
+			    					if(b.getWorld().getHighestBlockAt(b.getLocation()).getY() > b.getLocation().getBlockY())
+			    						return true;
+			    				} else
+			    					return true;
+		    				}
 		    			}
     				}
     			}
@@ -356,7 +373,14 @@ public class KBHelper
     					if((item.perm.length() > 0 && p.hasPermission(item.perm)) || item.perm.length() == 0)
     					{
     						if(b == null || item.canPlaceBlock(b))
+    						{
+    							if(item.indoor == 1)
+			    				{
+			    					if(b.getWorld().getHighestBlockAt(b.getLocation()).getY() > b.getLocation().getBlockY())
+			    						return true;
+			    				} else
     	    					return true;
+    						}
     					}
 	    			}
     			}
