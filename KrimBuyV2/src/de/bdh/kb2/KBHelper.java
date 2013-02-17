@@ -701,7 +701,7 @@ public class KBHelper
 		{
 			Connection conn = Main.Database.getConnection();
         	PreparedStatement ps;
-    		String strg = (new StringBuilder()).append("SELECT ruleset,level,sold FROM ").append(configManager.SQLTable).append("_krimbuy WHERE blockx = ? AND blocky = ? AND blockz = ? AND world = ? LIMIT 0,1").toString();
+    		String strg = (new StringBuilder()).append("SELECT ruleset,level,sold,id FROM ").append(configManager.SQLTable).append("_krimbuy WHERE blockx = ? AND blocky = ? AND blockz = ? AND world = ? LIMIT 0,1").toString();
     		ps = conn.prepareStatement(strg);
     		ps.setInt(1, b.getX());
     		ps.setInt(2, b.getY());
@@ -719,7 +719,7 @@ public class KBHelper
 				{
 					//Kaufdings hat ein Level und ein Ruleset
 					PreparedStatement ps2;
-					ps2 = conn.prepareStatement((new StringBuilder()).append("SELECT controlblockheight,blocks,bottom,height,deep FROM ").append(configManager.SQLTable).append("_krimbuy_rules WHERE ruleset = ? AND level = ? LIMIT 0,1").toString());
+					ps2 = conn.prepareStatement((new StringBuilder()).append("SELECT nobuild,controlblockheight,blocks,bottom,height,deep FROM ").append(configManager.SQLTable).append("_krimbuy_rules WHERE ruleset = ? AND level = ? LIMIT 0,1").toString());
 					ps2.setString(1, rs.getString("ruleset"));
 					ps2.setInt(2, rs.getInt("level"));
 					ResultSet rs2 = ps2.executeQuery();
@@ -797,7 +797,14 @@ public class KBHelper
 				    		ps2.setString(10, b.getWorld().getName());
 				    		ps2.executeUpdate();
 				    		
-				    		//Suche Boden (Hüchstes Level)
+				    		
+				    		//NoBuild add to Pub List
+				    		if(rs2.getInt("nobuild") == 0 && rs.getInt("sold") == 0)
+				    		{
+				    			this.pubList.add(rs.getInt("id"));
+				    		}
+				    		
+				    		//Suche Boden (Hoechstes Level)
 							PreparedStatement ps3;
 							ps3 = conn.prepareStatement((new StringBuilder()).append("SELECT bottom FROM ").append(configManager.SQLTable).append("_krimbuy_rules WHERE ruleset = ? ORDER BY level DESC LIMIT 0,1").toString());
 							ps3.setString(1, rs.getString("ruleset"));
