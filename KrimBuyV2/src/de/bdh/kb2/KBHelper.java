@@ -265,6 +265,8 @@ public class KBHelper
 		if(!this.worlds.contains(p.getWorld()))
     		return true;
     	
+		if(p.hasPermission("kb.pvp") && !p.isOp())
+			return true;
 
     	if(configManager.worldLimit.get(p.getWorld()) != null)
 		{

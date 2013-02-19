@@ -36,6 +36,9 @@ permissions:
     kb.alwayspvp:
         description: user has always pvp on
         default: op
+    kb.pvp:
+        description: user has pvp on
+        default: op
     kab.build:
         description: Allowed to build (master)
         default: op
