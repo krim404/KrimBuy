@@ -396,7 +396,7 @@ public class KBPlayerListener implements Listener
 				Player damager = (Player) event.getPotion().getShooter();
 				for(PotionEffect e: event.getPotion().getEffects())
 				{
-					if(e.getType().equals(PotionEffectType.POISON) || e.getType().equals(PotionEffectType.HARM) || e.getType().equals(PotionEffectType.WEAKNESS))
+					if(e.getType().equals(PotionEffectType.WITHER) || e.getType().equals(PotionEffectType.CONFUSION) || e.getType().equals(PotionEffectType.POISON) || e.getType().equals(PotionEffectType.HARM) || e.getType().equals(PotionEffectType.WEAKNESS))
 					{
 						Player damaged = null;
 						
