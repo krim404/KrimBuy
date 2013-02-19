@@ -1,6 +1,7 @@
 package de.bdh.kb2;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Fireball;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.Event;
@@ -24,12 +26,15 @@ import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import de.bdh.kb.util.configManager;
 import de.bdh.kb2.Main;
@@ -379,6 +384,56 @@ public class KBPlayerListener implements Listener
 	}
     
     //PVP
+    
+    @EventHandler
+	public void splashPot(PotionSplashEvent event)
+	{
+		try
+		{
+			List<Player> players = new ArrayList<Player>();
+			if(event.getPotion().getShooter() instanceof Player)
+			{
+				Player damager = (Player) event.getPotion().getShooter();
+				for(PotionEffect e: event.getPotion().getEffects())
+				{
+					if(e.getType().equals(PotionEffectType.POISON) || e.getType().equals(PotionEffectType.HARM) || e.getType().equals(PotionEffectType.WEAKNESS))
+					{
+						Player damaged = null;
+						
+						if(Main.helper.canPVPHere(damager) != false)
+						{
+							for(LivingEntity tmp : event.getAffectedEntities())
+							{
+								if(tmp instanceof Player)
+								{
+									damaged = (Player)tmp;
+									if(damaged.hasPermission("kb.alwayspvp") && !damaged.isOp())
+									{
+										players.add(damaged);
+									}
+									
+									if(Main.helper.canPVPHere(damaged) != false)
+						        	{
+										players.add(damaged);
+						        	}
+								}
+							}
+						}
+						event.setCancelled(true);
+						
+						for(Player p: players)
+						{
+							p.addPotionEffect(e);
+						}
+					}
+				}
+			}
+		} catch(Exception e)
+		{
+			//nothing
+		}
+	}
+    
     @EventHandler
 	public void onAssault(EntityDamageByEntityEvent event)
     {
