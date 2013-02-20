@@ -399,19 +399,19 @@ public class KBPlayerListener implements Listener
 					if(e.getType().equals(PotionEffectType.WITHER) || e.getType().equals(PotionEffectType.CONFUSION) || e.getType().equals(PotionEffectType.POISON) || e.getType().equals(PotionEffectType.HARM) || e.getType().equals(PotionEffectType.WEAKNESS))
 					{
 						Player damaged = null;
-						
-						if(Main.helper.canPVPHere(damager) != false)
+						boolean candamage = Main.helper.canPVPHere(damager);
+						for(LivingEntity tmp : event.getAffectedEntities())
 						{
-							for(LivingEntity tmp : event.getAffectedEntities())
+							if(tmp instanceof Player)
 							{
-								if(tmp instanceof Player)
+								damaged = (Player)tmp;
+								if(damaged.hasPermission("kb.alwayspvp") && !damaged.isOp())
 								{
-									damaged = (Player)tmp;
-									if(damaged.hasPermission("kb.alwayspvp") && !damaged.isOp())
-									{
-										players.add(damaged);
-									}
-									
+									players.add(damaged);
+								}
+								
+								if(candamage != false)
+								{
 									if(Main.helper.canPVPHere(damaged) != false)
 						        	{
 										players.add(damaged);
@@ -419,6 +419,7 @@ public class KBPlayerListener implements Listener
 								}
 							}
 						}
+
 						event.setCancelled(true);
 						
 						for(Player p: players)
