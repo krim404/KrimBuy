@@ -315,7 +315,7 @@ public class KBHelper
     			{
     				if(item.isIn(p.getLocation()))
 	    			{
-    					if((item.perm.length() > 0 && p.hasPermission(item.perm)) || item.perm.length() == 0)
+    					if((item.perm.length() > 0 && p.hasPermission(item.perm)) || (item.perm.length() > 0 && item.perm.startsWith("!") && !p.hasPermission(item.perm.replace("!", ""))) || item.perm.length() == 0)
     					{
     						if(item.indoor == 1)
 		    				{
@@ -372,7 +372,7 @@ public class KBHelper
     			{
     				if(item.isIn(b.getLocation()))
 	    			{
-    					if((item.perm.length() > 0 && p.hasPermission(item.perm)) || item.perm.length() == 0)
+    					if((item.perm.length() > 0 && p.hasPermission(item.perm)) || (item.perm.length() > 0 && item.perm.startsWith("!") && !p.hasPermission(item.perm.replace("!", ""))) || item.perm.length() == 0)
     					{
     						if(b == null || item.canPlaceBlock(b))
     						{

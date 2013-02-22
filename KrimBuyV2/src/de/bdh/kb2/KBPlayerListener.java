@@ -410,6 +410,7 @@ public class KBPlayerListener implements Listener
 									players.add(damaged);
 								}
 								
+
 								if(candamage != false)
 								{
 									if(Main.helper.canPVPHere(damaged) != false)
