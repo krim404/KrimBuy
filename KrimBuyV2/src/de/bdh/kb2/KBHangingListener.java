@@ -104,7 +104,7 @@ public class KBHangingListener implements Listener
     	
     	Player player = event.getPlayer();
 
-        if(!this.helper.canBuildHere(player, event.getBlock().getWorld().getBlockAt(event.getEntity().getLocation())))
+        if(!this.helper.canBuildHere(player, event.getBlock().getWorld().getBlockAt(event.getEntity().getLocation()),false))
         {
         	this.helper.blockedEvent.put(event.hashCode(), true);
         	event.setCancelled(true);
@@ -124,7 +124,7 @@ public class KBHangingListener implements Listener
 		    {
 		    	Player player = (Player)remover;
 		    	ply = true;
-	    		if(!this.helper.canBuildHere(player, event.getEntity().getWorld().getBlockAt(event.getEntity().getLocation())))
+	    		if(!this.helper.canBuildHere(player, event.getEntity().getWorld().getBlockAt(event.getEntity().getLocation()),false))
 	            {
 	    			this.helper.blockedEvent.put(event.hashCode(), true);
 	            	event.setCancelled(true);

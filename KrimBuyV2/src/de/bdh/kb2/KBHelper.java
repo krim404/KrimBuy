@@ -332,7 +332,7 @@ public class KBHelper
     	return false;
 	}
 	
-	public boolean canBuildHereData(Player p, Block b)
+	public boolean canBuildHereData(Player p, Block b, boolean interact)
 	{	
 		KBArea item = null;
     	List<Integer> li = this.getPlayerAreas(p);
@@ -348,7 +348,7 @@ public class KBHelper
     				{
 		    			if(item.isIn(b.getLocation()))
 		    			{
-		    				if(b == null || item.canPlaceBlock(b))
+		    				if(b == null || item.canPlaceBlock(b) || interact == true )
 		    				{
 		    					if(item.indoor == 1)
 			    				{
@@ -358,7 +358,7 @@ public class KBHelper
 			    					return true;
 		    				}
 		    			}
-    				}
+    				 }
     			}
     		}
     	}
@@ -374,7 +374,7 @@ public class KBHelper
 	    			{
     					if((item.perm.length() > 0 && p.hasPermission(item.perm)) || (item.perm.length() > 0 && item.perm.startsWith("!") && !p.hasPermission(item.perm.replace("!", ""))) || item.perm.length() == 0)
     					{
-    						if(b == null || item.canPlaceBlock(b))
+    						if(b == null || item.canPlaceBlock(b) || interact == true)
     						{
     							if(item.indoor == 1)
 			    				{
@@ -392,7 +392,7 @@ public class KBHelper
     	return false;
 	}
 	
-	public boolean canBuildHere(Player p, Block b)
+	public boolean canBuildHere(Player p, Block b, boolean interact)
 	{
 		if(p.hasPermission("kb.build")) return true;
     	if(b.getTypeId() == 328) return true;
@@ -407,7 +407,7 @@ public class KBHelper
 				return true;
 		}
     	
-    	return this.canBuildHereData(p, b);
+    	return this.canBuildHereData(p, b, interact);
 	}
 	
 	public void passwordChanged(int id)

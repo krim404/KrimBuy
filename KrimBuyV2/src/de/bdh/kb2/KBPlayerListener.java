@@ -313,7 +313,7 @@ public class KBPlayerListener implements Listener
 			return;
 		
         Player player = blockplaceevent.getPlayer();
-        if(!this.helper.canBuildHere(player, blockplaceevent.getBlock()))
+        if(!this.helper.canBuildHere(player, blockplaceevent.getBlock(),false))
         {
         	this.helper.blockedEvent.put(blockplaceevent.hashCode(), true);
     		blockplaceevent.setCancelled(true);
@@ -339,7 +339,7 @@ public class KBPlayerListener implements Listener
         Player player = blockbreakevent.getPlayer();
       
         
-        if(!this.helper.canBuildHere(player, blockbreakevent.getBlock()))
+        if(!this.helper.canBuildHere(player, blockbreakevent.getBlock(),false))
         {
         	this.helper.blockedEvent.put(blockbreakevent.hashCode(), true);
     		blockbreakevent.setCancelled(true);
@@ -513,7 +513,7 @@ public class KBPlayerListener implements Listener
 			
 			if((gt == Material.DISPENSER.getId() || gt == Material.FURNACE.getId() || gt == Material.CHEST.getId()) && player.hasPermission("kb.nochest") && !player.hasPermission("kb.chest"))
 			{
-				if(!this.helper.canBuildHereData(player, b))
+				if(!this.helper.canBuildHereData(player, b,true))
 				{
 					if(configManager.lang.equalsIgnoreCase("de"))
 						player.sendMessage("Dein Rang verbietet das Öffnen von Truhen / Dispensern / Öfen");
@@ -529,7 +529,7 @@ public class KBPlayerListener implements Listener
 			//Verhindere manipulation an Pipes - BrauTec Mod
 			else if(event.getAction() == Action.RIGHT_CLICK_BLOCK && (gt == 166 || gt == 187 || gt == 215) && !configManager.BrauTec.equalsIgnoreCase("0"))
 	        {
-	        	if(!this.helper.canBuildHere(player, b))
+	        	if(!this.helper.canBuildHere(player, b,true))
 				{
 					player.kickPlayer("Du darfst keine fremden Objekte editieren");
 					event.setCancelled(true);
@@ -567,10 +567,10 @@ public class KBPlayerListener implements Listener
                         }
    	        }
 	        	
-	        //Steinkn�pfe gehen immer genauso wie 225 ( BrauTec ) und Bedrock
-	        else if((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_BLOCK) && (event.getClickedBlock().getTypeId() != configManager.interactBlock && event.getClickedBlock().getTypeId() != 225 && event.getClickedBlock().getTypeId() != Material.STONE_BUTTON.getId()))
+	        //Holzkn�pfe gehen immer genauso wie 225 ( BrauTec ) und Bedrock
+	        else if((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_BLOCK) && (event.getClickedBlock().getTypeId() != configManager.interactBlock && event.getClickedBlock().getTypeId() != 225 && event.getClickedBlock().getTypeId() != Material.WOOD_BUTTON.getId()))
 			{
-				if(!(this.helper.canBuildHere(player, b.getRelative(BlockFace.UP))) && !this.helper.canBuildHere(player, b) && !event.getPlayer().hasPermission("kb.interact"))
+				if(!(this.helper.canBuildHere(player, b.getRelative(BlockFace.UP),true)) && !this.helper.canBuildHere(player, b,true) && !event.getPlayer().hasPermission("kb.interact"))
 				{
 	        		event.setCancelled(true);
 	        		this.helper.blockedEvent.put(event.hashCode(), true);
@@ -582,13 +582,13 @@ public class KBPlayerListener implements Listener
 	    	        		player.sendMessage("You can't interact on X:"+b.getX() +"+Y:"+ b.getY()+" Z:"+b.getZ());
 
 	        		}
-	        	} else if(!(this.helper.canBuildHere(player, b.getRelative(BlockFace.UP))) && !this.helper.canBuildHere(player, b) && event.getPlayer().hasPermission("kb.interact") && (gt == Material.DISPENSER.getId() || gt == Material.FURNACE.getId() || gt == Material.CHEST.getId()))
+	        	} else if(!(this.helper.canBuildHere(player, b.getRelative(BlockFace.UP),true)) && !this.helper.canBuildHere(player, b,true) && event.getPlayer().hasPermission("kb.interact") && (gt == Material.DISPENSER.getId() || gt == Material.FURNACE.getId() || gt == Material.CHEST.getId()))
 				{
 					//Truhen / Dispenser / Ofen sind trotz allem verboten (gilt nur mit Vanilla Blocks)
 					event.setCancelled(true);
 					this.helper.blockedEvent.put(event.hashCode(), true);
 					if(configManager.lang.equalsIgnoreCase("de"))
-						player.sendMessage("Du darfst keine fremden Truhen �ffnen");
+						player.sendMessage("Du darfst keine fremden Truhen oeffnen");
 					else
 		        		player.sendMessage("You're not allowed to open chests from other players");
 					
