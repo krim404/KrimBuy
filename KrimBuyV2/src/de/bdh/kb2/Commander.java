@@ -819,7 +819,27 @@ public class Commander implements CommandExecutor {
 										
 										if(this.plugin.econ.getBalance(sender.getName()) >= prc)
 										{
-											if((a.perm.length() > 0 && sender.hasPermission(a.perm)) || (a.perm.length() > 0 && a.perm.startsWith("!") && !sender.hasPermission(a.perm.replace("!", ""))) || a.perm.length() == 0)
+											boolean hasperm = false;
+											if(a.perm.length() > 0)
+											{
+												String[] tmperms = a.perm.split(",");
+												for (String tmperm: tmperms) 
+												{
+													if(sender.hasPermission(tmperm))
+														hasperm = true;
+												}
+												
+												for (String tmperm: tmperms) 
+												{
+													if(tmperm.startsWith("!"))
+													{
+														if(sender.hasPermission(tmperm.replace("!", "")))
+															hasperm = false;
+													}
+												}
+											}
+											
+											if(hasperm == true || a.perm.length() == 0)
 											{
 												if(a.onlyamount == 0 || this.helper.getGSAmount((Player)sender,a.ruleset,a.gruppe) < a.onlyamount)
 												{
