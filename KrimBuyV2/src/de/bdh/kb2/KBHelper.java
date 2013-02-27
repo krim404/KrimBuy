@@ -164,7 +164,10 @@ public class KBHelper
     			if(loosegs == false)
     			{
     				if(this.m.permission != null)
+    				{
     					this.m.permission.playerAddTransient(rs.getString("buyer"), "kb.owns."+rs.getString("ruleset"));
+    					this.m.permission.playerAddTransient(rs.getString("buyer"), "kb.owns.group."+a.gruppe);
+    				}
     				
     				pl.add(rs.getInt("id"));
     			}
@@ -477,7 +480,10 @@ public class KBHelper
 			
 			//Give Perms
 			if(this.m.permission != null)
+			{
 				this.m.permission.playerAddTransient(p, "kb.owns."+a.ruleset);
+				this.m.permission.playerAddTransient(p, "kb.owns.group."+a.gruppe);
+			}
 			
 			if(a.getInteractBlock() != null)
 			{
@@ -524,7 +530,10 @@ public class KBHelper
 			
 			//Take Perms
 			if(this.m.permission != null)
+			{
 				this.m.permission.playerRemoveTransient(a.owner, "kb.owns."+a.ruleset);
+				this.m.permission.playerRemoveTransient(a.owner, "kb.owns.group."+a.gruppe);
+			}
 			
 			a.owner = "";
 			a.pass = "";
