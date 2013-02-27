@@ -323,7 +323,7 @@ public class KBHelper
     			{
     				if(item.isIn(p.getLocation()))
 	    			{
-    					if((item.perm.length() > 0 && p.hasPermission(item.perm)) || (item.perm.length() > 0 && item.perm.startsWith("!") && !p.hasPermission(item.perm.replace("!", ""))) || item.perm.length() == 0)
+    					if(this.hasPerm(p, item.perm))
     					{
     						if(item.indoor == 1)
 		    				{
@@ -380,7 +380,7 @@ public class KBHelper
     			{
     				if(item.isIn(b.getLocation()))
 	    			{
-    					if((item.perm.length() > 0 && p.hasPermission(item.perm)) || (item.perm.length() > 0 && item.perm.startsWith("!") && !p.hasPermission(item.perm.replace("!", ""))) || item.perm.length() == 0)
+    					if(this.hasPerm(p, item.perm))
     					{
     						if(b == null || item.canPlaceBlock(b) || interact == true)
     						{
@@ -660,6 +660,46 @@ public class KBHelper
 		return ret;
 	}
 	
+	public boolean hasPerm(Player p, String perm)
+	{
+		boolean hasperm = false;
+		boolean tmt = true;
+		if(perm.length() > 0)
+		{
+			String[] tmperms = perm.split(",");
+			for (String tmperm: tmperms) 
+			{
+				if(!tmperm.startsWith("&") && !tmperm.startsWith("!"))
+					if(p.hasPermission(tmperm))
+						hasperm = true;
+			}
+			
+			for (String tmperm: tmperms) 
+			{
+				if(tmperm.startsWith("&"))
+				{
+					if(!p.hasPermission(tmperm.replace("&", "")))
+						tmt = false;
+					else
+						hasperm = true;
+				}
+			}
+			
+			if(tmt == false)
+				hasperm = false;
+			
+			for (String tmperm: tmperms) 
+			{
+				if(tmperm.startsWith("!"))
+				{
+					if(p.hasPermission(tmperm.replace("!", "")))
+						hasperm = false;
+				}
+			}
+		} else hasperm = true;
+		
+		return hasperm;
+	}
 	public int canUpgradeArea(Player p, Block b)
     {
     	int ret = 0;
@@ -691,7 +731,7 @@ public class KBHelper
 						{
 							if(!rs2.getString("permissionnode").equals(""))
 							{
-								if(p.hasPermission(rs2.getString("permissionnode")))
+								if(this.hasPerm(p, rs2.getString("permissionnode")))
 									ret = rs2.getInt("price");
 								else
 									ret = 0;
