@@ -1,6 +1,7 @@
 package de.bdh.kb2;
 
 import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
@@ -23,6 +24,7 @@ public class Main extends JavaPlugin
 	public KBPlayerListener playerListener = null;
 	public KBHangingListener hangList = null;
 	public Economy econ = null;
+	public Permission permission = null;
 	public static KBHelper helper = null;
 
  	public Main()
@@ -88,6 +90,12 @@ public class Main extends JavaPlugin
         	System.out.println((new StringBuilder()).append("[KB] unable to hook money").toString()); 
         } else
         	econ = rsp.getProvider();
+        
+        RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(Permission.class);
+        if (permissionProvider != null) {
+            permission = permissionProvider.getProvider();
+        } else
+        	System.out.println((new StringBuilder()).append("[KX] unable to hook permission").toString());
         
         helper = new KBHelper(this);
         playerListener = new KBPlayerListener(this);

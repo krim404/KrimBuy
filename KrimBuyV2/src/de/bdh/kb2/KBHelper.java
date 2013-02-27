@@ -94,7 +94,7 @@ public class KBHelper
         	PreparedStatement ps;
         	
         	List<Integer> pl = new ArrayList<Integer>();
-    		String strg = (new StringBuilder()).append("SELECT id,UNIX_TIMESTAMP() as `timestamp`, buyer FROM ").append(configManager.SQLTable).append("_krimbuy WHERE buyer=? or (pass=? AND pass != \"\" AND sold=1)").toString();
+    		String strg = (new StringBuilder()).append("SELECT id,UNIX_TIMESTAMP() as `timestamp`, buyer, ruleset FROM ").append(configManager.SQLTable).append("_krimbuy WHERE buyer=? or (pass=? AND pass != \"\" AND sold=1)").toString();
     		ps = conn.prepareStatement(strg);
     		ps.setString(1,p.getName());
     		if(this.pass.get(p.getName()) != null)
@@ -162,7 +162,12 @@ public class KBHelper
 					}
     			}
     			if(loosegs == false)
+    			{
+    				if(this.m.permission != null)
+    					this.m.permission.playerAddTransient(rs.getString("buyer"), "kb.owns."+rs.getString("ruleset"));
+    				
     				pl.add(rs.getInt("id"));
+    			}
     		}
     		
     		this.userarea.put(p, pl);
@@ -465,10 +470,14 @@ public class KBHelper
 			}
 			
 			//Nicht mehr in der Publiste vorhanden
-			if(this.pubList.contains(id))
+			if(this.pubList.contains((Object)id))
 			{
 				this.pubList.remove((Object)id);
 			}
+			
+			//Give Perms
+			if(this.m.permission != null)
+				this.m.permission.playerAddTransient(p, "kb.owns."+a.ruleset);
 			
 			if(a.getInteractBlock() != null)
 			{
@@ -512,6 +521,10 @@ public class KBHelper
 				tmp.remove((Object)id);
 				this.userarea.put(plx, tmp);
 			}
+			
+			//Take Perms
+			if(this.m.permission != null)
+				this.m.permission.playerRemoveTransient(a.owner, "kb.owns."+a.ruleset);
 			
 			a.owner = "";
 			a.pass = "";
