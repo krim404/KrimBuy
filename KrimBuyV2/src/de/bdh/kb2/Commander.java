@@ -820,14 +820,30 @@ public class Commander implements CommandExecutor {
 										if(this.plugin.econ.getBalance(sender.getName()) >= prc)
 										{
 											boolean hasperm = false;
+											boolean tmt = true;
 											if(a.perm.length() > 0)
 											{
 												String[] tmperms = a.perm.split(",");
 												for (String tmperm: tmperms) 
 												{
-													if(sender.hasPermission(tmperm))
-														hasperm = true;
+													if(!tmperm.startsWith("&") && !tmperm.startsWith("!"))
+														if(sender.hasPermission(tmperm))
+															hasperm = true;
 												}
+												
+												for (String tmperm: tmperms) 
+												{
+													if(tmperm.startsWith("&"))
+													{
+														if(!sender.hasPermission(tmperm.replace("&", "")))
+															tmt = false;
+														else
+															hasperm = true;
+													}
+												}
+												
+												if(tmt == false)
+													hasperm = false;
 												
 												for (String tmperm: tmperms) 
 												{
