@@ -878,7 +878,7 @@ public class KBHelper
 						e.setLine(1, "Typ: "+a.gruppe);
 						e.setLine(2,"Wert: "+a.paid);
 						if(value != 0)
-							e.setLine(3, "Preis: "+value);
+							e.setLine(3, "Kosten: "+value);
 					} else
 					{
 						e.setLine(1, "Type: "+a.gruppe);	
