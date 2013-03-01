@@ -556,6 +556,15 @@ public class KBHelper
 				{
 					b.getRelative(BlockFace.UP).setTypeId(Material.SPONGE.getId());
 				}
+				
+				if(configManager.doSign == 1)
+				{
+					Block sign = this.near(b, Material.WALL_SIGN.getId());
+					if(sign == null)
+						this.near(b, Material.SIGN_POST.getId());
+					if(sign != null)
+						sign.breakNaturally();
+				}
 			}
 			
 			if(a.nobuild == 0)
@@ -827,7 +836,7 @@ public class KBHelper
 								for(int z = a.bz; z <= a.tz; ++z)
 								{
 									tmp = Bukkit.getWorld(a.world).getBlockAt(x, y, z);
-									if(tmp != null && tmp.getType() != Material.AIR && !tmp.equals(sign) && !tmp.equals(interact))
+									if(tmp != null && tmp.getType() != Material.AIR && tmp.getTypeId() != configManager.interactBlock)
 									{
 										val = this.m.KShelper.getDurchschnitsspreis(KrimBlockName.getStackByBlock(tmp), 14);
 										value += Math.floor(val);
