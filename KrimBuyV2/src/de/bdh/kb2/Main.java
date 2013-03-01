@@ -97,11 +97,13 @@ public class Main extends JavaPlugin
         if (permissionProvider != null) {
             permission = permissionProvider.getProvider();
         } else
-        	System.out.println((new StringBuilder()).append("[KX] unable to hook permission").toString());
+        	System.out.println((new StringBuilder()).append("[KB] unable to hook permission").toString());
         
         RegisteredServiceProvider<KSHelper> KSh = getServer().getServicesManager().getRegistration(KSHelper.class);
         if(KSh != null)
         	KShelper = KSh.getProvider();
+        else
+        	System.out.println((new StringBuilder()).append("[KB] KrimSale not found").toString());	
         
         
         helper = new KBHelper(this);

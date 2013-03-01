@@ -46,7 +46,7 @@ public class KBHelper
 		this.loadPubAreas();
 	}
 	
-	class LotValue { public Integer value; public Long time; };
+	public class LotValue { public Integer value; public Long time; };
 	public HashMap<Integer,Boolean> blockedEvent = new HashMap<Integer,Boolean>();
 	public HashMap<String,String> pass = new HashMap<String,String>();
 	public HashMap<String,String> ruleset = new HashMap<String,String>();
@@ -784,7 +784,7 @@ public class KBHelper
 			if(sign == null)
 				return;
 		}
-		
+
 		if(interact == null)
 		{
 			interact = this.near(sign,configManager.interactBlock);
@@ -793,6 +793,7 @@ public class KBHelper
 		}
 		
 		int id = this.getIDbyBlock(interact);
+		
 		if(id != 0)
 		{
 			if(sign.getState() instanceof Sign)
@@ -804,6 +805,7 @@ public class KBHelper
 				
 				if(this.m.KShelper != null && Bukkit.getWorld(a.world) != null)
 				{
+					System.out.println("updating value");
 					LotValue v = this.values.get(id);
 					if(v != null)
 					{
@@ -816,13 +818,21 @@ public class KBHelper
 					
 					if(value == -1 || v == null)
 					{
+						Block tmp = null;
+						double val = 0.0;
+						value = 0;
 						for(int x = a.bx; x <= a.tx; ++x)
 						{
-							for(int y = a.by; x <= a.ty; ++y)
+							for(int y = a.by; y <= a.ty; ++y)
 							{
-								for(int z = a.bz; x <= a.tz; ++z)
+								for(int z = a.bz; z <= a.tz; ++z)
 								{
-									value += (int) this.m.KShelper.getDurchschnitsspreis(KrimBlockName.getStackByBlock(Bukkit.getWorld(a.world).getBlockAt(x, y, z)), 14);
+									tmp = Bukkit.getWorld(a.world).getBlockAt(x, y, z);
+									if(tmp != null && tmp.getType() != Material.AIR && tmp != sign && tmp != interact)
+									{
+										val = this.m.KShelper.getDurchschnitsspreis(KrimBlockName.getStackByBlock(tmp), 14);
+										value += Math.floor(val);
+									}
 								}
 							}
 						}
@@ -848,6 +858,7 @@ public class KBHelper
 						e.setLine(3, "Price: "+value);
 				}
 				
+				e.update();
 			}
 		}
 	}
