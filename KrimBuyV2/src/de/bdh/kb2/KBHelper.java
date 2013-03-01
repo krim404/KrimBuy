@@ -557,13 +557,17 @@ public class KBHelper
 					b.getRelative(BlockFace.UP).setTypeId(Material.SPONGE.getId());
 				}
 				
-				if(configManager.doSign == 1 && configManager.breakSign == 1)
+				if(configManager.doSign == 1)
 				{
-					Block sign = this.near(b, Material.WALL_SIGN.getId());
-					if(sign == null)
-						this.near(b, Material.SIGN_POST.getId());
-					if(sign != null)
-						sign.breakNaturally();
+					if(configManager.breakSign == 1)
+					{
+						Block sign = this.near(b, Material.WALL_SIGN.getId());
+						if(sign == null)
+							this.near(b, Material.SIGN_POST.getId());
+						if(sign != null)
+							sign.breakNaturally();
+					} else
+						this.updateSign(b);
 				}
 			}
 			
@@ -622,7 +626,21 @@ public class KBHelper
 						b.getRelative(BlockFace.UP).setTypeId(0);
 					b.setTypeId(0);
 				}
+				
+				if(configManager.doSign == 1)
+				{
+					if(configManager.breakSign == 1)
+					{
+						Block sign = this.near(b, Material.WALL_SIGN.getId());
+						if(sign == null)
+							this.near(b, Material.SIGN_POST.getId());
+						if(sign != null)
+							sign.breakNaturally();
+					} 
+				}
 			}
+			
+			
 			
 			try
 			{
@@ -809,7 +827,6 @@ public class KBHelper
 			{
 				KBArea a = this.getArea(id);
 				Sign e = (Sign)sign.getState();
-				e.setLine(0, "'"+a.owner+"'");
 				int value = 0;
 				
 				if(this.m.KShelper != null && Bukkit.getWorld(a.world) != null)
@@ -852,18 +869,36 @@ public class KBHelper
 					}
 				}
 				
-				if(configManager.lang.equalsIgnoreCase("de"))
+				if(a.sold == 1)
 				{
-					e.setLine(1, "Typ: "+a.gruppe);
-					e.setLine(2,"Wert: "+a.paid);
-					if(value != 0)
-						e.setLine(3, "Preis: "+value);
+					e.setLine(0, "'"+a.owner+"'");
+					
+					if(configManager.lang.equalsIgnoreCase("de"))
+					{
+						e.setLine(1, "Typ: "+a.gruppe);
+						e.setLine(2,"Wert: "+a.paid);
+						if(value != 0)
+							e.setLine(3, "Preis: "+value);
+					} else
+					{
+						e.setLine(1, "Type: "+a.gruppe);	
+						e.setLine(2,"Value: "+a.paid);
+						if(value != 0)
+							e.setLine(3, "Price: "+value);
+					}
 				} else
 				{
-					e.setLine(1, "Type: "+a.gruppe);	
-					e.setLine(2,"Value: "+a.paid);
-					if(value != 0)
-						e.setLine(3, "Price: "+value);
+					if(configManager.lang.equalsIgnoreCase("de"))
+					{
+						e.setLine(0, "Zum Verkauf");
+						e.setLine(1, "Typ: "+a.gruppe);
+						e.setLine(2, "Preis: "+a.price);
+					} else
+					{
+						e.setLine(0, "For Sale");
+						e.setLine(1, "Type: "+a.gruppe);
+						e.setLine(2, "Price: "+a.price);
+					}
 				}
 				
 				e.update();

@@ -29,7 +29,7 @@ public class configManager {
     public static String lang = "de";
     public static Integer doSponge = 1;
     public static Integer doSign = 1;
-    public static Integer breakSign = 1;
+    public static Integer breakSign = 0;
     public static Integer doPiston = 1;
     public static Integer doProtectPicsTNT = 1;
     public static Integer interactBlock = 7;
