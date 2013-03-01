@@ -227,6 +227,13 @@ public class KBArea
 		return Bukkit.getWorld(this.world).getBlockAt(ix, iy, iz);
 	}
 	
+	public String getDim()
+	{
+		String s = "";
+		s = (tx-bx) + "x"+ (tz-bz);
+		return s;
+	}
+	
 	public void clearGS()
 	{
 		int x = bx;

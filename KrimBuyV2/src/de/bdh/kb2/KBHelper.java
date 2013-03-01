@@ -893,11 +893,13 @@ public class KBHelper
 						e.setLine(0, "Zum Verkauf");
 						e.setLine(1, "Typ: "+a.gruppe);
 						e.setLine(2, "Preis: "+a.price);
+						e.setLine(3, "Dim: "+a.getDim());
 					} else
 					{
 						e.setLine(0, "For Sale");
 						e.setLine(1, "Type: "+a.gruppe);
 						e.setLine(2, "Price: "+a.price);
+						e.setLine(3, "Dim: "+a.getDim());
 					}
 				}
 				
