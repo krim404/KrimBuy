@@ -230,7 +230,7 @@ public class KBArea
 	public String getDim()
 	{
 		String s = "";
-		s = (tx-bx) + "x"+ (tz-bz);
+		s = (tx-bx+1) + "x"+ (tz-bz+1);
 		return s;
 	}
 	
