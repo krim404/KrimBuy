@@ -234,6 +234,13 @@ public class KBArea
 		return s;
 	}
 	
+	public int getMiet()
+	{
+		if(this.miet == 0) return 0;
+		if(this.miet == 1) return this.price;
+		else return this.miet;
+	}
+	
 	public void clearGS()
 	{
 		int x = bx;

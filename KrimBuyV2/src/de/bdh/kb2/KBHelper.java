@@ -875,31 +875,53 @@ public class KBHelper
 					
 					if(configManager.lang.equalsIgnoreCase("de"))
 					{
-						e.setLine(1, "Typ: "+a.gruppe);
+						if(a.level > 1)
+							e.setLine(1, "Typ: "+a.gruppe+ " "+a.level);
+						else
+							e.setLine(1, "Typ: "+a.gruppe);
 						e.setLine(2,"Wert: "+a.paid);
 						if(value != 0)
 							e.setLine(3, "Kosten: "+value);
 					} else
 					{
-						e.setLine(1, "Type: "+a.gruppe);	
+						if(a.level > 1)
+							e.setLine(1, "Type: "+a.gruppe+ " "+a.level);
+						else
+							e.setLine(1, "Type: "+a.gruppe);
 						e.setLine(2,"Value: "+a.paid);
 						if(value != 0)
 							e.setLine(3, "Price: "+value);
 					}
 				} else
 				{
+					int ln = 1;
+					
 					if(configManager.lang.equalsIgnoreCase("de"))
 					{
-						e.setLine(0, "Zum Verkauf");
-						e.setLine(1, "Typ: "+a.gruppe);
-						e.setLine(2, "Preis: "+a.price);
-						e.setLine(3, "Dim: "+a.getDim());
+						if(a.getMiet() != 0)
+						{
+							ln = 0;
+							e.setLine(3, "Miete: "+a.getMiet());
+						} else
+						{
+							e.setLine(0,"Zum Verkauf");
+						}
+						e.setLine(ln, "Preis: "+a.price);
+						e.setLine(ln+1, "Typ: "+a.gruppe);
+						e.setLine(ln+2, "Dim: "+a.getDim());
 					} else
 					{
-						e.setLine(0, "For Sale");
-						e.setLine(1, "Type: "+a.gruppe);
-						e.setLine(2, "Price: "+a.price);
-						e.setLine(3, "Dim: "+a.getDim());
+						if(a.getMiet() != 0)
+						{
+							ln = 0;
+							e.setLine(3, "Rental: "+a.getMiet());
+						} else
+						{
+							e.setLine(0,"For Sale");
+						}
+						e.setLine(ln, "Price: "+a.price);
+						e.setLine(ln+1, "Type: "+a.gruppe);
+						e.setLine(ln+2, "Dim: "+a.getDim());
 					}
 				}
 				
