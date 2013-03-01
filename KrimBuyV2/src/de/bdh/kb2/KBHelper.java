@@ -557,7 +557,7 @@ public class KBHelper
 					b.getRelative(BlockFace.UP).setTypeId(Material.SPONGE.getId());
 				}
 				
-				if(configManager.doSign == 1)
+				if(configManager.doSign == 1 && configManager.breakSign == 1)
 				{
 					Block sign = this.near(b, Material.WALL_SIGN.getId());
 					if(sign == null)
