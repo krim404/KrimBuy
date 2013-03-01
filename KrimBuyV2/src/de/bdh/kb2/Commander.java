@@ -242,7 +242,7 @@ public class Commander implements CommandExecutor {
         			return true;
         		}
         	}
-        	else if(command.getName().equals("nextGS"))
+        	else if(command.getName().equals("mi"))
         	{
         		if(sender.hasPermission("kb.buy"))
         		{

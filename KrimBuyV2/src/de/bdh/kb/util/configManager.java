@@ -28,6 +28,7 @@ public class configManager {
     public static String worlds = "0";
     public static String lang = "de";
     public static Integer doSponge = 1;
+    public static Integer doSign = 1;
     public static Integer doPiston = 1;
     public static Integer doProtectPicsTNT = 1;
     public static Integer interactBlock = 7;
@@ -70,6 +71,7 @@ public class configManager {
         interactMessage = conf.getInt("System.interactMessage",interactMessage);
         lang = conf.getString("System.lang",lang);
         doSponge = conf.getInt("System.sponge",doSponge);
+        doSign = conf.getInt("System.useSigns",doSign);
         doPiston = conf.getInt("System.hookPistonEvent",doPiston);
         doProtectPicsTNT = conf.getInt("System.protectPicturesFromTNT",doProtectPicsTNT);
         worlds = conf.getString("System.worlds",worlds);
@@ -159,6 +161,7 @@ public class configManager {
             //conf.set("System.BrauTec", BrauTec);
             conf.set("System.interactBlock",interactBlock);
             conf.set("System.worlds", worlds);
+            conf.set("System.useSigns", doSign);
             conf.set("System.lang", lang);
             conf.set("System.sponge", doSponge);
             conf.set("System.hookPistonEvent", doPiston);

@@ -38,5 +38,10 @@
   		<artifactId>vault</artifactId>
   		<version>1.0</version>
   	</dependency>
+  	<dependency>
+  		<groupId>de.bdh.ks</groupId>
+  		<artifactId>ks</artifactId>
+  		<version>1.1</version>
+  	</dependency>
   </dependencies>
 </project>

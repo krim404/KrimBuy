@@ -16,6 +16,7 @@ import de.bdh.kb2.Commander;
 import de.bdh.kb2.KBPlayerListener;
 import de.bdh.kb.util.Database;
 import de.bdh.kb.util.configManager;
+import de.bdh.ks.KSHelper;
 
 public class Main extends JavaPlugin
 {
@@ -25,6 +26,7 @@ public class Main extends JavaPlugin
 	public KBHangingListener hangList = null;
 	public Economy econ = null;
 	public Permission permission = null;
+	public KSHelper KShelper = null;
 	public static KBHelper helper = null;
 
  	public Main()
@@ -96,6 +98,11 @@ public class Main extends JavaPlugin
             permission = permissionProvider.getProvider();
         } else
         	System.out.println((new StringBuilder()).append("[KX] unable to hook permission").toString());
+        
+        RegisteredServiceProvider<KSHelper> KSh = getServer().getServicesManager().getRegistration(KSHelper.class);
+        if(KSh != null)
+        	KShelper = KSh.getProvider();
+        
         
         helper = new KBHelper(this);
         playerListener = new KBPlayerListener(this);

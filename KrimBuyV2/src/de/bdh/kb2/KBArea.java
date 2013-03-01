@@ -100,6 +100,9 @@ public class KBArea
 						if(prvp == 1)
 							this.pvp = true;
 						
+						if(this.gruppe.length() == 0)
+							this.gruppe = this.ruleset;
+						
 						String blocks = rs2.getString("blocks");
 						this.boh = new ArrayList<Integer>();
 						if(blocks != null && blocks.length() > 0)

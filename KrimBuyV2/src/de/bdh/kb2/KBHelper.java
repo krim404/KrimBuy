@@ -16,10 +16,12 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
 import de.bdh.kb.util.configManager;
 import de.bdh.kb2.KBArea;
+import de.bdh.ks.KrimBlockName;
 
 public class KBHelper 
 {
@@ -44,10 +46,12 @@ public class KBHelper
 		this.loadPubAreas();
 	}
 	
+	class LotValue { public Integer value; public Long time; };
 	public HashMap<Integer,Boolean> blockedEvent = new HashMap<Integer,Boolean>();
 	public HashMap<String,String> pass = new HashMap<String,String>();
 	public HashMap<String,String> ruleset = new HashMap<String,String>();
 	public HashMap<Player,List<Integer>> userarea = new HashMap<Player,List<Integer>>();
+	public HashMap<Integer,LotValue> values = new HashMap<Integer,LotValue>();
 	public Map<Player, Block> lastBlock = new HashMap<Player, Block>();
 	public List<Integer> pubList;
 	public HashMap<Integer,KBArea> areas = new HashMap<Integer,KBArea>();
@@ -758,6 +762,118 @@ public class KBHelper
 		}
     	return ret;
     }
+	
+	public void updateSign(Block b)
+	{
+		Block sign = null, interact = null;
+		if(b.getTypeId() == configManager.interactBlock)
+		{
+			interact = b;
+		} else if(b.getType() == Material.WALL_SIGN || b.getType() == Material.SIGN_POST)
+		{
+			sign = b;
+		}
+		
+		if(sign == null && interact == null) return;
+		if(sign == null)
+		{
+			//Suche Schild
+			sign = this.near(interact,Material.SIGN_POST.getId());
+			if(sign == null)
+				sign = this.near(interact,Material.WALL_SIGN.getId());
+			if(sign == null)
+				return;
+		}
+		
+		if(interact == null)
+		{
+			interact = this.near(sign,configManager.interactBlock);
+			if(interact == null)
+				return;
+		}
+		
+		int id = this.getIDbyBlock(interact);
+		if(id != 0)
+		{
+			if(sign.getState() instanceof Sign)
+			{
+				KBArea a = this.getArea(id);
+				Sign e = (Sign)sign.getState();
+				e.setLine(0, "'"+a.owner+"'");
+				int value = 0;
+				
+				if(this.m.KShelper != null && Bukkit.getWorld(a.world) != null)
+				{
+					LotValue v = this.values.get(id);
+					if(v != null)
+					{
+						if(System.currentTimeMillis() - v.time < 1000*60*60)
+						{
+							value = v.value;
+						} else
+							value = -1;
+					}
+					
+					if(value == -1 || v == null)
+					{
+						for(int x = a.bx; x <= a.tx; ++x)
+						{
+							for(int y = a.by; x <= a.ty; ++y)
+							{
+								for(int z = a.bz; x <= a.tz; ++z)
+								{
+									value += (int) this.m.KShelper.getDurchschnitsspreis(KrimBlockName.getStackByBlock(Bukkit.getWorld(a.world).getBlockAt(x, y, z)), 14);
+								}
+							}
+						}
+						
+						v = new LotValue();
+						v.time = System.currentTimeMillis();
+						v.value = value;
+						this.values.put(id,v);
+					}
+				}
+				
+				if(configManager.lang.equalsIgnoreCase("de"))
+				{
+					e.setLine(1, "Typ: "+a.gruppe);
+					e.setLine(2,"Wert: "+a.paid);
+					if(value != 0)
+						e.setLine(3, "Preis: "+value);
+				} else
+				{
+					e.setLine(1, "Type: "+a.gruppe);	
+					e.setLine(2,"Value: "+a.paid);
+					if(value != 0)
+						e.setLine(3, "Price: "+value);
+				}
+				
+			}
+		}
+	}
+	
+	public Block near(Block b,int type)
+	{
+		BlockFace faces[] = 
+		{
+            BlockFace.EAST_NORTH_EAST, BlockFace.EAST_SOUTH_EAST, BlockFace.NORTH_EAST, BlockFace.NORTH_NORTH_EAST, BlockFace.NORTH_NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_SOUTH_EAST, BlockFace.SOUTH_SOUTH_WEST, BlockFace.SOUTH_WEST, BlockFace.WEST_NORTH_WEST, BlockFace.WEST_SOUTH_WEST, BlockFace.NORTH, BlockFace.WEST, BlockFace.EAST, BlockFace.SOUTH, BlockFace.UP, BlockFace.DOWN
+        };
+		
+		if(b.getTypeId() == type)
+			return b;
+		
+		int len$ = faces.length;
+		Block temp = null;
+		
+        for(int i$ = 0; i$ < len$; i$++)
+        {
+        	temp = b.getRelative(faces[i$]);
+        	if(temp.getTypeId() == type)
+        		return temp;
+        }
+        
+        return null;
+	}
 	
 	public void updateArea(Player p, Block b)
 	{

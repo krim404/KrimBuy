@@ -327,6 +327,15 @@ public class KBPlayerListener implements Listener
 		{
 			this.helper.lastBlock.put(p, blockplaceevent.getBlock());
 		}
+		
+		if(configManager.doSign == 1 && blockplaceevent.isCancelled() == false && blockplaceevent.getBlockAgainst() != null && blockplaceevent.getBlock() != null)
+		{
+			if(blockplaceevent.getBlockAgainst().getTypeId() == configManager.interactBlock && (blockplaceevent.getBlock().getType() == Material.SIGN_POST || blockplaceevent.getBlock().getType() == Material.WALL_SIGN))
+			{
+				//Info-Sign
+				Main.helper.updateSign(blockplaceevent.getBlock());
+			}
+		}
     }
     
     //DEFAULT Block Break
@@ -537,11 +546,21 @@ public class KBPlayerListener implements Listener
 	        }
 	        
 			
-	        //Schilder d�rfen immer geklickt werden - sowie minecarts immer auf rails oder wool gesetzt werden d�rfen
+	        //Schilder duerfen immer geklickt werden - sowie minecarts immer auf rails oder wool gesetzt werden d�rfen
 	        else if(event.getAction() == Action.RIGHT_CLICK_BLOCK && ((gt == 63 || gt == 68 || gt == 323) || (player.getItemInHand().getTypeId() == 328 && (gt == Material.WOOL.getId() || gt == 27 || gt == 28 || gt == 66))))
 	        {
 	        	this.helper.blockedEvent.put(event.hashCode(), false);
 	        	event.setCancelled(false);
+	        	
+	        	//Schilder aktualisieren
+	        	if((gt == 63 || gt == 68) && configManager.doSign == 1)
+	        	{
+	        		if(Main.helper.near(event.getClickedBlock(), configManager.interactBlock) != null)
+	        		{
+	        			Main.helper.updateSign(event.getClickedBlock());
+	        		}
+	        	}
+	        	
 	        	//alles OK
 	        //Boote sind erlaubt
 	        } else if((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) && player.getItemInHand().getTypeId() == Material.BOAT.getId())
