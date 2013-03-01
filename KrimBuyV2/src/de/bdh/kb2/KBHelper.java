@@ -805,7 +805,6 @@ public class KBHelper
 				
 				if(this.m.KShelper != null && Bukkit.getWorld(a.world) != null)
 				{
-					System.out.println("updating value");
 					LotValue v = this.values.get(id);
 					if(v != null)
 					{
@@ -828,7 +827,7 @@ public class KBHelper
 								for(int z = a.bz; z <= a.tz; ++z)
 								{
 									tmp = Bukkit.getWorld(a.world).getBlockAt(x, y, z);
-									if(tmp != null && tmp.getType() != Material.AIR && tmp != sign && tmp != interact)
+									if(tmp != null && tmp.getType() != Material.AIR && !tmp.equals(sign) && !tmp.equals(interact))
 									{
 										val = this.m.KShelper.getDurchschnitsspreis(KrimBlockName.getStackByBlock(tmp), 14);
 										value += Math.floor(val);
