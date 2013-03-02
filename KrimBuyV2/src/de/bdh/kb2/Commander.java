@@ -493,7 +493,7 @@ public class Commander implements CommandExecutor {
 				        		int found = 0;
 				        		ResultSet rs = ps.executeQuery();
 				        		int id = 0;
-				    			if(rs.next())
+				    			while(rs.next())
 				    			{
 				    				id = rs.getInt("id");
 				    				
