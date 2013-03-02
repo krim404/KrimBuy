@@ -118,6 +118,7 @@ public class Main extends JavaPlugin
         getCommand("makesell").setExecutor(c); 
         getCommand("buyGS").setExecutor(c);
         getCommand("upgradeGS").setExecutor(c);
+        getCommand("autoclearGS").setExecutor(c);
         getCommand("passwortGS").setExecutor(c);
         getCommand("useGS").setExecutor(c);
         getCommand("giveGS").setExecutor(c);
