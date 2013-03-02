@@ -879,18 +879,18 @@ public class KBHelper
 							e.setLine(1, "Typ: "+a.gruppe+ " "+a.level);
 						else
 							e.setLine(1, "Typ: "+a.gruppe);
-						e.setLine(2,"Wert: "+a.paid);
+						e.setLine(2,"Preis: "+a.paid);
 						if(value != 0)
-							e.setLine(3, "Kosten: "+value);
+							e.setLine(3, "Wert: "+value);
 					} else
 					{
 						if(a.level > 1)
 							e.setLine(1, "Type: "+a.gruppe+ " "+a.level);
 						else
 							e.setLine(1, "Type: "+a.gruppe);
-						e.setLine(2,"Value: "+a.paid);
+						e.setLine(2,"Price: "+a.paid);
 						if(value != 0)
-							e.setLine(3, "Price: "+value);
+							e.setLine(3, "Value: "+value);
 					}
 				} else
 				{

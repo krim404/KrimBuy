@@ -729,9 +729,9 @@ public class KBPlayerListener implements Listener
 						} else
         				{
 							if(configManager.lang.equalsIgnoreCase("de"))
-								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück im Wert von ").append(a.paid).append(this.p.econ.currencyNamePlural()).append(" des Typs '").append(typ).append("' - Level ").append(a.level).append(" gehört ").append(a.owner).toString());
+								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück mit dem Preis von ").append(a.paid).append(this.p.econ.currencyNamePlural()).append(" des Typs '").append(typ).append("' - Level ").append(a.level).append(" gehört ").append(a.owner).toString());
 							else
-								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot with the value ").append(a.paid).append(this.p.econ.currencyNamePlural()).append(" and the type '").append(typ).append("' - Level ").append(a.level).append(" owns ").append(a.owner).toString());
+								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot with the price ").append(a.paid).append(this.p.econ.currencyNamePlural()).append(" and the type '").append(typ).append("' - Level ").append(a.level).append(" owns ").append(a.owner).toString());
 
 							long tmp = 1000l * a.lastonline;
 							String date = DateFormat.getDateInstance().format(tmp);
