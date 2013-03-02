@@ -1438,7 +1438,7 @@ public class KBHelper
 				rs.close();
 		} catch (SQLException e)
 		{
-			System.out.println((new StringBuilder()).append("[KB] unable to get gs amount: ").append(e).toString());
+			System.out.println((new StringBuilder()).append("[KB] unable to autoclear gs: ").append(e).toString());
 		}
 	}
 }

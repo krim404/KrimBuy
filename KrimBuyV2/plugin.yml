@@ -84,6 +84,9 @@ commands:
     tpGS:
          description: Teleportiert dich zur ID
          usage: /tpGS ID
+    autoclearGS:
+         description: Teleportiert dich zur ID
+         usage: /tpGS ID
     nolooseGS:
          description: Der Spieler verliert nicht sein GS - auch wenn er zu lange offline ist
          usage: /nolooseGS PLAYER

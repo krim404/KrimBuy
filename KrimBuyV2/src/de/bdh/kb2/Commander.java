@@ -37,7 +37,20 @@ public class Commander implements CommandExecutor {
     	}
 		else if(sender instanceof Player)
         {
-        	if(command.getName().equals("giveGS"))
+			if(command.getName().equals("autoclearGS"))
+        	{
+        		if(sender.hasPermission("kb.admin"))
+        		{
+        			if(configManager.lang.equalsIgnoreCase("de"))
+        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Autofree Grundstuecke werden geleert").toString());
+        			else
+        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Clearing 'autofree' lots").toString());
+        			
+        			this.helper.Tick();
+        			return true;	
+        		}
+        	}
+			else if(command.getName().equals("giveGS"))
         	{
         		if(sender.hasPermission("kb.admin"))
         		{
