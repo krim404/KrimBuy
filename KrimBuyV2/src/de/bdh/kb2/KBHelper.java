@@ -1419,7 +1419,7 @@ public class KBHelper
         	ps = conn.prepareStatement(str);
 			ResultSet rs = ps.executeQuery();
 			KBArea a;
-			if(rs.next())
+			while(rs.next())
 			{
 				a = this.getArea(rs.getInt("id"));
 				if(a != null)
