@@ -26,7 +26,7 @@ public class Main extends JavaPlugin
 	public KBHangingListener hangList = null;
 	public Economy econ = null;
 	public Permission permission = null;
-	public KSHelper KShelper = null;
+	public Object KShelper = null;
 	public static KBHelper helper = null;
 
  	public Main()
@@ -99,11 +99,18 @@ public class Main extends JavaPlugin
         } else
         	System.out.println((new StringBuilder()).append("[KB] unable to hook permission").toString());
         
-        RegisteredServiceProvider<KSHelper> KSh = getServer().getServicesManager().getRegistration(KSHelper.class);
-        if(KSh != null)
-        	KShelper = KSh.getProvider();
-        else
-        	System.out.println((new StringBuilder()).append("[KB] KrimSale not found").toString());	
+        try {
+			if(Class.forName("de.bdh.ks.KSHelper",false,getClassLoader()) != null)
+			{
+			    RegisteredServiceProvider<KSHelper> KSh = getServer().getServicesManager().getRegistration(KSHelper.class);
+			    if(KSh != null)
+			    	KShelper = KSh.getProvider();
+			    else
+			    	throw new ClassNotFoundException();
+			}
+		} catch (ClassNotFoundException e) {
+			System.out.println((new StringBuilder()).append("[KB] KrimSale not found").toString());	
+		} 
         
         
         helper = new KBHelper(this);

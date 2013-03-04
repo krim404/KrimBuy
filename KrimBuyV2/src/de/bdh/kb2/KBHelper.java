@@ -21,6 +21,7 @@ import org.bukkit.entity.Player;
 
 import de.bdh.kb.util.configManager;
 import de.bdh.kb2.KBArea;
+import de.bdh.ks.KSHelper;
 import de.bdh.ks.KrimBlockName;
 
 public class KBHelper 
@@ -855,7 +856,7 @@ public class KBHelper
 									tmp = Bukkit.getWorld(a.world).getBlockAt(x, y, z);
 									if(tmp != null && tmp.getType() != Material.AIR && tmp.getTypeId() != configManager.interactBlock)
 									{
-										val = this.m.KShelper.getDurchschnitsspreis(KrimBlockName.getStackByBlock(tmp), 14);
+										val = ((KSHelper)this.m.KShelper).getDurchschnitsspreis(KrimBlockName.getStackByBlock(tmp), 14);
 										value += Math.floor(val);
 									}
 								}
