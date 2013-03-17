@@ -21,6 +21,9 @@ permissions:
     kb.nochest:
         description: Not Allowed to open chests
         default: op
+    kb.nolot:
+        description: disable build on lots
+        default: op
     kb.trade:
         description: Player can trade
         default: op
@@ -44,6 +47,9 @@ permissions:
         default: op
     kb.neverpvp:
         description: user has never pvp on
+        default: op
+    kb.disableLots:
+        description: user cannot use his lots
         default: op
     kab.build:
         description: Allowed to build (master)

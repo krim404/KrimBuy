@@ -93,12 +93,13 @@ public class KBHelper
 	
 	public void loadPlayerAreas(Player p)
 	{
+		List<Integer> pl = new ArrayList<Integer>();
 		try
 		{
     		Connection conn = Main.Database.getConnection();
         	PreparedStatement ps;
         	
-        	List<Integer> pl = new ArrayList<Integer>();
+        	
     		String strg = (new StringBuilder()).append("SELECT id,UNIX_TIMESTAMP() as `timestamp`, buyer, ruleset FROM ").append(configManager.SQLTable).append("_krimbuy WHERE buyer=? or (pass=? AND pass != \"\" AND sold=1)").toString();
     		ps = conn.prepareStatement(strg);
     		ps.setString(1,p.getName());
@@ -217,6 +218,15 @@ public class KBHelper
 	public KBArea getAreaByLocation(Location l)
 	{
 		KBArea ret = null;
+		int id = this.getAreaIdByLocation(l);
+		if(id != -1)
+			ret = this.getArea(id);
+		return ret;
+	}
+	
+	public int getAreaIdByLocation(Location l)
+	{
+		int ret = -1;
 		try
 		{
 			Connection conn = Main.Database.getConnection();
@@ -232,7 +242,7 @@ public class KBHelper
     		ResultSet rs = ps.executeQuery();
 			if(rs.next())
 			{
-				ret = this.getArea(rs.getInt("id"));
+				ret = rs.getInt("id");
 			} 
 			
 			if(ps != null)
@@ -411,20 +421,33 @@ public class KBHelper
 	
 	public boolean canBuildHere(Player p, Block b, boolean interact)
 	{
+		if(!this.worlds.contains(p.getWorld()))
+    		return true;
+		
+		if(p.hasPermission("kb.notlot"))
+		{
+			int a = this.getAreaIdByLocation(b.getLocation());
+			if(a != -1)
+			{
+				return false;
+			}
+		}
+		
 		if(p.hasPermission("kb.build")) return true;
     	if(b.getTypeId() == 328) return true;
     	
-    	if(!this.worlds.contains(p.getWorld()))
-    		return true;
     	
-
+		
     	if(configManager.worldLimit.get(p.getWorld()) != null)
 		{
 			if(!configManager.worldLimit.get(p.getWorld()).isIn(b.getLocation(),p))
 				return true;
 		}
     	
-    	return this.canBuildHereData(p, b, interact);
+    	if(p.hasPermission("kb.disableLots"))
+    		return false;
+    	else
+    		return this.canBuildHereData(p, b, interact);
 	}
 	
 	public void passwordChanged(int id)
