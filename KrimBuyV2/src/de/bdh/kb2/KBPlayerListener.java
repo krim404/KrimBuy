@@ -239,6 +239,19 @@ public class KBPlayerListener implements Listener
         Player giver = event.getPlayer();
         Player reciever = (Player)event.getRightClicked();
         
+        if(giver != null && reciever != null)
+        {
+        	if(!giver.hasPermission("kb.trade") || !reciever.hasPermission("kb.trade"))
+        	{
+        		if(configManager.lang.equalsIgnoreCase("de"))
+					giver.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du darfst mit diesem Spieler nicht handeln").toString());
+				else
+	        		giver.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You're not allowed to trade with this player").toString());
+
+        		return;
+        	}
+        } 
+        
         if(event.getPlayer().isSneaking() && event.isCancelled() == false)
         {
         	Long lc = lastclick.get(giver);

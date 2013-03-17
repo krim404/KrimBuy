@@ -21,6 +21,9 @@ permissions:
     kb.nochest:
         description: Not Allowed to open chests
         default: op
+    kb.trade:
+        description: Player can trade
+        default: op
     kb.interact:
         description: Allowed to interact with everything
         default: op
