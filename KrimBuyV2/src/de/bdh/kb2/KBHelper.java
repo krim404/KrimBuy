@@ -291,7 +291,8 @@ public class KBHelper
 			
 			else if(configManager.worldLimit.get(p.getWorld()).blockpvp == false)
 				return true;
-		}
+		} else if(configManager.basepvp == false)
+			return true;
     	
 		KBArea item = null;
 		List<Integer> li = this.getPlayerAreas(p);
