@@ -700,9 +700,16 @@ public class KBHelper
 	{
 		boolean hasperm = false;
 		boolean tmt = true;
+		String[] tmperms;
 		if(perm.length() > 0)
 		{
-			String[] tmperms = perm.split(",");
+			if(perm.contains(","))
+			{
+				tmperms = perm.split(",");
+			} else
+				tmperms = new String[] { perm };
+				
+
 			for (String tmperm: tmperms) 
 			{
 				if(!tmperm.startsWith("&") && !tmperm.startsWith("!"))
@@ -714,7 +721,8 @@ public class KBHelper
 			{
 				if(tmperm.startsWith("&"))
 				{
-					if(!p.hasPermission(tmperm.replace("&", "")))
+					
+					if(!p.hasPermission(tmperm.substring(1,tmperm.length())))
 						tmt = false;
 					else
 						hasperm = true;
@@ -728,7 +736,7 @@ public class KBHelper
 			{
 				if(tmperm.startsWith("!"))
 				{
-					if(p.hasPermission(tmperm.replace("!", "")))
+					if(p.hasPermission(tmperm.substring(1,tmperm.length())))
 						hasperm = false;
 				}
 			}
