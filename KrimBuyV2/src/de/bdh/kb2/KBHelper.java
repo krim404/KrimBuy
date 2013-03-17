@@ -738,6 +738,8 @@ public class KBHelper
 				{
 					if(p.hasPermission(tmperm.substring(1,tmperm.length())))
 						hasperm = false;
+					else if(tmperms.length == 1)
+						hasperm = true;
 				}
 			}
 		} else hasperm = true;
