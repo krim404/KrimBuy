@@ -424,7 +424,7 @@ public class KBHelper
 		if(!this.worlds.contains(p.getWorld()))
     		return true;
 		
-		if(p.hasPermission("kb.notlot"))
+		if(p.hasPermission("kb.notlot") && !p.isOp())
 		{
 			int a = this.getAreaIdByLocation(b.getLocation());
 			if(a != -1)
