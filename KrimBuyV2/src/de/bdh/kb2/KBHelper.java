@@ -20,6 +20,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
 import de.bdh.kb.util.configManager;
+import de.bdh.kb.util.kbWorld;
 import de.bdh.kb2.KBArea;
 import de.bdh.ks.KSHelper;
 import de.bdh.ks.KrimBlockName;
@@ -361,6 +362,7 @@ public class KBHelper
 	
 	public boolean canBuildHereData(Player p, Block b, boolean interact)
 	{	
+		
 		KBArea item = null;
     	List<Integer> li = this.getPlayerAreas(p);
     	if(li != null)
@@ -424,7 +426,7 @@ public class KBHelper
 		if(!this.worlds.contains(p.getWorld()))
     		return true;
 		
-		if(p.hasPermission("kb.notlot") && !p.isOp())
+		if(p.hasPermission("kb.nolot") && !p.isOp())
 		{
 			int a = this.getAreaIdByLocation(b.getLocation());
 			if(a != -1)
@@ -432,22 +434,25 @@ public class KBHelper
 				return false;
 			}
 		}
-		
-		if(p.hasPermission("kb.build")) return true;
-    	if(b.getTypeId() == 328) return true;
     	
+    	if(b.getTypeId() == 328) return true;
     	
 		
     	if(configManager.worldLimit.get(p.getWorld()) != null)
 		{
-			if(!configManager.worldLimit.get(p.getWorld()).isIn(b.getLocation(),p))
+    		kbWorld w = configManager.worldLimit.get(p.getWorld());
+    		if(!w.hasPermOut(p) && p.hasPermission("kb.build") && !w.isIn(b.getLocation()))
+				return false;
+    		else if(!w.isIn(b.getLocation(),p))
 				return true;
-		}
+		}  
+			
+		if(p.hasPermission("kb.build")) 
+			return true;
     	
     	if(p.hasPermission("kb.disableLots"))
     		return false;
-    	else
-    		return this.canBuildHereData(p, b, interact);
+    	else return this.canBuildHereData(p, b, interact);
 	}
 	
 	public void passwordChanged(int id)

@@ -13,7 +13,7 @@ permissions:
         description: admin permissions to sell
         default: op
     kb.build:
-        description: Allowed to build
+        description: Allowed to build inside region
         default: op
     kb.chest:
         description: Allowed to open chests

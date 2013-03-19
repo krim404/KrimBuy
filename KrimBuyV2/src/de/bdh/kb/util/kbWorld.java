@@ -36,13 +36,22 @@ public class kbWorld
 			return false;
 	}
 	
-	public boolean isIn(Location l, Player p)
+	public boolean hasPermOut(Player p)
 	{
 		if(this.perm.length() > 0)
 		{
-			if(!p.hasPermission(this.perm) && !this.isIn(l))
+			if(p.hasPermission(this.perm))
 				return true;
-		}
+			else
+				return false;
+		} else 
+			return true;
+	}
+	
+	public boolean isIn(Location l, Player p)
+	{
+		if(!hasPermOut(p) && !this.isIn(l))
+			return true;
 		
 		return this.isIn(l);
 	}
