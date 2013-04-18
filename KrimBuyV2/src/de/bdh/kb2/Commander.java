@@ -30,14 +30,14 @@ public class Commander implements CommandExecutor {
 	
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String args[])
     {
-		if(command.getName().equals("kbreload") && ((sender instanceof Player) && sender.hasPermission("kb.admin")) || !(sender instanceof Player))
+		if(command.getName().equalsIgnoreCase("kbreload") && ((sender instanceof Player) && sender.hasPermission("kb.admin")) || !(sender instanceof Player))
     	{
 			this.plugin.reload();
 			sender.sendMessage("KrimBuy reloaded");
     	}
 		else if(sender instanceof Player)
         {
-			if(command.getName().equals("autoclearGS"))
+			if(command.getName().equalsIgnoreCase("autoclearGS"))
         	{
         		if(sender.hasPermission("kb.admin"))
         		{
@@ -50,7 +50,7 @@ public class Commander implements CommandExecutor {
         			return true;	
         		}
         	}
-			else if(command.getName().equals("giveGS"))
+			else if(command.getName().equalsIgnoreCase("giveGS"))
         	{
         		if(sender.hasPermission("kb.admin"))
         		{
@@ -100,7 +100,26 @@ public class Commander implements CommandExecutor {
 
         		}
         	}
-        	else if(command.getName().equals("useGS"))
+			else if(command.getName().equalsIgnoreCase("freeGS"))
+			{
+
+        		if(args.length == 0)
+                {
+        			if(configManager.lang.equalsIgnoreCase("de"))
+        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("USAGE: /freeGS Type").toString());
+        			else
+        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("USAGE: /freeGS TYPE").toString());
+        			return true;
+                } else
+                {
+                	int am = this.helper.howMuchFreeGS(args[0]);
+                	if(configManager.lang.equalsIgnoreCase("de"))
+        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Es sind noch ").append(am).append(" freie GS vom Typ '").append(args[0]).append("' frei").toString());
+        			else
+        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("There are still ").append(am).append(" lots of type '").append(args[0]).append("' for sale").toString());
+                }
+			}
+        	else if(command.getName().equalsIgnoreCase("useGS"))
         	{
         		if(sender.hasPermission("kb.buy"))
         		{
@@ -108,6 +127,8 @@ public class Commander implements CommandExecutor {
 	                {
 	        			if(configManager.lang.equalsIgnoreCase("de"))
 	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Bitte gib das Passwort fuer ein GS ein: /useGS PASSWORT").toString());
+	        			else
+	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Please enter the password for the lot: /useGS PASSWORT").toString());
 	        			return true;
 	                } else
 	                {
@@ -127,7 +148,7 @@ public class Commander implements CommandExecutor {
         				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You dont have permissions to do that").toString());
         		}
         	}
-        	else if(command.getName().equals("listGS"))
+        	else if(command.getName().equalsIgnoreCase("listGS"))
         	{
         		try
         		{
@@ -193,7 +214,7 @@ public class Commander implements CommandExecutor {
         			System.out.println((new StringBuilder()).append("[KB] unable to list gs: ").append(e).toString());
         		}
         	}
-        	else if(command.getName().equals("mineGS"))
+        	else if(command.getName().equalsIgnoreCase("mineGS"))
         	{
         		if(sender.hasPermission("kb.buy"))
         		{
@@ -255,7 +276,7 @@ public class Commander implements CommandExecutor {
         			return true;
         		}
         	}
-        	else if(command.getName().equals("nextgs"))
+        	else if(command.getName().equalsIgnoreCase("nextgs"))
         	{
         		if(sender.hasPermission("kb.buy"))
         		{
@@ -316,7 +337,7 @@ public class Commander implements CommandExecutor {
         			return true;
         		}
         	}
-        	else if(command.getName().equals("tpGS"))
+        	else if(command.getName().equalsIgnoreCase("tpGS"))
         	{
         		if(sender.hasPermission("kb.admin"))
         		{
@@ -433,7 +454,7 @@ public class Commander implements CommandExecutor {
         				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You dont have permissions to do that").toString());
     				return true;
         		}
-        	} else if(command.getName().equals("delGS"))
+        	} else if(command.getName().equalsIgnoreCase("delGS"))
         	{
         		if(args.length > 0)
         		{	
@@ -475,7 +496,7 @@ public class Commander implements CommandExecutor {
 
 	        	}
         	}
-        	else if(command.getName().equals("delallGS"))
+        	else if(command.getName().equalsIgnoreCase("delallGS"))
         	{
         		if(args.length > 1)
         		{	
@@ -546,7 +567,7 @@ public class Commander implements CommandExecutor {
         		}
         		
         	}
-        	else if(command.getName().equals("sellGS"))
+        	else if(command.getName().equalsIgnoreCase("sellGS"))
         	{
         		if(sender.hasPermission("kb.buy"))
         		{
@@ -618,7 +639,7 @@ public class Commander implements CommandExecutor {
         				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You dont have permissions to do that").toString());
         		}
         	}
-        	else if(command.getName().equals("passwortGS") || command.getName().equals("passGS"))
+        	else if(command.getName().equalsIgnoreCase("passwortGS") || command.getName().equalsIgnoreCase("passGS"))
         	{
         		if(sender.hasPermission("kb.buy"))
         		{
@@ -711,7 +732,7 @@ public class Commander implements CommandExecutor {
         		}
         		return true;
         	}
-        	else if(command.getName().equals("nolooseGS") || command.getName().equals("neverlooseGS"))
+        	else if(command.getName().equalsIgnoreCase("nolooseGS") || command.getName().equalsIgnoreCase("neverlooseGS"))
         	{
         		if(sender.hasPermission("kb.admin"))
         		{
@@ -727,7 +748,7 @@ public class Commander implements CommandExecutor {
 	        	        	PreparedStatement ps;
 	        	        	
 	        	        	int l = 1;
-	        	        	if(command.getName().equals("neverlooseGS"))
+	        	        	if(command.getName().equalsIgnoreCase("neverlooseGS"))
 	        	        		l = 2;
 	        	        	
 	        	    		String strg = (new StringBuilder()).append("UPDATE ").append(configManager.SQLTable).append("_krimbuy SET noloose=? WHERE buyer = ?").toString();
@@ -757,7 +778,7 @@ public class Commander implements CommandExecutor {
         				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You dont have permissions to do that").toString());
         			}
         	}
-        	else if(command.getName().equals("upgradeGS"))
+        	else if(command.getName().equalsIgnoreCase("upgradeGS"))
         	{
         		if(sender.hasPermission("kb.upgrade"))
         		{
@@ -804,7 +825,7 @@ public class Commander implements CommandExecutor {
 					}	
         		}
         	}
-        	else if(command.getName().equals("buyGS"))
+        	else if(command.getName().equalsIgnoreCase("buyGS"))
         	{
         		if(sender.hasPermission("kb.buy"))
         		{
@@ -917,7 +938,7 @@ public class Commander implements CommandExecutor {
         				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You're not allowed to buy lots").toString());
 
         		}
-        	} else if(command.getName().equals("kbupdate") && sender.hasPermission("kb.create"))
+        	} else if(command.getName().equalsIgnoreCase("kbupdate") && sender.hasPermission("kb.create"))
         	{
         		Block b = this.helper.lastBlock.get(((Player)sender));
             	if(b == null)
@@ -936,7 +957,7 @@ public class Commander implements CommandExecutor {
 
         		}
             	return true;
-        	} else if(command.getName().equals("kbruleset") && sender.hasPermission("kb.create"))
+        	} else if(command.getName().equalsIgnoreCase("kbruleset") && sender.hasPermission("kb.create"))
         	{
         		if(args.length == 0)
                 {
@@ -984,7 +1005,7 @@ public class Commander implements CommandExecutor {
                 }
         		return true;
         	}
-        	else if(command.getName().equals("makesell") && sender.hasPermission("kb.create"))
+        	else if(command.getName().equalsIgnoreCase("makesell") && sender.hasPermission("kb.create"))
         	{
         		if(args.length == 0)
                 {

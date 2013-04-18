@@ -552,6 +552,33 @@ public class KBHelper
 		}
 	}
 	
+	public int howMuchFreeGS(String type)
+	{
+		int am = 0;
+		try
+		{
+			Connection conn = Main.Database.getConnection();
+        	PreparedStatement ps;
+    		String strg = (new StringBuilder()).append("SELECT count(*) as c FROM ").append(configManager.SQLTable).append("_krimbuy WHERE ruleset = ?").toString();
+    		ps = conn.prepareStatement(strg);
+    		ps.setString(1, type);
+    		ResultSet rs = ps.executeQuery();
+			if(rs.next())
+			{
+				am = rs.getInt("c");
+			} 
+			if(ps != null)
+				ps.close();
+			if(rs != null)
+				rs.close();
+			
+		} catch (SQLException e) 
+		{ 
+			System.out.println((new StringBuilder()).append("[KB] unable to get lot amount: ").append(e).toString());
+	    }
+		return am;
+	}
+	
 	public void freeGS(int id)
 	{
 		KBArea a = this.getArea(id);
