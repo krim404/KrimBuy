@@ -96,6 +96,9 @@ commands:
     tpGS:
          description: Teleportiert dich zur ID
          usage: /tpGS ID
+    freeGS:
+         description: Tells you the amount of free lots
+         usage: /tpGS ID
     autoclearGS:
          description: Teleportiert dich zur ID
          usage: /tpGS ID

@@ -239,7 +239,7 @@ public class KBPlayerListener implements Listener
         Player giver = event.getPlayer();
         Player reciever = (Player)event.getRightClicked();
         
-        if(giver != null && reciever != null)
+        if(event.getPlayer().isSneaking() && giver != null && reciever != null)
         {
         	if(!giver.hasPermission("kb.trade") || !reciever.hasPermission("kb.trade"))
         	{
