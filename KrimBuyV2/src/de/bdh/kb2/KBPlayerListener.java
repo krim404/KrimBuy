@@ -599,8 +599,8 @@ public class KBPlayerListener implements Listener
                         }
    	        }
 	        	
-	        //Holzkn�pfe gehen immer genauso wie 225 ( BrauTec ) und Bedrock
-	        else if((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_BLOCK) && (event.getClickedBlock().getTypeId() != configManager.interactBlock && event.getClickedBlock().getTypeId() != 225 && event.getClickedBlock().getTypeId() != Material.WOOD_BUTTON.getId()))
+	        //Holzkn�pfe gehen immer genauso wie 225 ( BrauTec ), Trapped Chests und Bedrock
+	        else if((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_BLOCK) && (event.getClickedBlock().getTypeId() != configManager.interactBlock && event.getClickedBlock().getTypeId() != 225 && event.getClickedBlock().getTypeId() != 146 && event.getClickedBlock().getTypeId() != Material.WOOD_BUTTON.getId()))
 			{
 				if(!(this.helper.canBuildHere(player, b.getRelative(BlockFace.UP),true)) && !this.helper.canBuildHere(player, b,true) && !event.getPlayer().hasPermission("kb.interact"))
 				{
