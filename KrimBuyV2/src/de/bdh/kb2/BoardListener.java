@@ -20,14 +20,16 @@ public class BoardListener implements Listener
 	{
 		BoardListener l;
 		Player p;
-		public removeBoard(BoardListener l, Player p)
+		String id;
+		public removeBoard(BoardListener l, Player p, String id)
 		{
 			this.l = l;
 			this.p = p;
+			this.id = id;
 		}
 		public void run() 
 		{
-			this.l.bh.removeBoardFromPlayer(p, "krimbuy_detail");
+			this.l.bh.removeBoardFromPlayer(p, this.id);
 		}
 		
 	}
@@ -99,10 +101,9 @@ public class BoardListener implements Listener
     					if(miet != 0) o.getScore(Bukkit.getOfflinePlayer("Rent:")).setScore(miet);
     				}
     				
-    				System.out.println("Registerboard");
-    				this.bh.registerPrivateBoard(event.getPlayer(), "krimbuy_detail", bd);
-    				this.bh.showBoardToPlayer(event.getPlayer(), "krimbuy_detail");
-    				//Bukkit.getServer().getScheduler().runTaskLater(this.m, new removeBoard(this,event.getPlayer()), 10*20);
+    				this.bh.registerPrivateBoard(event.getPlayer(), "krimbuy_detail_"+id, bd);
+    				this.bh.showBoardToPlayer(event.getPlayer(), "krimbuy_detail_"+id);
+    				Bukkit.getServer().getScheduler().runTaskLater(this.m, new removeBoard(this,event.getPlayer(),"krimbuy_detail_"+id), 10*20);
     			}
     		}
 		}

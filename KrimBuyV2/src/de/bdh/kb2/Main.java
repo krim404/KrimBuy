@@ -115,6 +115,10 @@ public class Main extends JavaPlugin
 			System.out.println((new StringBuilder()).append("[KB] KrimSale not found").toString());	
 		} 
         
+        
+        helper = new KBHelper(this);
+        playerListener = new KBPlayerListener(this);
+        
         try {
 			if(Class.forName("de.bdh.board.BoardHelper",false,getClassLoader()) != null)
 			{
@@ -132,8 +136,7 @@ public class Main extends JavaPlugin
 			System.out.println((new StringBuilder()).append("[KB] KrimBoard not found").toString());	
 		} 
         
-        helper = new KBHelper(this);
-        playerListener = new KBPlayerListener(this);
+        
         
         KBTimer k = new KBTimer(this);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, k, 1, 20*60*60);
