@@ -58,7 +58,7 @@ permissions:
         description: Allowed to Interact (master)
         default: op
 depend: [Vault]
-softdepend: [KrimSale]
+softdepend: [KrimSale, KrimBoard]
 commands:
     buyGS:
          description: Kaufe das GS

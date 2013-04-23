@@ -14,6 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import de.bdh.kb2.Commander;
 import de.bdh.kb2.KBPlayerListener;
+import de.bdh.board.BoardHelper;
 import de.bdh.kb.util.Database;
 import de.bdh.kb.util.configManager;
 import de.bdh.ks.KSHelper;
@@ -23,10 +24,12 @@ public class Main extends JavaPlugin
 	private static Server Server = null;
 	public static Database Database = null;
 	public KBPlayerListener playerListener = null;
+	public BoardListener boardListener = null;
 	public KBHangingListener hangList = null;
 	public Economy econ = null;
 	public Permission permission = null;
 	public Object KShelper = null;
+	public Object BoardHelper = null;
 	public static KBHelper helper = null;
 
  	public Main()
@@ -112,6 +115,22 @@ public class Main extends JavaPlugin
 			System.out.println((new StringBuilder()).append("[KB] KrimSale not found").toString());	
 		} 
         
+        try {
+			if(Class.forName("de.bdh.board.BoardHelper",false,getClassLoader()) != null)
+			{
+			    RegisteredServiceProvider<BoardHelper> KSh = getServer().getServicesManager().getRegistration(BoardHelper.class);
+			    if(KSh != null)
+			    {
+			    	BoardHelper = KSh.getProvider();
+			    	this.boardListener = new BoardListener(this);
+			    	Bukkit.getServer().getPluginManager().registerEvents(boardListener, this);
+			    }
+			    else
+			    	throw new ClassNotFoundException();
+			}
+		} catch (ClassNotFoundException e) {
+			System.out.println((new StringBuilder()).append("[KB] KrimBoard not found").toString());	
+		} 
         
         helper = new KBHelper(this);
         playerListener = new KBPlayerListener(this);

@@ -43,5 +43,10 @@
   		<artifactId>ks</artifactId>
   		<version>1.1</version>
   	</dependency>
+  	<dependency>
+  		<groupId>de.krimboard</groupId>
+  		<artifactId>krimboard</artifactId>
+  		<version>0.1</version>
+  	</dependency>
   </dependencies>
 </project>
