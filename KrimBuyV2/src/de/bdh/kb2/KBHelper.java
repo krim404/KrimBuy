@@ -54,6 +54,7 @@ public class KBHelper
 	public HashMap<String,String> ruleset = new HashMap<String,String>();
 	public HashMap<Player,List<Integer>> userarea = new HashMap<Player,List<Integer>>();
 	public HashMap<Integer,LotValue> values = new HashMap<Integer,LotValue>();
+	public HashMap<Block,Integer> blockIDs = new HashMap<Block,Integer>();
 	public Map<Player, Block> lastBlock = new HashMap<Player, Block>();
 	public List<Integer> pubList;
 	public HashMap<Integer,KBArea> areas = new HashMap<Integer,KBArea>();
@@ -680,6 +681,8 @@ public class KBHelper
 			if(a.getInteractBlock() != null)
 			{
 				Block b = a.getInteractBlock();
+				this.blockIDs.remove(b);
+				
 				if(b.getTypeId() != 0)
 				{
 					if(b.getRelative(BlockFace.UP).getTypeId() == Material.SPONGE.getId())
@@ -724,30 +727,34 @@ public class KBHelper
 	public int getIDbyBlock(Block b)
 	{
 		int ret = 0;
-		try
+		if(this.blockIDs.get(b) == null)
 		{
-			Connection conn = Main.Database.getConnection();
-        	PreparedStatement ps;
-    		String strg = (new StringBuilder()).append("SELECT id FROM ").append(configManager.SQLTable).append("_krimbuy WHERE blockx = ? AND blocky = ? AND blockz = ? AND world = ? LIMIT 0,1").toString();
-    		ps = conn.prepareStatement(strg);
-    		ps.setInt(1, b.getX());
-    		ps.setInt(2, b.getY());
-    		ps.setInt(3, b.getZ());
-    		ps.setString(4, b.getWorld().getName());
-    		ResultSet rs = ps.executeQuery();
-			if(rs.next())
+			try
 			{
-				ret = rs.getInt("id");
-			} 
-			if(ps != null)
-				ps.close();
-			if(rs != null)
-				rs.close();
-			
-		} catch (SQLException e) 
-		{ 
-			System.out.println((new StringBuilder()).append("[KB] unable to get ID from block: ").append(e).toString());
-	    }
+				Connection conn = Main.Database.getConnection();
+	        	PreparedStatement ps;
+	    		String strg = (new StringBuilder()).append("SELECT id FROM ").append(configManager.SQLTable).append("_krimbuy WHERE blockx = ? AND blocky = ? AND blockz = ? AND world = ? LIMIT 0,1").toString();
+	    		ps = conn.prepareStatement(strg);
+	    		ps.setInt(1, b.getX());
+	    		ps.setInt(2, b.getY());
+	    		ps.setInt(3, b.getZ());
+	    		ps.setString(4, b.getWorld().getName());
+	    		ResultSet rs = ps.executeQuery();
+				if(rs.next())
+				{
+					ret = rs.getInt("id");
+					this.blockIDs.put(b, ret);
+				} 
+				if(ps != null)
+					ps.close();
+				if(rs != null)
+					rs.close();
+				
+			} catch (SQLException e) 
+			{ 
+				System.out.println((new StringBuilder()).append("[KB] unable to get ID from block: ").append(e).toString());
+		    }
+		} else ret = this.blockIDs.get(b);
 		return ret;
 	}
 	
