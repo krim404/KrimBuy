@@ -171,10 +171,14 @@ public class KBHelper
     			}
     			if(loosegs == false)
     			{
-    				if(this.m.permission != null)
+    				Player plx = Bukkit.getServer().getPlayer(rs.getString("buyer"));
+    				if(this.m.permission != null && plx != null)
     				{
-    					this.m.permission.playerAddTransient(rs.getString("buyer"), "kb.owns."+rs.getString("ruleset"));
-    					this.m.permission.playerAddTransient(rs.getString("buyer"), "kb.owns.group."+a.gruppe);
+    					try
+    					{
+	    					this.m.permission.playerAddTransient(rs.getString("buyer"), "kb.owns."+rs.getString("ruleset"));
+	    					this.m.permission.playerAddTransient(rs.getString("buyer"), "kb.owns.group."+a.gruppe);
+    					} catch (Exception e) {}
     				}
     				
     				pl.add(rs.getInt("id"));
@@ -516,11 +520,15 @@ public class KBHelper
 				this.pubList.remove((Object)id);
 			}
 			
+			
 			//Give Perms
-			if(this.m.permission != null)
+			if(this.m.permission != null && plx != null)
 			{
-				this.m.permission.playerAddTransient(p, "kb.owns."+a.ruleset);
-				this.m.permission.playerAddTransient(p, "kb.owns.group."+a.gruppe);
+				try
+				{
+					this.m.permission.playerAddTransient(p, "kb.owns."+a.ruleset);
+					this.m.permission.playerAddTransient(p, "kb.owns.group."+a.gruppe);
+				} catch (Exception e) {}
 			}
 			
 			if(a.getInteractBlock() != null)
@@ -591,14 +599,19 @@ public class KBHelper
 				List<Integer> tmp = this.userarea.get(plx);
 				tmp.remove((Object)id);
 				this.userarea.put(plx, tmp);
+				
+				//Take Perms
+				if(this.m.permission != null)
+				{
+					try
+					{
+						this.m.permission.playerRemoveTransient(a.owner, "kb.owns."+a.ruleset);
+						this.m.permission.playerRemoveTransient(a.owner, "kb.owns.group."+a.gruppe);
+					} catch(Exception e) {}
+				}
 			}
 			
-			//Take Perms
-			if(this.m.permission != null)
-			{
-				this.m.permission.playerRemoveTransient(a.owner, "kb.owns."+a.ruleset);
-				this.m.permission.playerRemoveTransient(a.owner, "kb.owns.group."+a.gruppe);
-			}
+			
 			
 			a.owner = "";
 			a.pass = "";

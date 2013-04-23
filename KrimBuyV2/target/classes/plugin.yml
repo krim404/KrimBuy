@@ -1,6 +1,6 @@
 name: KrimBuy
 main: de.bdh.kb2.Main
-version: 2.3
+version: 2.4
 authors: [wmchris]
 permissions:
     kb.buy:
