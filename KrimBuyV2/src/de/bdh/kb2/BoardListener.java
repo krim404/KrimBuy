@@ -80,11 +80,12 @@ public class BoardListener implements Listener
     					else if(a.sold == 0 && a.nobuy == 1)
     						o.setDisplayName("GS Unverkaueflich");
     					else if(a.sold == 1)
-    						o.setDisplayName("GS von "+a.owner);
+    						o.setDisplayName(a.gruppe+" von "+a.owner);
     					
     					o.getScore(Bukkit.getOfflinePlayer("Hoehe:")).setScore(a.height);
     					o.getScore(Bukkit.getOfflinePlayer("Keller:")).setScore(a.deep);
-    					o.getScore(Bukkit.getOfflinePlayer("Wert:")).setScore(preis);
+    					o.getScore(Bukkit.getOfflinePlayer("Preis:")).setScore(preis);
+    					o.getScore(Bukkit.getOfflinePlayer("Level:")).setScore(a.level);
     					if(miet != 0) o.getScore(Bukkit.getOfflinePlayer("Miete:")).setScore(miet);
     				} else
     				{
@@ -93,11 +94,12 @@ public class BoardListener implements Listener
     					else if(a.sold == 0 && a.nobuy == 1)
     						o.setDisplayName("Unbuyable lot");
     					else if(a.sold == 1)
-    						o.setDisplayName("Lot of "+a.owner);
+    						o.setDisplayName(a.gruppe+" of "+a.owner);
     					
     					o.getScore(Bukkit.getOfflinePlayer("Height:")).setScore(a.height);
     					o.getScore(Bukkit.getOfflinePlayer("Basement:")).setScore(a.deep);
     					o.getScore(Bukkit.getOfflinePlayer("Value:")).setScore(preis);
+    					o.getScore(Bukkit.getOfflinePlayer("Level:")).setScore(a.level);
     					if(miet != 0) o.getScore(Bukkit.getOfflinePlayer("Rent:")).setScore(miet);
     				}
     				
