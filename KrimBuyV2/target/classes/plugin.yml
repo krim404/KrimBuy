@@ -109,8 +109,11 @@ commands:
          description: Der Spieler verliert nicht sein GS - auch wenn er zu lange offline ist
          usage: /nolooseGS PLAYER
     makesell:
+         description: alias of kbsell
+         usage: /makesell MONEY
+    kbsell:
          description: make it sellable
-         usage: /makesell amount
+         usage: /kbsell MONEY
     kbruleset:
          description: setze das ruleset
          usage: /kbruleset REGELNAME

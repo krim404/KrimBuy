@@ -957,7 +957,7 @@ public class Commander implements CommandExecutor {
 
         		}
             	return true;
-        	} else if(command.getName().equalsIgnoreCase("kbruleset") && sender.hasPermission("kb.create"))
+        	} else if(command.getName().equalsIgnoreCase("kbruleset"))
         	{
         		if(args.length == 0)
                 {
@@ -981,12 +981,21 @@ public class Commander implements CommandExecutor {
 	    				{
 	    					found = true;
 	    					//OK GEFUNDEN
-	    					this.helper.ruleset.put(sender.getName(),rs.getString("ruleset"));
-	    					if(configManager.lang.equalsIgnoreCase("de"))
-	    						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du legst nun Gebiete mit den Regeln ").append(this.helper.ruleset.get(sender.getName())).append(" an").toString());
-	    					else
-	    						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You're creating lots with the ruleset ").append(this.helper.ruleset.get(sender.getName())).append("").toString());
+	    					if(sender.hasPermission("kb.create") || sender.hasPermission("kb.create."+rs.getString("ruleset")))
+	    					{
+		    					this.helper.ruleset.put(sender.getName(),rs.getString("ruleset"));
+		    					if(configManager.lang.equalsIgnoreCase("de"))
+		    						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du legst nun Gebiete mit den Regeln ").append(this.helper.ruleset.get(sender.getName())).append(" an").toString());
+		    					else
+		    						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You're creating lots with the ruleset ").append(this.helper.ruleset.get(sender.getName())).append("").toString());
+	    					} else
+	    					{
+	    						if(configManager.lang.equalsIgnoreCase("de"))
+		    						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast keine Genehmigung Gebiete mit den Regeln von ").append(this.helper.ruleset.get(sender.getName())).append(" anzulegen").toString());
+		    					else
+		    						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You dont have permission to create lots with the ruleset ").append(this.helper.ruleset.get(sender.getName())).append("").toString());
 
+	    					}
 	    				}
 	    				if(rs != null)
 	        				rs.close();
@@ -1005,7 +1014,7 @@ public class Commander implements CommandExecutor {
                 }
         		return true;
         	}
-        	else if(command.getName().equalsIgnoreCase("makesell") && sender.hasPermission("kb.create"))
+        	else if((command.getName().equalsIgnoreCase("makesell") || command.getName().equalsIgnoreCase("kbsell")) && (sender.hasPermission("kb.create") || ( this.helper.ruleset.get(sender.getName()) != null && sender.hasPermission("kb.create."+this.helper.ruleset.get(sender.getName())))))
         	{
         		if(args.length == 0)
                 {

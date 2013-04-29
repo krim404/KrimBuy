@@ -25,7 +25,8 @@ public class configManager {
     public static String SQLTable = "minecraft";
     public static String BrauTec = "0";
     public static Integer interactMessage = 0;
-    public static String worlds = "0";
+    public static String worlds = "";
+    public static String cworlds = "not implemented yet";
     public static String lang = "de";
     public static Integer doSponge = 1;
     public static Integer doSign = 1;
@@ -77,6 +78,7 @@ public class configManager {
         doPiston = conf.getInt("System.hookPistonEvent",doPiston);
         doProtectPicsTNT = conf.getInt("System.protectPicturesFromTNT",doProtectPicsTNT);
         worlds = conf.getString("System.worlds",worlds);
+        cworlds = conf.getString("System.chunkWorlds",cworlds);
         interactBlock = conf.getInt("System.interactBlock",interactBlock);
         
         fromx = conf.getInt("System.worldLimit.default.protect.from.x",fromx);
@@ -163,6 +165,7 @@ public class configManager {
             //conf.set("System.BrauTec", BrauTec);
             conf.set("System.interactBlock",interactBlock);
             conf.set("System.worlds", worlds);
+            conf.set("System.chunkWorlds", cworlds);
             conf.set("System.useSigns", doSign);
             conf.set("System.breakSigns", breakSign);
             conf.set("System.lang", lang);
