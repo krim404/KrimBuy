@@ -4,6 +4,12 @@
   <artifactId>KrimBuyV2</artifactId>
   <version>2.4-SNAPSHOT</version>
   <name>KrimBuyV2</name>
+  <repositories>
+	  <repository>
+	  	<id>bukkit-repo</id>
+	  	<url>http://repo.bukkit.org/content/groups/public/</url>
+	  </repository>
+  </repositories>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
@@ -30,8 +36,8 @@
   <dependencies>
   	<dependency>
   		<groupId>org.bukkit</groupId>
-  		<artifactId>bukkit</artifactId>
-  		<version>1.5.1</version>
+  		<artifactId>craftbukkit</artifactId>
+  		<version>1.5.2-R0.1-SNAPSHOT</version>
   	</dependency>
   	<dependency>
   		<groupId>org.vault</groupId>
