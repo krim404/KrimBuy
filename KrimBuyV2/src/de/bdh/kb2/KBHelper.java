@@ -568,7 +568,7 @@ public class KBHelper
 		{
 			Connection conn = Main.Database.getConnection();
         	PreparedStatement ps;
-    		String strg = (new StringBuilder()).append("SELECT count(*) as c FROM ").append(configManager.SQLTable).append("_krimbuy WHERE ruleset = ?").toString();
+    		String strg = (new StringBuilder()).append("SELECT count(*) as c FROM ").append(configManager.SQLTable).append("_krimbuy WHERE ruleset = ? AND sold = 0").toString();
     		ps = conn.prepareStatement(strg);
     		ps.setString(1, type);
     		ResultSet rs = ps.executeQuery();
