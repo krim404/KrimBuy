@@ -33,14 +33,34 @@ public class KBHelper
 		this.m = m;
 		this.worlds = new ArrayList<World>();
 		String w = configManager.worlds;
+		List<World> allw = Bukkit.getWorlds();
 		if(w != null && w.length() > 0)
 		{
 			String[] tmpBoh = w.split(",");
-			for (String bl: tmpBoh) {
+			for (String bl: tmpBoh) 
+			{
 				if(Bukkit.getWorld(bl) != null)
 				{
 					System.out.println("[KB] Enabled for World: "+bl);
 					this.worlds.add(Bukkit.getWorld(bl));
+				} else if(bl.contains("*"))
+				{
+					String tmpwn = bl.replace("*", "");
+					for(World aw: allw)
+					{
+						if(tmpwn.length() > 0)
+						{
+							if(aw.getName().contains(tmpwn))
+							{
+								System.out.println("[KB] Enabled for World: "+aw.getName());
+								this.worlds.add(aw);
+							}
+						} else
+						{
+							System.out.println("[KB] Enabled for World: "+aw.getName());
+							this.worlds.add(aw);
+						}
+					}
 				}
 			}
 		}
