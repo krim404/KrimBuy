@@ -448,7 +448,7 @@ public class KBHelper
 	
 	public boolean canBuildHere(Player p, Block b, boolean interact)
 	{
-		if(!this.worlds.contains(p.getWorld()))
+		if(!this.worlds.contains(p.getWorld()) || (!configManager.BrauTec.equalsIgnoreCase("0") && p.getWorld().getName().contains("perworld")))
     		return true;
 		
 		if(p.hasPermission("kb.nolot") && !p.isOp())
