@@ -861,7 +861,7 @@ public class KBHelper
 	}
 	public int canUpgradeArea(Player p, Block b)
     {
-    	int ret = 0;
+    	int ret = -1;
     	try
 		{
 			Connection conn = Main.Database.getConnection();
@@ -893,7 +893,7 @@ public class KBHelper
 								if(this.hasPerm(p, rs2.getString("permissionnode")))
 									ret = rs2.getInt("price");
 								else
-									ret = 0;
+									ret = -1;
 							} else
 								ret = rs2.getInt("price");
 							
@@ -902,13 +902,14 @@ public class KBHelper
 								try
 								{
 									XPVaultProcessor xp = (XPVaultProcessor) this.m.XPVault;
-									if(xp.getBalance(p.getName()) > rs2.getInt("pricexp"))
+									if(xp.getBalance(p.getName()) < rs2.getInt("pricexp"))
 									{
 										ret = rs2.getInt("pricexp") * -1;
-									} else ret = 0;
+									}
 								} catch(Exception e)
 								{
-									ret = 0;
+									e.printStackTrace();
+									ret = -1;
 								}
 							}
 						}

@@ -74,9 +74,20 @@ public class KBArea
 				if(this.ruleset.length() > 0)
 				{
 					PreparedStatement ps2;
-					ps2 = conn.prepareStatement((new StringBuilder()).append("SELECT pvp,indoor,height,deep,miet,autofree,blocks,bottom,controlblockheight,clear,cansell,permissionnode,nobuild,onlyamount,price,gruppe,nobuy FROM ").append(configManager.SQLTable).append("_krimbuy_rules WHERE ruleset = ? AND level = ? LIMIT 0,1").toString());
+					ps2 = conn.prepareStatement((new StringBuilder()).append("SELECT price,pricexp FROM ").append(configManager.SQLTable).append("_krimbuy_rules WHERE ruleset = ? AND level = ? LIMIT 0,1").toString());
 					ps2.setString(1, rs.getString("ruleset"));
-					int level = rs.getInt("level");
+					int level = rs.getInt("level") +1 ;
+					ps2.setInt(2, level);
+					ResultSet rs3 = ps2.executeQuery();
+					if(rs3.next())
+					{
+						this.upgradeprice = rs3.getInt("price");
+						this.upgradexp = rs3.getInt("pricexp");
+					}
+					
+					ps2 = conn.prepareStatement((new StringBuilder()).append("SELECT pvp,indoor,height,deep,miet,autofree,blocks,bottom,controlblockheight,clear,cansell,permissionnode,nobuild,onlyamount,gruppe,nobuy FROM ").append(configManager.SQLTable).append("_krimbuy_rules WHERE ruleset = ? AND level = ? LIMIT 0,1").toString());
+					ps2.setString(1, rs.getString("ruleset"));
+					level = rs.getInt("level");
 					if(level == 0) level = 1;
 					ps2.setInt(2, level);
 					ResultSet rs2 = ps2.executeQuery();
@@ -92,8 +103,7 @@ public class KBArea
 						this.onlyamount = rs2.getInt("onlyamount");
 						this.nobuild = rs2.getInt("nobuild");
 						this.perm = rs2.getString("permissionnode");
-						this.upgradeprice = rs2.getInt("price");
-						this.upgradexp = rs2.getInt("pricexp");
+						
 						this.gruppe = rs2.getString("gruppe");
 						this.nobuy = rs2.getInt("nobuy");
 						this.indoor = rs2.getInt("indoor");

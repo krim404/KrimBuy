@@ -145,7 +145,6 @@ public class Main extends JavaPlugin
 			    RegisteredServiceProvider<XPVaultProcessor> KSh = getServer().getServicesManager().getRegistration(XPVaultProcessor.class);
 			    if(KSh != null)
 			    {
-			    	configManager.KXP = true;
 			    	XPVault = KSh.getProvider();
 			    }
 			    else

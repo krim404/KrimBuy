@@ -725,7 +725,7 @@ public class KBPlayerListener implements Listener
         					}
         				} else if(a.owner.equalsIgnoreCase(event.getPlayer().getName()))
         				{
-							StringBuilder sndm = (new StringBuilder()).append(ChatColor.YELLOW).append("Level: '").append(a.level);
+							StringBuilder sndm = (new StringBuilder()).append(ChatColor.YELLOW).append("Level: '").append(a.level).append("'");
 							if(a.cansell != 0)
 							{
 								if(configManager.lang.equalsIgnoreCase("de"))
@@ -735,13 +735,13 @@ public class KBPlayerListener implements Listener
 
 							}
 							if(configManager.lang.equalsIgnoreCase("de"))
-								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dieses Grundstück gehört dir. Es ist vom Typ '").append(typ).toString());
+								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dieses Grundstück gehört dir. Es ist vom Typ '").append(typ).append("'").toString());
 							else
-								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot is yours. It's type is '").append(typ).toString());
+								event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot is yours. It's type is '").append(typ).append("'").toString());
 	
 							event.getPlayer().sendMessage(sndm.toString());
 							int cu = this.helper.canUpgradeArea(event.getPlayer(), b);
-							if(cu > 0)
+							if(cu >= 0)
 							{
 								String add = "";
 								
@@ -755,7 +755,7 @@ public class KBPlayerListener implements Listener
 								{
 									if(a.upgradexp > 0)
 										add = " plus "+a.upgradexp+" EXP";
-									event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot can be upgraded for ").append(cu).append(this.p.econ.currencyNamePlural()).append(". Just enter /upgradeGS").toString());
+									event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot can be upgraded for ").append(cu).append(this.p.econ.currencyNamePlural()).append(add).append(". Just enter /upgradeGS").toString());
 								}
 							}        				
 						} else

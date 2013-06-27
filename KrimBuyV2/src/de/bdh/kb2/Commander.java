@@ -592,9 +592,18 @@ public class Commander implements CommandExecutor {
 		        				if(args.length == 0)
 		        				{
 		        					if(configManager.lang.equalsIgnoreCase("de"))
+		        					{
 		        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du kannst dieses Grundstueck fuer ").append(amount).append(this.plugin.econ.currencyNamePlural()).append(" verkaufen. Gib hierzu '/sellGS okay' ein").toString());
+		        						if(a.pricexp > 0)
+			        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Achtung! Deine EXP bekommst du nicht zurueck!").toString());
+		        					}
 		        					else
+		        					{
 		        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You can sell this lot for ").append(amount).append(this.plugin.econ.currencyNamePlural()).append(". Just enter '/sellGS okay'").toString());
+		        						if(a.pricexp > 0)
+			        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Be aware! You will not get your EXP back!").toString());
+
+		        					}
 	
 		        				}
 		        				else
@@ -793,13 +802,13 @@ public class Commander implements CommandExecutor {
 	        			return true;
 	        		}
 	        		int exp = this.helper.canUpgradeArea((Player)sender,b);
-	        		if(exp > 0)
+	        		if(exp >= 0)
 	        		{
 	        			Double prc = new Double(exp);
 	        			if(this.plugin.econ.getBalance(sender.getName()) > prc)
 						{
 							this.plugin.econ.withdrawPlayer(sender.getName(), prc);
-							if(this.helper.upgradeArea((Player)sender, b,configManager.KXP))
+							if(this.helper.upgradeArea((Player)sender, b,(this.plugin.XPVault != null)) == true)
 							{
 								if(configManager.lang.equalsIgnoreCase("de"))
 									sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstueck wurde erweitert").toString());
@@ -823,7 +832,7 @@ public class Commander implements CommandExecutor {
 
 							return true;
 						}
-	        		} else if(exp == 0)
+	        		} else if(exp == -1)
 	        		{
 	        			if(configManager.lang.equalsIgnoreCase("de"))
 	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du kannst dieses Grundstueck nicht erweitern").toString());
@@ -883,6 +892,7 @@ public class Commander implements CommandExecutor {
 														hasxp = true;
 												} catch (Exception e)
 												{
+													e.printStackTrace();
 													hasxp = false;
 												}
 											} else hasxp = true;
@@ -1063,7 +1073,7 @@ public class Commander implements CommandExecutor {
         		if(args.length == 0)
                 {
         			String add = "";
-        			if(configManager.KXP == true)
+        			if(this.plugin.XPVault != null)
         				add = "[EXP]";
         			
         			if(configManager.lang.equalsIgnoreCase("de"))

@@ -35,7 +35,6 @@ public class configManager {
     public static Integer doProtectPicsTNT = 1;
     public static Integer interactBlock = 7;
     public static String permOutBorder = "";
-    public static boolean KXP = false;
     public static Integer fromx = 0,fromy = 0,fromz = 0,tox = 0,toy = 0,toz = 0;
     public static boolean basepvp = false;
     public static HashMap<World,kbWorld> worldLimit = new HashMap<World,kbWorld>();
