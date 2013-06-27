@@ -86,6 +86,10 @@ public class BoardListener implements Listener
     					o.getScore(Bukkit.getOfflinePlayer("Keller:")).setScore(a.deep);
     					o.getScore(Bukkit.getOfflinePlayer("Preis:")).setScore(preis);
     					o.getScore(Bukkit.getOfflinePlayer("Level:")).setScore(a.level);
+    					if(configManager.KXP == true && a.pricexp > 0 && a.sold == 0)
+    					{
+    						o.getScore(Bukkit.getOfflinePlayer("EXP:")).setScore(a.pricexp);
+    					}
     					if(miet != 0) o.getScore(Bukkit.getOfflinePlayer("Miete:")).setScore(miet);
     				} else
     				{
@@ -100,6 +104,10 @@ public class BoardListener implements Listener
     					o.getScore(Bukkit.getOfflinePlayer("Basement:")).setScore(a.deep);
     					o.getScore(Bukkit.getOfflinePlayer("Value:")).setScore(preis);
     					o.getScore(Bukkit.getOfflinePlayer("Level:")).setScore(a.level);
+    					if(configManager.KXP == true && a.pricexp > 0 && a.sold == 0)
+    					{
+    						o.getScore(Bukkit.getOfflinePlayer("EXP:")).setScore(a.pricexp);
+    					}
     					if(miet != 0) o.getScore(Bukkit.getOfflinePlayer("Rent:")).setScore(miet);
     				}
     				

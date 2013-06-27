@@ -19,6 +19,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
+import de.bdh.brauxp.XPVaultProcessor;
 import de.bdh.kb.util.configManager;
 import de.bdh.kb.util.kbWorld;
 import de.bdh.kb2.KBArea;
@@ -534,6 +535,23 @@ public class KBHelper
 				this.userarea.put(plx, tmp);
 			}
 			
+			
+			if(a.pricexp > 0)
+			{
+				try
+				{
+					XPVaultProcessor xp = (XPVaultProcessor) this.m.XPVault;
+					if(xp.getBalance(p) > a.pricexp)
+					{
+						xp.withdrawPlayer(p, a.pricexp);
+					} else return;
+				} catch(Exception e)
+				{
+					return;
+				}
+			}
+			
+			
 			//Nicht mehr in der Publiste vorhanden
 			if(this.pubList.contains((Object)id))
 			{
@@ -864,7 +882,7 @@ public class KBHelper
 					if(!rs.getString("ruleset").equals("0") && rs.getInt("level") != 0 && rs.getString("ruleset").length() > 0)
 					{
 						PreparedStatement ps2;
-						ps2 = conn.prepareStatement((new StringBuilder()).append("SELECT price,permissionnode FROM ").append(configManager.SQLTable).append("_krimbuy_rules WHERE ruleset = ? AND level = ? LIMIT 0,1").toString());
+						ps2 = conn.prepareStatement((new StringBuilder()).append("SELECT price,pricexp,permissionnode FROM ").append(configManager.SQLTable).append("_krimbuy_rules WHERE ruleset = ? AND level = ? LIMIT 0,1").toString());
 						ps2.setString(1, rs.getString("ruleset"));
 						ps2.setInt(2, (rs.getInt("level")+1));
 						ResultSet rs2 = ps2.executeQuery();
@@ -878,6 +896,21 @@ public class KBHelper
 									ret = 0;
 							} else
 								ret = rs2.getInt("price");
+							
+							if(rs2.getInt("pricexp") > 0)
+							{
+								try
+								{
+									XPVaultProcessor xp = (XPVaultProcessor) this.m.XPVault;
+									if(xp.getBalance(p.getName()) > rs2.getInt("pricexp"))
+									{
+										ret = rs2.getInt("pricexp") * -1;
+									} else ret = 0;
+								} catch(Exception e)
+								{
+									ret = 0;
+								}
+							}
 						}
 						
 						if(ps2 != null)
@@ -1008,7 +1041,12 @@ public class KBHelper
 					
 					if(configManager.lang.equalsIgnoreCase("de"))
 					{
-						if(a.getMiet() != 0)
+						if(a.pricexp != 0)
+						{
+							ln = 0;
+							e.setLine(3, "EXP: "+a.pricexp);
+						}
+						else if(a.getMiet() != 0)
 						{
 							ln = 0;
 							e.setLine(3, "Miete: "+a.getMiet());
@@ -1021,7 +1059,12 @@ public class KBHelper
 						e.setLine(ln+2, "Dim: "+a.getDim());
 					} else
 					{
-						if(a.getMiet() != 0)
+						if(a.pricexp != 0)
+						{
+							ln = 0;
+							e.setLine(3, "EXP: "+a.pricexp);
+						}
+						else if(a.getMiet() != 0)
 						{
 							ln = 0;
 							e.setLine(3, "Rental: "+a.getMiet());
@@ -1337,7 +1380,7 @@ public class KBHelper
     	return ret.toString();
     }
 	
-	public void upgradeArea(Player p,Block b)
+	public boolean upgradeArea(Player p,Block b,boolean takexp)
     {
     	int toLvl = 0;
     	try
@@ -1359,7 +1402,7 @@ public class KBHelper
 				{
 					//Kaufdings hat ein Level und ein Ruleset
 					PreparedStatement ps2;
-					ps2 = conn.prepareStatement((new StringBuilder()).append("SELECT controlblockheight,blocks,bottom,height,deep,price FROM ").append(configManager.SQLTable).append("_krimbuy_rules WHERE ruleset = ? AND level = ? LIMIT 0,1").toString());
+					ps2 = conn.prepareStatement((new StringBuilder()).append("SELECT controlblockheight,blocks,bottom,height,deep,price,pricexp FROM ").append(configManager.SQLTable).append("_krimbuy_rules WHERE ruleset = ? AND level = ? LIMIT 0,1").toString());
 					ps2.setString(1, rs.getString("ruleset"));
 					ps2.setInt(2, toLvl);
 					ResultSet rs2 = ps2.executeQuery();
@@ -1368,6 +1411,8 @@ public class KBHelper
 					{
 						found = true;
 						int price = rs2.getInt("price");
+						int pricexp = rs2.getInt("pricexp");
+						
 						List<Integer> bot = new ArrayList<Integer>();
 						if(rs2.getString("bottom") != null && rs2.getString("bottom").length() > 0)
 						{
@@ -1376,6 +1421,18 @@ public class KBHelper
 							   bot.add(Integer.parseInt(bl));
 							}
 						}
+						
+						if(takexp == true && pricexp > 0)
+						{
+							XPVaultProcessor xp = (XPVaultProcessor) this.m.XPVault;
+							if(xp.getBalance(p.getName()) < pricexp)
+								return false;
+							else
+							{
+								xp.withdrawPlayer(p.getName(), pricexp);
+							}
+						} else if(pricexp > 0)
+							return false;
 						
 						Block unter = b.getWorld().getBlockAt(rs.getInt("bx"), b.getRelative(0,(rs2.getInt("controlblockheight") * -1),0).getY(), rs.getInt("bz"));
 						Block uber = b.getWorld().getBlockAt(rs.getInt("tx"), b.getRelative(0,(rs2.getInt("controlblockheight") * -1),0).getY(), rs.getInt("tz"));
@@ -1487,7 +1544,9 @@ public class KBHelper
 		} catch (SQLException e)
 		{
 			System.out.println((new StringBuilder()).append("[KB] unable to upgrade area: ").append(e).toString());
+			return false;
 		}
+    	return true;
     }
 	
 	public int getGSAmount(Player p, String s, String gr)

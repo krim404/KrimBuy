@@ -19,7 +19,7 @@ import de.bdh.kb2.Main;
 
 public class KBArea 
 {
-	public int indoor=0,nobuy=0,ix,iy,iz,bx,by,bz,tx,ty,tz,id,lastpay,bh=0,price,upgradeprice=0,paid,height=0,deep=0,clear=0,cansell=0,miet=0,autofree=0,onlyamount=0,nobuild=1,level,lastonline,noloose,kaufzeit,timestamp,sold;
+	public int indoor=0,nobuy=0,ix,iy,iz,bx,by,bz,tx,ty,tz,id,lastpay,bh=0,price,pricexp,upgradeprice=0,upgradexp=0,paid,height=0,deep=0,clear=0,cansell=0,miet=0,autofree=0,onlyamount=0,nobuild=1,level,lastonline,noloose,kaufzeit,timestamp,sold;
 	public List<Integer> bot = null;
 	public List<Integer> boh = null;
 	public HashMap<Block,Integer> floor = null;
@@ -40,7 +40,7 @@ public class KBArea
 		{
 			Connection conn = Main.Database.getConnection();
         	PreparedStatement ps;
-    		String strg = (new StringBuilder()).append("SELECT world,bx,`by`,bz,tx,ty,tz, price, paid, blockx,blocky,blockz, sold, buyer, pass, ruleset, level, lastonline, lastpay, noloose, kaufzeit, UNIX_TIMESTAMP() as `timestamp` FROM ").append(configManager.SQLTable).append("_krimbuy WHERE id = ? LIMIT 0,1").toString();
+    		String strg = (new StringBuilder()).append("SELECT pricexp,world,bx,`by`,bz,tx,ty,tz, price, paid, blockx,blocky,blockz, sold, buyer, pass, ruleset, level, lastonline, lastpay, noloose, kaufzeit, UNIX_TIMESTAMP() as `timestamp` FROM ").append(configManager.SQLTable).append("_krimbuy WHERE id = ? LIMIT 0,1").toString();
     		ps = conn.prepareStatement(strg);
     		ps.setInt(1, id);
     		ResultSet rs = ps.executeQuery();
@@ -68,6 +68,7 @@ public class KBArea
 				this.lastonline = rs.getInt("lastonline");
 				this.noloose = rs.getInt("noloose");
 				this.kaufzeit = rs.getInt("kaufzeit");
+				this.pricexp = rs.getInt("pricexp");
 				
 				
 				if(this.ruleset.length() > 0)
@@ -92,6 +93,7 @@ public class KBArea
 						this.nobuild = rs2.getInt("nobuild");
 						this.perm = rs2.getString("permissionnode");
 						this.upgradeprice = rs2.getInt("price");
+						this.upgradexp = rs2.getInt("pricexp");
 						this.gruppe = rs2.getString("gruppe");
 						this.nobuy = rs2.getInt("nobuy");
 						this.indoor = rs2.getInt("indoor");

@@ -699,6 +699,16 @@ public class KBPlayerListener implements Listener
 	        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("It's free").toString());
 	
 	        					}
+	        					
+	        					if(a.pricexp > 0)
+	        					{
+	        						if(configManager.lang.equalsIgnoreCase("de"))
+	        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstück kostet zusaetzlich ").append(a.pricexp).append(" EXP").toString());
+	        						else
+	        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("The lot costs additionally ").append(a.pricexp).append(" EXP").toString());
+
+	        					}
+	        					
 								if(s.length() > 1)
 									event.getPlayer().sendMessage(s.toString());
 								
@@ -731,13 +741,22 @@ public class KBPlayerListener implements Listener
 	
 							event.getPlayer().sendMessage(sndm.toString());
 							int cu = this.helper.canUpgradeArea(event.getPlayer(), b);
-							if(cu != 0)
+							if(cu > 0)
 							{
+								String add = "";
+								
 								if(configManager.lang.equalsIgnoreCase("de"))
-									event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dieses Grundstück kann erweitert werden für ").append(cu).append(this.p.econ.currencyNamePlural()).append(". Gib dazu /upgradeGS ein").toString());
+								{
+									if(a.upgradexp > 0)
+										add = " sowie "+a.upgradexp+" EXP";
+									event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dieses Grundstück kann erweitert werden für ").append(cu).append(this.p.econ.currencyNamePlural()).append(add).append(". Gib dazu /upgradeGS ein").toString());
+								}
 								else
+								{
+									if(a.upgradexp > 0)
+										add = " plus "+a.upgradexp+" EXP";
 									event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("This lot can be upgraded for ").append(cu).append(this.p.econ.currencyNamePlural()).append(". Just enter /upgradeGS").toString());
-
+								}
 							}        				
 						} else
         				{

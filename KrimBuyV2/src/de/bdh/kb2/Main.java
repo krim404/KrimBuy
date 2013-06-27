@@ -15,6 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import de.bdh.kb2.Commander;
 import de.bdh.kb2.KBPlayerListener;
 import de.bdh.board.BoardHelper;
+import de.bdh.brauxp.XPVaultProcessor;
 import de.bdh.kb.util.Database;
 import de.bdh.kb.util.configManager;
 import de.bdh.ks.KSHelper;
@@ -31,6 +32,7 @@ public class Main extends JavaPlugin
 	public Object KShelper = null;
 	public Object BoardHelper = null;
 	public static KBHelper helper = null;
+	public Object XPVault = null;
 
  	public Main()
     {
@@ -137,6 +139,21 @@ public class Main extends JavaPlugin
 		} 
         
         
+        try {
+			if(Class.forName("de.bdh.brauxp.XPVaultProcessor",false,getClassLoader()) != null)
+			{
+			    RegisteredServiceProvider<XPVaultProcessor> KSh = getServer().getServicesManager().getRegistration(XPVaultProcessor.class);
+			    if(KSh != null)
+			    {
+			    	configManager.KXP = true;
+			    	XPVault = KSh.getProvider();
+			    }
+			    else
+			    	throw new ClassNotFoundException();
+			}
+		} catch (ClassNotFoundException e) {
+			System.out.println((new StringBuilder()).append("[KB] KrimXP not found").toString());	
+		}
         
         KBTimer k = new KBTimer(this);
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, k, 1, 20*60*60);

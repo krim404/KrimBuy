@@ -15,6 +15,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import de.bdh.brauxp.XPVaultProcessor;
 import de.bdh.kb.util.configManager;
 import de.bdh.kb2.Main;
 
@@ -792,18 +793,26 @@ public class Commander implements CommandExecutor {
 	        			return true;
 	        		}
 	        		int exp = this.helper.canUpgradeArea((Player)sender,b);
-	        		if(exp != 0)
+	        		if(exp > 0)
 	        		{
 	        			Double prc = new Double(exp);
 	        			if(this.plugin.econ.getBalance(sender.getName()) > prc)
 						{
 							this.plugin.econ.withdrawPlayer(sender.getName(), prc);
-							this.helper.upgradeArea((Player)sender, b);
-							if(configManager.lang.equalsIgnoreCase("de"))
-								sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstueck wurde erweitert").toString());
-							else
-								sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Your lot has been expanded").toString());
-
+							if(this.helper.upgradeArea((Player)sender, b,configManager.KXP))
+							{
+								if(configManager.lang.equalsIgnoreCase("de"))
+									sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstueck wurde erweitert").toString());
+								else
+									sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Your lot has been expanded").toString());
+							} else
+							{
+								if(configManager.lang.equalsIgnoreCase("de"))
+									sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast nicht genug EXP").toString());
+								else
+									sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You don't have enough EXP").toString());
+					
+							}
 							return true;
 						} else
 						{
@@ -814,12 +823,20 @@ public class Commander implements CommandExecutor {
 
 							return true;
 						}
-	        		} else
+	        		} else if(exp == 0)
 	        		{
 	        			if(configManager.lang.equalsIgnoreCase("de"))
 	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du kannst dieses Grundstueck nicht erweitern").toString());
 	        			else
 	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You can't expand this lot anymore").toString());
+
+	        			return true;
+					} else if(exp < 0)
+	        		{
+	        			if(configManager.lang.equalsIgnoreCase("de"))
+	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du benoetigst mehr EXP zum erweitern: ").append(exp * -1).toString());
+	        			else
+	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You can't expand this lot. You need more EXP: ").append(exp * -1).toString());
 
 	        			return true;
 					}	
@@ -853,44 +870,71 @@ public class Commander implements CommandExecutor {
 										
 										if(this.plugin.econ.getBalance(sender.getName()) >= prc)
 										{
-											boolean hasperm = Main.helper.hasPerm((Player)sender,a.perm);
 											
-											if(hasperm == true || a.perm.length() == 0)
+											boolean hasxp = false;
+											if(a.pricexp > 0)
 											{
-												if(a.onlyamount == 0 || this.helper.getGSAmount((Player)sender,a.ruleset,a.gruppe) < a.onlyamount)
+												try
 												{
-													if(this.plugin.econ.withdrawPlayer(sender.getName(), prc).transactionSuccess())
+													XPVaultProcessor xp = (XPVaultProcessor) this.plugin.XPVault;
+													if(xp.getBalance(sender.getName()) < a.pricexp)
+														hasxp = false;
+													else
+														hasxp = true;
+												} catch (Exception e)
+												{
+													hasxp = false;
+												}
+											} else hasxp = true;
+											
+											if(hasxp == true)
+											{
+												boolean hasperm = Main.helper.hasPerm((Player)sender,a.perm);
+												
+												if(hasperm == true || a.perm.length() == 0)
+												{
+													if(a.onlyamount == 0 || this.helper.getGSAmount((Player)sender,a.ruleset,a.gruppe) < a.onlyamount)
 													{
-														this.helper.obtainGS(id, sender.getName());
-														if(configManager.lang.equalsIgnoreCase("de"))
-															sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast das Grundstueck gekauft").toString());
-														else
-															sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've bought this lot").toString());
-	
+														if(this.plugin.econ.withdrawPlayer(sender.getName(), prc).transactionSuccess())
+														{
+															this.helper.obtainGS(id, sender.getName());
+															if(configManager.lang.equalsIgnoreCase("de"))
+																sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast das Grundstueck gekauft").toString());
+															else
+																sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've bought this lot").toString());
+		
+														} else
+														{
+															if(configManager.lang.equalsIgnoreCase("de"))
+																sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Etwas ist schiefgelaufen. Bitte erstelle eine /PE").toString());
+															else
+																sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Something went wrong. Contact an administrator").toString());
+			
+														}
 													} else
 													{
 														if(configManager.lang.equalsIgnoreCase("de"))
-															sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Etwas ist schiefgelaufen. Bitte erstelle eine /PE").toString());
+															sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast bereits zuviele Grundstuecke von diesem Typ").toString());
 														else
-															sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Something went wrong. Contact an administrator").toString());
+															sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've already got too many lots of this type").toString());
 		
 													}
 												} else
 												{
 													if(configManager.lang.equalsIgnoreCase("de"))
-														sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast bereits zuviele Grundstuecke von diesem Typ").toString());
+														sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du darfst dieses Grundstueck nicht kaufen").toString());
 													else
-														sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've already got too many lots of this type").toString());
-	
+														sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You're not allowed to buy this lot").toString());
+		
 												}
 											} else
 											{
 												if(configManager.lang.equalsIgnoreCase("de"))
-													sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du darfst dieses Grundstueck nicht kaufen").toString());
+													sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast nicht genug EXP").toString());
 												else
-													sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You're not allowed to buy this lot").toString());
-	
-											}	
+													sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You don't have enough EXP").toString());
+		
+											}
 										} else
 										{
 											if(configManager.lang.equalsIgnoreCase("de"))
@@ -1018,8 +1062,14 @@ public class Commander implements CommandExecutor {
         	{
         		if(args.length == 0)
                 {
+        			String add = "";
+        			if(configManager.KXP == true)
+        				add = "[EXP]";
+        			
         			if(configManager.lang.equalsIgnoreCase("de"))
-        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Verkaufe Block - /makesell PREIS").toString());
+        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Verkaufe Block - /makesell PREIS ").append(add).toString());
+        			else
+        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Sell Lot - /makesell price ").append(add).toString());
                 } else
                 {
                 	Block b = this.helper.lastBlock.get(((Player)sender));
@@ -1034,12 +1084,16 @@ public class Commander implements CommandExecutor {
                 	Connection conn = Main.Database.getConnection();
                 	PreparedStatement ps = null;
             		try {
-						ps = conn.prepareStatement((new StringBuilder()).append("INSERT INTO ").append(configManager.SQLTable).append("_krimbuy (price,blockx,blocky,blockz,world,floor,ruleset) VALUES (?,?,?,?,?,\"\",\"\")").toString());
+            			int pxp = 0;
+            			if(args.length == 2)
+            				pxp = Integer.parseInt(args[1]);
+						ps = conn.prepareStatement((new StringBuilder()).append("INSERT INTO ").append(configManager.SQLTable).append("_krimbuy (price,blockx,blocky,blockz,world,floor,ruleset,pricexp) VALUES (?,?,?,?,?,\"\",\"\",?)").toString());
 	            		ps.setInt(1, Integer.parseInt(args[0]));
 	            		ps.setInt(2,b.getX());
 	            		ps.setInt(3,b.getY());
 	            		ps.setInt(4,b.getZ());
 	            		ps.setString(5, b.getWorld().getName());
+	            		ps.setInt(6, pxp);
 	        			ps.executeUpdate();
 	        			if(ps != null)
 	        				ps.close();
