@@ -879,7 +879,7 @@ public class Commander implements CommandExecutor {
 										
 										if(this.plugin.econ.getBalance(sender.getName()) >= prc)
 										{
-											
+					
 											boolean hasxp = false;
 											if(a.pricexp > 0)
 											{
@@ -905,7 +905,18 @@ public class Commander implements CommandExecutor {
 												{
 													if(a.onlyamount == 0 || this.helper.getGSAmount((Player)sender,a.ruleset,a.gruppe) < a.onlyamount)
 													{
-														if(this.plugin.econ.withdrawPlayer(sender.getName(), prc).transactionSuccess())
+														if(prc < 0)
+														{
+															this.helper.obtainGS(id, sender.getName());
+															prc = prc*-1;
+															this.plugin.econ.depositPlayer(sender.getName(), prc*-1);
+															
+															if(configManager.lang.equalsIgnoreCase("de"))
+																sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast das Grundstueck und ").append(prc).append(this.plugin.econ.currencyNamePlural()).append(" erhalten").toString());
+															else
+																sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've got the lot and additionally you've gained ").append(prc).append(this.plugin.econ.currencyNamePlural()).append("").toString());
+														}
+														else if(this.plugin.econ.withdrawPlayer(sender.getName(), prc).transactionSuccess())
 														{
 															this.helper.obtainGS(id, sender.getName());
 															if(configManager.lang.equalsIgnoreCase("de"))
@@ -918,7 +929,7 @@ public class Commander implements CommandExecutor {
 															if(configManager.lang.equalsIgnoreCase("de"))
 																sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Etwas ist schiefgelaufen. Bitte erstelle eine /PE").toString());
 															else
-																sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Something went wrong. Contact an administrator").toString());
+																sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Something went wrong. Please contact an administrator").toString());
 			
 														}
 													} else
