@@ -84,7 +84,10 @@ public class BoardListener implements Listener
     					
     					o.getScore(Bukkit.getOfflinePlayer("Hoehe:")).setScore(a.height);
     					o.getScore(Bukkit.getOfflinePlayer("Keller:")).setScore(a.deep);
-    					o.getScore(Bukkit.getOfflinePlayer("Preis:")).setScore(preis);
+    					if(preis > 0)
+    						o.getScore(Bukkit.getOfflinePlayer("Preis:")).setScore(preis);
+    					else
+    						o.getScore(Bukkit.getOfflinePlayer("Guthaben:")).setScore(preis);
     					o.getScore(Bukkit.getOfflinePlayer("Level:")).setScore(a.level);
     					if(this.m.XPVault != null && a.pricexp > 0)
     					{
@@ -102,7 +105,10 @@ public class BoardListener implements Listener
     					
     					o.getScore(Bukkit.getOfflinePlayer("Height:")).setScore(a.height);
     					o.getScore(Bukkit.getOfflinePlayer("Basement:")).setScore(a.deep);
-    					o.getScore(Bukkit.getOfflinePlayer("Value:")).setScore(preis);
+    					if(preis > 0)
+    						o.getScore(Bukkit.getOfflinePlayer("Value:")).setScore(preis);
+    					else
+    						o.getScore(Bukkit.getOfflinePlayer("Asset:")).setScore(preis);
     					o.getScore(Bukkit.getOfflinePlayer("Level:")).setScore(a.level);
     					if(this.m.XPVault != null && a.pricexp > 0)
     					{

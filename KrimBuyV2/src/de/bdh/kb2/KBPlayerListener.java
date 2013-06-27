@@ -700,6 +700,14 @@ public class KBPlayerListener implements Listener
 	
 	        					}
 	        					
+	        					if(a.price < 0)
+	        					{
+	        						if(configManager.lang.equalsIgnoreCase("de"))
+	        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du erhälst zusätzlich zum Kauf ").append(a.price).append(this.p.econ.currencyNamePlural()).toString());
+	        						else
+	        							event.getPlayer().sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You'll gain additionally ").append(a.price).append(this.p.econ.currencyNamePlural()).toString());
+	        					}
+	        					
 	        					if(a.pricexp > 0)
 	        					{
 	        						if(configManager.lang.equalsIgnoreCase("de"))

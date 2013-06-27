@@ -593,13 +593,19 @@ public class Commander implements CommandExecutor {
 		        				{
 		        					if(configManager.lang.equalsIgnoreCase("de"))
 		        					{
-		        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du kannst dieses Grundstueck fuer ").append(amount).append(this.plugin.econ.currencyNamePlural()).append(" verkaufen. Gib hierzu '/sellGS okay' ein").toString());
+		        						if(amount < 0)
+			        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du musst zum Verkaufen ").append(amount * -1).append(this.plugin.econ.currencyNamePlural()).append(" zurueckzahlen. Gib hierzu '/sellGS okay' ein").toString());
+		        						else
+		        							sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du kannst dieses Grundstueck fuer ").append(amount).append(this.plugin.econ.currencyNamePlural()).append(" verkaufen. Gib hierzu '/sellGS okay' ein").toString());
 		        						if(a.pricexp > 0)
 			        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Achtung! Deine EXP bekommst du nicht zurueck!").toString());
 		        					}
 		        					else
 		        					{
-		        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You can sell this lot for ").append(amount).append(this.plugin.econ.currencyNamePlural()).append(". Just enter '/sellGS okay'").toString());
+		        						if(amount < 0)
+			        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You'll have to pay ").append(amount * -1).append(this.plugin.econ.currencyNamePlural()).append(" to sell this lot. Just enter '/sellGS okay'").toString());
+		        						else
+		        							sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You can sell this lot for ").append(amount).append(this.plugin.econ.currencyNamePlural()).append(". Just enter '/sellGS okay'").toString());
 		        						if(a.pricexp > 0)
 			        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Be aware! You will not get your EXP back!").toString());
 
@@ -608,7 +614,20 @@ public class Commander implements CommandExecutor {
 		        				}
 		        				else
 		        				{
-		        					this.plugin.econ.depositPlayer(sender.getName(), amount);
+		        					if(amount < 0)
+		        					{
+		        						if(this.plugin.econ.getBalance(sender.getName()) < (amount * -1))
+		        						{
+		        							if(configManager.lang.equalsIgnoreCase("de"))
+				        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast nicht genug Geld").toString());
+				        					else
+				        						sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You don't have enough money").toString());
+		        							return true;
+		        						} else
+		        							this.plugin.econ.withdrawPlayer(sender.getName(), (amount * -1));
+		        					} else
+		        						this.plugin.econ.depositPlayer(sender.getName(), amount);
+		        					
 		        					if(a.clear > 0)
 		        					{
 		        						a.clearGS();

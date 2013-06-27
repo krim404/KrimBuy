@@ -1594,6 +1594,14 @@ public class KBHelper
 				a = this.getArea(rs.getInt("id"));
 				if(a != null)
 				{
+					if(a.price < 0)
+					{
+						try
+						{
+							this.m.econ.withdrawPlayer(a.owner, (a.price * -1));
+						} catch(Exception e){}
+					}
+					
 					System.out.println("[KB] Free GS with ID:"+a.id);
 					if(a.clear > 0)
 						a.clearGS();
