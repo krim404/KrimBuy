@@ -928,7 +928,7 @@ public class Commander implements CommandExecutor {
 														{
 															this.helper.obtainGS(id, sender.getName());
 															prc = prc*-1;
-															this.plugin.econ.depositPlayer(sender.getName(), prc*-1);
+															this.plugin.econ.depositPlayer(sender.getName(), prc);
 															
 															if(configManager.lang.equalsIgnoreCase("de"))
 																sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast das Grundstueck und ").append(prc).append(this.plugin.econ.currencyNamePlural()).append(" erhalten").toString());
