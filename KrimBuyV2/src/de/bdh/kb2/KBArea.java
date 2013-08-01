@@ -125,7 +125,15 @@ public class KBArea
 								if(bl.equalsIgnoreCase("!"))
 									this.invers = true;
 								else
-									this.boh.add(Integer.parseInt(bl));
+								{
+									try
+									{
+										this.boh.add(Integer.parseInt(bl));
+									} catch(Exception e)
+									{
+										System.out.println("[KB] ERROR: Blocks in Ruleset MUST be Numeric!");
+									}
+								}
 							}
 						}
 						
@@ -135,7 +143,13 @@ public class KBArea
 						{
 							String[] tmpBoh = bottom.split(",");
 							for (String bl: tmpBoh) {
-							   this.bot.add(Integer.parseInt(bl));
+								try
+								{
+									this.bot.add(Integer.parseInt(bl));
+								} catch(Exception e)
+								{
+									System.out.println("[KB] ERROR: Bottom in Ruleset MUST be Numeric!");
+								}
 							}
 						}
 						
