@@ -514,7 +514,7 @@ public class KBHelper
 		}
 	}
 	
-	public void obtainGS(int id, String p)
+	public void obtainGS(int id, String p, boolean takexp)
 	{
 		KBArea a = this.getArea(id);
 		if(a != null)
@@ -536,7 +536,7 @@ public class KBHelper
 			}
 			
 			
-			if(a.pricexp > 0)
+			if(a.pricexp > 0 && takexp)
 			{
 				try
 				{
@@ -547,7 +547,7 @@ public class KBHelper
 					} else return;
 				} catch(Exception e)
 				{
-					return;
+					System.out.println("Unable to get EXP from Player");
 				}
 			}
 			

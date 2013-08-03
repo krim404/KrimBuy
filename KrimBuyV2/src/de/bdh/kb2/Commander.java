@@ -83,7 +83,7 @@ public class Commander implements CommandExecutor {
 
 	        				} else
 			                {
-			                	this.helper.obtainGS(id, args[0]);
+			                	this.helper.obtainGS(id, args[0],false);
 			                	if(configManager.lang.equalsIgnoreCase("de"))
 			                		sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Das Grundstueck gehoert nun: ").append(args[0]).toString());
 			                	else
@@ -926,7 +926,7 @@ public class Commander implements CommandExecutor {
 													{
 														if(prc < 0)
 														{
-															this.helper.obtainGS(id, sender.getName());
+															this.helper.obtainGS(id, sender.getName(),true);
 															prc = prc*-1;
 															this.plugin.econ.depositPlayer(sender.getName(), prc);
 															
@@ -937,7 +937,7 @@ public class Commander implements CommandExecutor {
 														}
 														else if(this.plugin.econ.withdrawPlayer(sender.getName(), prc).transactionSuccess())
 														{
-															this.helper.obtainGS(id, sender.getName());
+															this.helper.obtainGS(id, sender.getName(),true);
 															if(configManager.lang.equalsIgnoreCase("de"))
 																sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast das Grundstueck gekauft").toString());
 															else
