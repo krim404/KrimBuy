@@ -569,16 +569,6 @@ public class KBHelper
 				} catch (Exception e) {}
 			}
 			
-			if(a.getInteractBlock() != null)
-			{
-				Block b = a.getInteractBlock();
-				if(b.getTypeId() != 0)
-				{
-					if(b.getRelative(BlockFace.UP).getTypeId() == Material.SPONGE.getId())
-						b.getRelative(BlockFace.UP).setTypeId(0);
-				}
-			}
-			
 			try
 			{
 				Connection conn = Main.Database.getConnection();
@@ -593,6 +583,15 @@ public class KBHelper
 				System.out.println((new StringBuilder()).append("[KB] unable to func obtainGS: ").append(e).toString());
 			}
 			
+			if(a.getInteractBlock() != null)
+			{
+				Block b = a.getInteractBlock();
+				if(b.getTypeId() != 0)
+				{
+					if(b.getRelative(BlockFace.UP).getTypeId() == Material.SPONGE.getId())
+						b.getRelative(BlockFace.UP).setTypeId(0);
+				}
+			}
 		} else
 		{
 			System.out.println((new StringBuilder()).append("[KB] unable to func obtainGS: not found ").append(id).toString());
