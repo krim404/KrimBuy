@@ -148,7 +148,20 @@ public class KBHelper
 						int money = daily * days;
 						Double prc = new Double(money);
 						
-						if(this.m.econ.getBalance(p.getName()) >= prc)
+						if(p.hasPermission("kb.freerent"))
+						{
+							if(configManager.lang.equalsIgnoreCase("de"))
+								p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dir wurde die Miete von '").append(money).append("'").append(this.m.econ.currencyNamePlural()).append(" fuer  ").append(days).append(" Tag(e) wurden dir erlassen").toString());
+							else
+								p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("The daily rental fee of '").append(money).append("'").append(this.m.econ.currencyNamePlural()).append(" for ").append(days).append(" day(s) have been waved").toString());
+
+							PreparedStatement ps3;
+							ps3 = conn.prepareStatement((new StringBuilder()).append("UPDATE ").append(configManager.SQLTable).append("_krimbuy SET lastpay=UNIX_TIMESTAMP() WHERE id = ? LIMIT 1").toString());
+							ps3.setInt(1, rs.getInt("id"));
+							ps3.executeUpdate();
+							a.lastpay = rs.getInt("timestamp");
+						}
+						else if(this.m.econ.getBalance(p.getName()) >= prc)
 						{
 							this.m.econ.withdrawPlayer(p.getName(), prc);
 							if(configManager.lang.equalsIgnoreCase("de"))

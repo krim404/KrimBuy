@@ -21,6 +21,9 @@ permissions:
     kb.nochest:
         description: Not Allowed to open chests
         default: op
+    kb.freerent:
+        description: free rent
+        default: op
     kb.nolot:
         description: disable build on lots
         default: op
