@@ -576,27 +576,27 @@ public class KBPlayerListener implements Listener
 	        	
 	        	//alles OK
 	        //Boote sind erlaubt
-	        } else if((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) && player.getItemInHand().getTypeId() == Material.BOAT.getId())
+	        } else if((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) && player.getItemInHand().getTypeId() == Material.BOAT.getId() && configManager.BrauTec.equals("0"))
 	        {
-                        //Blocks to be rendered as "transparent"
-                        HashSet<Byte> ignore = new HashSet<Byte>();
-                        //Ignore air, torches and signs
-                        //NOTE:Add more if you like to
-                        ignore.add((byte)0);
-                        ignore.add((byte)Material.TORCH.getId());
-                        ignore.add((byte)Material.WALL_SIGN.getId());
-                        ignore.add((byte)Material.SIGN_POST.getId());
-                        
-                        Block targetBlock = player.getTargetBlock(ignore, 5);
-                        
-                        if(targetBlock!=null){
-                            if(targetBlock.getType() == Material.WATER || targetBlock.getType() == Material.STATIONARY_WATER){
-
-                                this.helper.blockedEvent.put(event.hashCode(), false);
-                                event.setCancelled(false);
-
-                            }
-                        }
+                //Blocks to be rendered as "transparent"
+                HashSet<Byte> ignore = new HashSet<Byte>();
+                //Ignore air, torches and signs
+                //NOTE:Add more if you like to
+                ignore.add((byte)0);
+                ignore.add((byte)Material.TORCH.getId());
+                ignore.add((byte)Material.WALL_SIGN.getId());
+                ignore.add((byte)Material.SIGN_POST.getId());
+                
+                Block targetBlock = player.getTargetBlock(ignore, 5);
+                
+                if(targetBlock!=null)
+                {
+                    if(targetBlock.getType() == Material.WATER || targetBlock.getType() == Material.STATIONARY_WATER)
+                    {
+                        this.helper.blockedEvent.put(event.hashCode(), false);
+                        event.setCancelled(false);
+                    } else event.setCancelled(true);
+                } else event.setCancelled(true);
    	        }
 	        	
 	        //Holzkn�pfe gehen immer genauso wie 225 ( BrauTec ), Trapped Chests und Bedrock
