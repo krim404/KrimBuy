@@ -148,7 +148,7 @@ public class KBHelper
 						int money = daily * days;
 						Double prc = new Double(money);
 						
-						if(p.hasPermission("kb.freerent"))
+						if(p.hasPermission("kb.freerent") || p.hasPermission("kb.freerent."+rs.getString("ruleset").toLowerCase()))
 						{
 							if(configManager.lang.equalsIgnoreCase("de"))
 								p.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Dir wurde die Miete von '").append(money).append("'").append(this.m.econ.currencyNamePlural()).append(" fuer  ").append(days).append(" Tag(e) wurden dir erlassen").toString());
