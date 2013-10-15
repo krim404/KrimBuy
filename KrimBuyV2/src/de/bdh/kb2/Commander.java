@@ -898,7 +898,6 @@ public class Commander implements CommandExecutor {
 										
 										if(this.plugin.econ.getBalance(sender.getName()) >= prc)
 										{
-					
 											boolean hasxp = false;
 											if(a.pricexp > 0)
 											{
@@ -929,7 +928,7 @@ public class Commander implements CommandExecutor {
 															this.helper.obtainGS(id, sender.getName(),true);
 															prc = prc*-1;
 															this.plugin.econ.depositPlayer(sender.getName(), prc);
-															
+																														
 															if(configManager.lang.equalsIgnoreCase("de"))
 																sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast das Grundstueck und ").append(prc).append(this.plugin.econ.currencyNamePlural()).append(" erhalten").toString());
 															else
@@ -937,6 +936,11 @@ public class Commander implements CommandExecutor {
 														}
 														else if(this.plugin.econ.withdrawPlayer(sender.getName(), prc).transactionSuccess())
 														{
+															if(a.payout == 1 && a.seller.length() > 2)
+															{
+																this.plugin.econ.depositPlayer(a.seller, prc);
+															}
+															
 															this.helper.obtainGS(id, sender.getName(),true);
 															if(configManager.lang.equalsIgnoreCase("de"))
 																sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("Du hast das Grundstueck gekauft").toString());
@@ -1098,12 +1102,12 @@ public class Commander implements CommandExecutor {
                 }
         		return true;
         	}
-        	else if((command.getName().equalsIgnoreCase("makesell") || command.getName().equalsIgnoreCase("kbsell")) && (sender.hasPermission("kb.create") || ( this.helper.ruleset.get(sender.getName()) != null && sender.hasPermission("kb.create."+this.helper.ruleset.get(sender.getName())))))
+        	else if((command.getName().equalsIgnoreCase("makesell") || command.getName().equalsIgnoreCase("kbsell")) && (sender.hasPermission("kb.create") || (this.helper.ruleset.get(sender.getName()) == null && sender.hasPermission("kb.create.block")) || ( this.helper.ruleset.get(sender.getName()) != null && sender.hasPermission("kb.create."+this.helper.ruleset.get(sender.getName())))))
         	{
         		if(args.length == 0)
                 {
         			String add = "";
-        			if(this.plugin.XPVault != null)
+        			if(this.plugin.XPVault != null && sender.hasPermission("kb.create"))
         				add = "[EXP]";
         			
         			if(configManager.lang.equalsIgnoreCase("de"))
@@ -1121,19 +1125,24 @@ public class Commander implements CommandExecutor {
 	        				sender.sendMessage((new StringBuilder()).append(ChatColor.YELLOW).append("You've not selected a lot").toString());
                 		return true;
 	        		}
+                	int preis = Integer.parseInt(args[0]);
+                	if(preis < 0 && !sender.hasPermission("kb.negativeprice"))
+                		preis = preis * -1;
+                	
                 	Connection conn = Main.Database.getConnection();
                 	PreparedStatement ps = null;
             		try {
             			int pxp = 0;
             			if(args.length == 2)
             				pxp = Integer.parseInt(args[1]);
-						ps = conn.prepareStatement((new StringBuilder()).append("INSERT INTO ").append(configManager.SQLTable).append("_krimbuy (price,blockx,blocky,blockz,world,floor,ruleset,pricexp) VALUES (?,?,?,?,?,\"\",\"\",?)").toString());
-	            		ps.setInt(1, Integer.parseInt(args[0]));
+						ps = conn.prepareStatement((new StringBuilder()).append("INSERT INTO ").append(configManager.SQLTable).append("_krimbuy (price,blockx,blocky,blockz,world,floor,ruleset,pricexp,seller) VALUES (?,?,?,?,?,\"\",\"\",?,?)").toString());
+	            		ps.setInt(1, preis);
 	            		ps.setInt(2,b.getX());
 	            		ps.setInt(3,b.getY());
 	            		ps.setInt(4,b.getZ());
 	            		ps.setString(5, b.getWorld().getName());
 	            		ps.setInt(6, pxp);
+	            		ps.setString(7, sender.getName());
 	        			ps.executeUpdate();
 	        			if(ps != null)
 	        				ps.close();
