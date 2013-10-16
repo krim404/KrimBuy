@@ -54,7 +54,7 @@ permissions:
     kb.disableLots:
         description: user cannot use his lots
         default: op
-    kb.negativeprice
+    kb.negativeprice:
         description: user can set a negative price (payout on buy)
         default: op
     kab.build:
