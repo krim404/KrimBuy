@@ -22,6 +22,7 @@ public class KBArea
 	public int indoor=0,nobuy=0,ix,iy,iz,bx,by,bz,tx,ty,tz,id,lastpay,bh=0,price,pricexp,upgradeprice=0,upgradexp=0,paid,height=0,deep=0,clear=0,cansell=0,miet=0,autofree=0,onlyamount=0,nobuild=1,level,lastonline,noloose,kaufzeit,timestamp,sold,payout=1;
 	public List<Integer> bot = null;
 	public List<Integer> boh = null;
+	public List<String> givePerms = new ArrayList<String>();
 	public HashMap<Block,Integer> floor = null;
 	public String world = "", pass = "", owner = "", ruleset = "", perm = "", gruppe = "", seller="";
 	
@@ -87,7 +88,7 @@ public class KBArea
 						this.upgradexp = rs3.getInt("pricexp");
 					}
 					
-					ps2 = conn.prepareStatement((new StringBuilder()).append("SELECT payout,pvp,indoor,height,deep,miet,autofree,blocks,bottom,controlblockheight,clear,cansell,permissionnode,nobuild,onlyamount,gruppe,nobuy FROM ").append(configManager.SQLTable).append("_krimbuy_rules WHERE ruleset = ? AND level = ? LIMIT 0,1").toString());
+					ps2 = conn.prepareStatement((new StringBuilder()).append("SELECT giveperm,payout,pvp,indoor,height,deep,miet,autofree,blocks,bottom,controlblockheight,clear,cansell,permissionnode,nobuild,onlyamount,gruppe,nobuy FROM ").append(configManager.SQLTable).append("_krimbuy_rules WHERE ruleset = ? AND level = ? LIMIT 0,1").toString());
 					ps2.setString(1, rs.getString("ruleset"));
 					level = rs.getInt("level");
 					if(level == 0) level = 1;
@@ -117,6 +118,16 @@ public class KBArea
 						
 						if(this.gruppe.length() == 0)
 							this.gruppe = this.ruleset;
+						
+						String gperm = rs2.getString("giveperm");
+						if(gperm.length() > 0)
+						{
+							String[] tmpprm = gperm.split(",");
+							for (String prm: tmpprm) 
+							{
+								this.givePerms.add(prm);
+							}
+						}
 						
 						String blocks = rs2.getString("blocks");
 						this.boh = new ArrayList<Integer>();

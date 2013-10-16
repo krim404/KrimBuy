@@ -212,6 +212,13 @@ public class KBHelper
     					{
 	    					this.m.permission.playerAddTransient(rs.getString("buyer"), "kb.owns."+rs.getString("ruleset"));
 	    					this.m.permission.playerAddTransient(rs.getString("buyer"), "kb.owns.group."+a.gruppe);
+	    					
+	    					if(a.givePerms.size() > 0)
+	    					for(String prm: a.givePerms)
+	    					{
+	    						this.m.permission.playerAddTransient(rs.getString("buyer"), prm);
+	    					}
+	    					
     					} catch (Exception e) {}
     				}
     				
@@ -657,6 +664,11 @@ public class KBHelper
 					{
 						this.m.permission.playerRemoveTransient(a.owner, "kb.owns."+a.ruleset);
 						this.m.permission.playerRemoveTransient(a.owner, "kb.owns.group."+a.gruppe);
+						if(a.givePerms.size() > 0)
+    					for(String prm: a.givePerms)
+    					{
+    						this.m.permission.playerRemoveTransient(a.owner, prm);
+    					}
 					} catch(Exception e) {}
 				}
 			}
