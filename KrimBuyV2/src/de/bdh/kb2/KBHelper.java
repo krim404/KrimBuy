@@ -664,7 +664,7 @@ public class KBHelper
 					{
 						this.m.permission.playerRemoveTransient(a.owner, "kb.owns."+a.ruleset);
 						this.m.permission.playerRemoveTransient(a.owner, "kb.owns.group."+a.gruppe);
-						if(a.givePerms.size() > 0)
+						if(a.givePerms.size() > 0) 
     					for(String prm: a.givePerms)
     					{
     						this.m.permission.playerRemoveTransient(a.owner, prm);

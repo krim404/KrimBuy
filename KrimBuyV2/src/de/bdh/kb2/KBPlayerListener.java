@@ -336,7 +336,7 @@ public class KBPlayerListener implements Listener
 		int i = blockplaceevent.getBlock().getTypeId();
 		Player p = blockplaceevent.getPlayer();
 		
-		if(p.hasPermission("kb.create") && (i == configManager.interactBlock))
+		if((p.hasPermission("kb.create.block") || p.hasPermission("kb.create")) && (i == configManager.interactBlock))
 		{
 			this.helper.lastBlock.put(p, blockplaceevent.getBlock());
 		}
@@ -379,7 +379,7 @@ public class KBPlayerListener implements Listener
 		Block b = blockbreakevent.getBlock();
 		int i = b.getTypeId();
 		Player p = blockbreakevent.getPlayer();
-		if(p.hasPermission("kb.create") && (i == configManager.interactBlock))
+		if((p.hasPermission("kb.create.block") || p.hasPermission("kb.create")) && (i == configManager.interactBlock))
 		{
 			Long lc = lastclick.get(blockbreakevent.getPlayer());
 			lastclick.put(blockbreakevent.getPlayer(), System.currentTimeMillis());
@@ -631,7 +631,7 @@ public class KBPlayerListener implements Listener
 	        //Interaktionsblock
 	        else if(b.getTypeId() == configManager.interactBlock && !event.getPlayer().isSneaking())
 			{
-				if(event.getPlayer().hasPermission("kb.create"))
+				if(event.getPlayer().hasPermission("kb.create") || event.getPlayer().hasPermission("kb.create.block"))
 					this.helper.lastBlock.put(event.getPlayer(), b);
 				
 				this.helper.blockedEvent.put(event.hashCode(), true);
