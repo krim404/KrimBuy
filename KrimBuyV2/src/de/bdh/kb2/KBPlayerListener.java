@@ -631,7 +631,7 @@ public class KBPlayerListener implements Listener
 	        //Interaktionsblock
 	        else if(b.getTypeId() == configManager.interactBlock && !event.getPlayer().isSneaking())
 			{
-				if(event.getPlayer().hasPermission("kb.create") || event.getPlayer().hasPermission("kb.create.block"))
+				if(event.getPlayer().hasPermission("kb.canalready") && (event.getPlayer().hasPermission("kb.create") || event.getPlayer().hasPermission("kb.create.block")))
 					this.helper.lastBlock.put(event.getPlayer(), b);
 				
 				this.helper.blockedEvent.put(event.hashCode(), true);
