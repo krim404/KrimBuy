@@ -57,7 +57,7 @@ permissions:
     kb.negativeprice:
         description: user can set a negative price (payout on buy)
         default: op
-    kb.canalready
+    kb.canalready:
         description: user can use an already existing bedrock for selling
         default: op    
     kab.build:
